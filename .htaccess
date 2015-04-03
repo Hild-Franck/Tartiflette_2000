@@ -1,0 +1,9 @@
+Options -Indexes
+
+DirectoryIndex Controllers/mainController.php
+
+Options +FollowSymlinks
+
+RewriteEngine on
+
+RewriteRule  ^Jesus/(.+)$ Confirmation/confirmationController.php?key=$1 [L]

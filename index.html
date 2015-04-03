@@ -1,0 +1,143 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="user-scalable=0" />
+    <title>Tartiflette 2000</title>
+    <link href='http://fonts.googleapis.com/css?family=Sniglet:800' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Sniglet' rel='stylesheet' type='text/css' />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+    <h1>Tartiflette 2000</h1>
+</header>
+<form id="inscription" name="inscription" method="post" enctype="multipart/form-data">
+    <label for="email">Inscription</label>
+    <input class="input" id="email" name="email" type="text" placeholder="prénom.nom@y-nov.com" />
+    <input type="submit" value="Valider" class="button"/>
+</form>
+</body>
+<script>
+
+    document.getElementById("inscription").onsubmit = function(event){
+        event.preventDefault();
+        if(/^.+\..+@y-nov\.com$/.test(document.getElementById("email").value)){
+            SendData(Response);
+        }
+        else
+            Error("Rentrez un email y-nov !");
+    };
+
+    /**
+     * Réceptionne la réponse serveur et affiche les informations adéquates
+     * @param gData Réponse du serveur en JSON
+     */
+
+    function Response(gData){
+        var response = JSON.parse(gData);
+        if(!response.error) {
+            fadeOut(document.forms.namedItem("inscription"), function () {
+                var div = document.createElement("div");
+                div.className = "sucess-inscr";
+                div.innerHTML = response.txt;
+                appendAfter(document.getElementsByTagName("header")[0], div);
+            });
+        }
+        else{
+            Error(response.txt);
+        }
+    }
+
+    /**
+     * Génère un nombre aléatoire dans un intervalle
+     * @param min Borne inférieure de l'intervalle
+     * @param max Borne supérieure de l'intervalle
+     * @returns int Nombre aléatoire
+     */
+
+    function RandomInt(min, max){
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    /**
+     * Choisi aléatoire un nombre entre deux nombres
+     * @param intOne Le premier nombre
+     * @param intTwo le second nombre
+     * @returns Retourne un des deux nombres
+     */
+
+    function Choose(intOne, intTwo){
+        var perct = (Math.random() *100) + 1;
+        if(perct >= 50)
+            return intOne;
+        else
+            return intTwo;
+    }
+
+    /**
+     * Insère un élément après un autre
+     * @param el Élément après lequel insérer
+     * @param nwEl Élément à insérer
+     */
+
+    function appendAfter(el, nwEl){
+        el.parentNode.insertBefore(nwEl, el.nextSibling);
+    }
+
+    function Error(str){
+        var error = document.getElementsByClassName("error-wrapper")[0];
+        if(error != undefined)
+            error.remove();
+        var wrapper = document.createElement("div");
+        wrapper.className = "error-wrapper";
+        var div = document.createElement("div");
+        div.className = "error";
+        div.innerHTML = str;
+        wrapper.appendChild(div);
+        var header = document.getElementsByTagName("header")[0];
+        appendAfter(header, wrapper);
+        setTimeout(function() {fadeOut(wrapper); }, 2000);
+    }
+
+    /**
+     * Envoie les données du formulaire au serveur en AJAX
+     * @param callback La fonction de lecture des données après réception et traitement serveur
+     */
+
+    function SendData(callback){
+        var form = document.forms.namedItem("inscription");
+        var data = new FormData(form);
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)){
+                callback(xhr.responseText);
+            }
+        };
+
+        xhr.open("POST", "inscription.php", true);
+        xhr.send(data);
+    }
+
+    /**
+     * Fait disparaître un élément puis l'enlève, en appelant une fonction si spécifiée
+     * @param element L'élément à faire disparaître
+     * @param [callback] Fonction appelée à la disparition de l'élément
+     */
+
+    function fadeOut(element, callback) {
+        var op = 1;
+        var timer = setInterval(function () {
+            if (op <= 0.01){
+                if(callback)
+                    callback();
+                clearInterval(timer);
+                element.remove();
+            }
+            element.style.opacity = op;
+            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+            op -= op * 0.1;
+        }, 25);
+    }
+</script>
+</html>
