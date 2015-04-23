@@ -53,6 +53,6 @@ function setMember($email, $pseudo, $password, $bdd){
     $req->execute(array(
         "nwEmail" => $email,
         "nwPseudo" => $pseudo,
-        "nwPassword" => $password
+        "nwPassword" => sha1($password)
     ));
 }
