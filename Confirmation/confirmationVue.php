@@ -118,6 +118,11 @@
      * @param nwEl Élément à insérer
      */
 
+    /**
+     *
+     * @param el
+     * @param nwEl
+     */
     function appendAfter(el, nwEl){
         el.parentNode.insertBefore(nwEl, el.nextSibling);
     }

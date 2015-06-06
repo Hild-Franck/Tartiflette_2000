@@ -1,6 +1,5 @@
 Options -Indexes
 
-DirectoryIndex Controllers/mainController.php
 
 Options +FollowSymlinks
 

@@ -23,6 +23,7 @@ function randomString()
  * @return int Retourne 1 si l'email est correct, 0 sinon
  **/
 
+
 function checkEmail($str){
     return preg_match("#^.+\..+@y-nov\.com$#", $str);
 }
