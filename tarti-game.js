@@ -7,6 +7,15 @@ var context = canvas.getContext("2d");
 var tilesheet = new Image();
 tilesheet.src = "resources/Outside_A2.png";
 
+var charTilesheet = new Image();
+charTilesheet.src = "resources/Actor1.png";
+
+function update(){
+    context.clearRect(0,0,canvas.width,canvas.height);
+    dispMap();
+    drawPlayer();
+}
+
 /**
  * Fonction qui permet d'afficher une tile de 32*32, d'un fichier seul ou d'un tilesheet
  * @param tile Le tile à afficher
@@ -23,8 +32,33 @@ function dispTile(tile, x, y){
 function dispMap(){
     for(var i = 0; i < 10; i++){
         for(var y = 0; y < 10; y++) {
-            dispTile(grassTile, 32*i, 32*y);
+            dispTile(tilesheet, 32*i, 32*y);
         }
     }
 }
-var drwIntvl = setInterval(function(){ dispMap() }, 1000/60);
+
+/**
+ * Fonction qui affiche le personnage du joueur et qui l'anime
+ * @param countDrawPlayer Compteur pour changer les frames
+ * @param framePlayer La frame du personnage
+ */
+
+var countDrawPlayer = 0;
+var framePlayer = 0;
+
+function drawPlayer(){
+    context.drawImage(charTilesheet, framePlayer * 32 , 0, 32, 32, 0, 0, 32, 32);
+
+    countDrawPlayer++;
+
+    //Permet le changement de frame
+    
+    if(countDrawPlayer > 60)
+        countDrawPlayer = 0;
+    if(countDrawPlayer % 12 == 0)
+        framePlayer++;
+    if(framePlayer > 2)
+        framePlayer = 0;
+
+}
+ var drwIntvl = setInterval(function(){ update() }, 1000/60);
