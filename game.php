@@ -2,7 +2,7 @@
 /**
  * Fichier qui accueille le jeu
  * Created by PhpStorm.
- * User: Hild Franck
+ * User: Hild Franck le Génie
  * Date: 6/6/2015
  * Time: 5:48 PM
  */
@@ -14,9 +14,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="canvas">
+    <canvas id="canvas" width="320" height="320">
 
     </canvas>
 </body>
+<script src="debug.js" charset="utf-8"></script>
 <script src="tarti-game.js" charset="utf-8"></script>
 </html>
