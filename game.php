@@ -16,7 +16,7 @@
 
 <body>
     <canvas id="canvas" width="320" height="320">
-<body onkeypress="movePlayer()">
+<body>
     <canvas id="canvas" >
 
 

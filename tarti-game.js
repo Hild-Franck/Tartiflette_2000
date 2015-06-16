@@ -26,15 +26,24 @@ function Character(){
     this.sprInd = 0;
     this.leftSwitch = false;
     this.rightSwitch = false;
+    this.downSwitch = false;
+    this.upSwitch = false;
 
     this.drawChar = function(){
         animate(this);
     }
+
     this.move = function(){
-        if(this.leftSwitch)
+        this.playerPrevPosX = this.playerPosX;
+        this.playerPrevPosY = this.playerPosY;
+        if(this.leftSwitch && player.playerPosX > 0)
             this.playerPosX -= 4;
-        if(this.rightSwitch)
+        if(this.rightSwitch && player.playerPosX < canvas.width - 32)
             this.playerPosX += 4;
+        if(this.downSwitch && player.playerPosY < canvas.height - 32)
+            this.playerPosY += 4;
+        if(this.upSwitch && player.playerPosY > 0)
+            this.playerPosY -= 4;
     }
 }
 
@@ -46,8 +55,9 @@ player = new Character();
 
 function update() {
     debug.monitor("count: ", player.countDrawPlayer);
-    debug.addAssert(player.rightSwitch, "Touche 'd' pressée");
-    debug.addAssert(player.leftSwitch, "Touche 'q' pressée");
+    debug.monitor("frame player :", player.framePlayer);
+    debug.monitor("Player pos X :", player.playerPosX);
+    debug.monitor("Player prev pos X :", player.playerPrevPosX);
     debug.addTest("Tests", function () {
         debug.test(1 == 1, "Ca passe");
         debug.test(3 == 2, "La ca passe aussi");
@@ -98,6 +108,19 @@ function animate(obj){
         obj.framePlayer++;
     if (obj.framePlayer > 2)
         obj.framePlayer = 0;
+
+    if(obj.rightSwitch)
+        obj.sprInd = 2;
+    if(obj.leftSwitch)
+        obj.sprInd = 1;
+    if(obj.upSwitch)
+        obj.sprInd = 3;
+    if(obj.downSwitch)
+        obj.sprInd = 0;
+
+    if(obj.playerPrevPosX == obj.playerPosX && obj.playerPrevPosY == obj.playerPosY)
+        obj.framePlayer = 1;
+
 }
 
 /**
@@ -105,18 +128,26 @@ function animate(obj){
  * @param event evennement qui s'active lors de la pression d'une touche
  */
 document.onkeydown = function(event){
+
     if(event.keyCode == 68)
         player.rightSwitch = true;
     if(event.keyCode == 81)
         player.leftSwitch = true;
+    if(event.keyCode == 90)
+        player.upSwitch = true;
+    if(event.keyCode == 83)
+        player.downSwitch = true;
 }
 document.onkeyup = function(event){
     if(event.keyCode == 68)
         player.rightSwitch = false;
     if(event.keyCode == 81)
         player.leftSwitch = false;
+    if(event.keyCode == 90)
+        player.upSwitch = false;
+    if(event.keyCode == 83)
+        player.downSwitch = false;
 }
-
 
 
 // Regle les fps à 60
