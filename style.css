@@ -1,3 +1,18 @@
+body
+{
+    margin: 0px;
+}
+
+header.menu
+{
+    display: block;
+    background-color: white;
+    height: 100px;
+    border-bottom-style: solid;
+    border-bottom-color: #2ba6cb;
+
+}
+
 h1{
     font-family: 'Sniglet', cursive;
     text-align: center;
@@ -10,17 +25,18 @@ h1{
     border-bottom: #2ba6cb solid 5px;
 }
 
-#inscription{
+#inscription, #connexion{
     margin: auto;
     margin-top: 150px;
     text-align: center;
-
+    margin-bottom: 20px;
 }
 
-#inscription > label{
+label{
     display: block;
     font-family: 'Sniglet', cursive;
     font-size: 30px;
+    margin-bottom: 20px;
 }
 
 .input{
@@ -125,4 +141,164 @@ h1{
     .error{
         font-size: 27px;
     }
+}
+
+#nav, #nav ul
+{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+
+#nav li
+{
+    display: inline-block;
+    position: relative;
+    border-radius: 0 0 8px 8px;
+    background-color: #2ba6cb;
+}
+
+#nav ul li
+{
+    display: inherit;
+    border-radius: 8px 8px 8px 8px;
+}
+
+#nav ul li:hover
+{
+    border-radius: 8px 8px 8px 8px;
+}
+
+#nav ul
+{
+    position: absolute;
+    max-height: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+#nav li:hover ul
+{
+    max-height: 15em;
+}
+
+/* background des liens sous menus */
+#nav li:nth-child(2) li
+{
+    background: #333A40;
+}
+
+#nav li:nth-child(4) li
+{
+    background: #333A40;
+}
+
+/* background des liens menus et sous menus au survol */
+#nav li:first-child:hover
+{
+    background: #729EBF;
+}
+
+#nav li:nth-child(2):hover, #nav li:nth-child(2) li:hover
+{
+    background: #729EBF;
+}
+
+#nav li:nth-child(3):hover
+{
+    background: #729EBF;
+}
+
+#nav li:nth-child(4):hover, #nav li:nth-child(4) li:hover
+{
+    background: #729EBF;
+}
+
+#nav li:last-child:hover
+{
+    background: #729EBF;
+}
+
+
+/* Couleur lors du click */
+#nav a:first-child:active
+{
+    color: white;
+}
+
+#nav a:nth-child(2)
+{
+    color: white;
+}
+
+#nav a:nth-child(3)
+{
+    color: white;
+}
+
+#nav a:last-child
+{
+    color: white;
+}
+
+/* les a href */
+#nav a
+{
+    text-decoration: none;
+    display: block;
+    padding: 8px 32px;
+    color: #fff;
+    font-weight: bold;
+}
+
+#nav ul a
+{
+    padding: 8px 0;
+}
+
+#nav li:hover li a
+{
+    color: #fff;
+    text-transform: inherit;
+}
+
+#nav li:hover a, #nav li li:hover a
+{
+    color: #000;
+}
+
+div.news
+{
+    display: block;
+    text-align: center;
+    height: auto;
+}
+
+span.news
+{
+    display: inline-block;
+    width: 250px;
+    height: 150px;
+    margin: 2%;
+    float: left;
+    border: solid 1px black;
+}
+
+table.news
+{
+    height: 150px;
+}
+
+td.date
+{
+    display: inline;
+    vertical-align: bottom;
+}
+
+
+th
+{
+    width: 250px;
 }

@@ -1,7 +1,11 @@
 <?php
 function connect(){
     try{
-        $bdd = new PDO('mysql:host=localhost;dbname=xfpipgfd_tartiflette_2000', 'xfpipgfd_admin', '^35xgn*7opK0');
+        $dsn = 'mysql:dbname=Tartiflette-2000;host=localhost;port=8889';
+        $user = 'root';
+        $password = 'root';
+
+        $bdd = new PDO($dsn, $user, $password);
         $bdd->exec("SET CHARACTER SET utf8");
     }
     catch(EXEPTION $e){
@@ -49,10 +53,48 @@ function removeKey($str, $bdd){
 }
 
 function setMember($email, $pseudo, $password, $bdd){
-    $req = $bdd->prepare("INSERT INTO members(mail, pseudo, password) VALUES(:nwEmail, :nwPseudo, :nwPassword)");
+    $req = $bdd->prepare("INSERT INTO members(mail, pseudo, password)
+                                              VALUES(:nwEmail, :nwPseudo, :nwPassword)");
     $req->execute(array(
         "nwEmail" => $email,
         "nwPseudo" => $pseudo,
         "nwPassword" => sha1($password)
     ));
+}
+
+
+function checkMember($bdd, $pseudo, $password)
+{
+    $req = $bdd->prepare("SELECT pseudo
+                                                FROM members
+                                                WHERE pseudo = :pseudo
+                                                AND password = :password");
+    $req->execute(array(
+        ':pseudo' => $pseudo,
+        ':password' => sha1($password)
+    ));
+    $member = $req->fetch();
+
+   if(!empty($member))
+    {
+        session_start();
+        $_SESSION['member'] = $member['pseudo'];
+        return 1;
+    }
+
+    else
+    {
+        return 0;
+    }
+}
+
+
+function callNews()
+{
+    $req = connect()->prepare("SELECT *
+                                               FROM News");
+    $req->execute(array());
+
+    $news = $req->fetchAll(MYSQL_BOTH);
+    return $news;
 }

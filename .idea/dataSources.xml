@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1803161968">
-    <data-source source="LOCAL" name="MySQL - tartiflette_2000@localhost" uuid="e7f49936-53b4-4c9d-af52-bbde283fac23">
+  <component name="DataSourceManagerImpl" format="xml" hash="3362191390">
+    <data-source source="LOCAL" name="MySQL - Tartiflette-2000@localhost" uuid="e7f49936-53b4-4c9d-af52-bbde283fac23">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost/tartiflette_2000</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:8889/Tartiflette-2000</jdbc-url>
       <driver-properties>
         <property name="zeroDateTimeBehavior" value="convertToNull" />
         <property name="tinyInt1isBit" value="false" />
@@ -17,3 +17,4 @@
     </data-source>
   </component>
 </project>
+

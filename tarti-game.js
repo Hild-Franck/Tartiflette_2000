@@ -103,4 +103,3 @@ function movePlayer(){
 var drwIntvl = setInterval(function() {
     update()
 }, 1000 / 60);
-
