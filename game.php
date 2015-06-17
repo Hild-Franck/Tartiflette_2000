@@ -13,10 +13,15 @@
     <title>Tarti-game</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body onkeypress="movePlayer()">
+
+<body>
+    <canvas id="canvas" width="320" height="320">
+<body>
     <canvas id="canvas" >
+
 
     </canvas>
 </body>
+<script src="debug.js" charset="utf-8"></script>
 <script src="tarti-game.js" charset="utf-8"></script>
 </html>
