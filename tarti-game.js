@@ -10,10 +10,6 @@ tilesheet.src = "resources/Outside_A2.png";
 
 var xOffSet = 0;
 var yOffSet = 0;
-var rightArrSwitch = false;
-var leftArrSwitch = false;
-var upArrSwitch = false;
-var downArrSwitch = false;
 var objects = [];
 
 
@@ -30,8 +26,8 @@ function Character(){
     this.framePlayer = 0;
     this.x = 160;
     this.y = 160;
-    /*this.playerPrevPosX = 0;
-    this.playerPrevPosY = 0;*/
+    this.xPrev = 0;
+    this.yPrev = 0;
     this.sprInd = 0;
     this.leftSwitch = false;
     this.rightSwitch = false;
@@ -53,6 +49,8 @@ function Character(){
      * Déplace le personnage sur le canvas selon les input récupérées
      */
     this.move = function(){
+        this.xPrev = this.x;
+        this.yPrev = this.y;
         if(this.leftSwitch)
             this.x -= this.speed;
         if(this.rightSwitch)
@@ -112,7 +110,7 @@ function dispMap() {
  * Fonction qui permet d'afficher et animer le sprite d'un objet
  * @param obj L'objet à afficher / animer
  */
-function animate(obj){
+function animate(obj) {
     context.drawImage(obj.charSpritesheet, obj.framePlayer * 32, obj.sprInd * 32, 32, 32, obj.x + xOffSet - obj.xSpot, obj.y + yOffSet - obj.ySpot, 32, 32);
     obj.countDrawPlayer++;
 
@@ -123,6 +121,18 @@ function animate(obj){
         obj.framePlayer++;
     if (obj.framePlayer > 2)
         obj.framePlayer = 0;
+
+    if (obj.rightSwitch)
+        obj.sprInd = 2;
+    if (obj.leftSwitch)
+        obj.sprInd = 1;
+    if (obj.upSwitch)
+        obj.sprInd = 3;
+    if (obj.downSwitch)
+        obj.sprInd = 0;
+
+    if (obj.xPrev == obj.x && obj.yPrev == obj.y)
+        obj.framePlayer = 1;
 }
 
 /**
@@ -135,7 +145,7 @@ function drawObjects(){
 
 /**
  * Fonction qui permet d'appliquer une portview suivant un objet
- * @param L'objet à traquer
+ * @param obj L'objet à traquer
  * @param pVwWdtOffset La distance du bord du canvas à partir de laquelle la caméra suis le joueur pour la largeur
  * @param pVwHgtOffset La distance du bord du canvas à partir de laquelle la caméra suis le joueur pour la hauteur
  */
