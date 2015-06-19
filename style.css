@@ -126,3 +126,22 @@ h1{
         font-size: 27px;
     }
 }
+
+canvas{
+    float: left;
+    border: 2px solid black;
+}
+
+ul#debug{
+    float: left;
+    padding-left: 20px;
+    margin: 0;
+
+}
+
+.fail{
+    color: red;
+}
+.pass{
+    color: green;
+}
