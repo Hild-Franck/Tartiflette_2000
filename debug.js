@@ -24,7 +24,7 @@ function Debug(){
         for(var i = 0; i < this.li.length; i++){
             this.ul.appendChild(this.li[i]);
         }
-    }
+    };
 
     /**
      * Permet de surveiller la valeur d'une variable
@@ -36,7 +36,7 @@ function Debug(){
         nwLi.appendChild(document.createTextNode(desc + variable));
         this.li.push(nwLi);
 
-    }
+    };
 
     /**
      * Permet de supprimer les childNodes de la liste pour pouvoir les générer plus tard
@@ -46,7 +46,7 @@ function Debug(){
             this.li[i].remove();
         }
         this.li = [];
-    }
+    };
 
     /**
      * Permet d'ajouter une assertion à la liste des valeurs/tests à afficher
@@ -55,7 +55,7 @@ function Debug(){
      */
     this.addAssert = function(value, desc){
         this.li.push(this.assert(value, desc));
-    }
+    };
 
     /**
      * Permet d'ajouter des tests liée à la liste des valeurs/tests à afficher
@@ -70,7 +70,7 @@ function Debug(){
         nwLi.appendChild(this.tests);
         fn();
         this.li.push(nwLi);
-    }
+    };
 
 
     /**
@@ -84,7 +84,7 @@ function Debug(){
         nwLi.className = value ? "pass" : "fail";
         nwLi.appendChild(document.createTextNode(desc));
         return nwLi;
-    }
+    };
 
     /**
      * Permet de créer un test faisant parti d'un groupe
