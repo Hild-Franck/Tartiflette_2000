@@ -80,6 +80,7 @@ function update() {
     player.move();
     portview(player,100, 100);
     player.drawChar();
+    socket.emit('message', 'Position x : ' + player.x);
 }
 
 var charTilesheet = new Image();

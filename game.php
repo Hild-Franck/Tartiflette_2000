@@ -16,12 +16,14 @@
 
 <body>
     <canvas id="canvas" width="320" height="320">
-<body>
-    <canvas id="canvas" >
-
-
     </canvas>
-</body>
+
+<script src="./socket.io/node_modules\socket.io-client/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:8081');
+        socket.emit('message', 'Client connecté de ' + navigator.userAgent);
+    </script>
 <script src="debug.js" charset="utf-8"></script>
 <script src="tarti-game.js" charset="utf-8"></script>
+</body>
 </html>
