@@ -1,0 +1,140 @@
+header
+{
+    display: block;
+    height: 36px;
+    background-color: #2E9DC3;
+}
+
+#nav, #nav ul
+{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+
+#nav li
+{
+    display: inline-block;
+    position: relative;
+    background-color: #2E9DC3;
+}
+
+#nav ul li
+{
+    display: inherit;
+}
+
+#nav ul
+{
+    position: absolute;
+    max-height: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+#nav li:hover ul
+{
+    max-height: 15em;
+}
+
+/* background des liens sous menus */
+#nav li:nth-child(2) li
+{
+    background: #2E9DC3;
+    opacity: 0.85;
+}
+
+#nav li:nth-child(3) li
+{
+    background: #2E9DC3;
+    opacity: 0.85;
+}
+
+#nav li:nth-child(4) li
+{
+    background: #2E9DC3;
+    opacity: 0.85;
+}
+
+#nav li:nth-child(5) li
+{
+    background: #2E9DC3;
+    opacity: 0.85;
+}
+
+#nav li:nth-child(6) li
+{
+    background: #2E9DC3;
+    opacity: 0.85;
+}
+
+/* background des liens menus et sous menus au survol */
+#nav li:first-child:hover
+{
+    background: #d6c8c3;
+}
+
+#nav li:nth-child(2):hover, #nav li:nth-child(2) li:hover
+{
+    background: #d6c8c3;
+}
+
+#nav li:nth-child(3):hover, #nav li:nth-child(3) li:hover
+{
+    background: #d6c8c3;
+}
+
+#nav li:nth-child(4):hover, #nav li:nth-child(4) li:hover
+{
+    background: #d6c8c3;
+}
+
+#nav li:nth-child(5):hover, #nav li:nth-child(5) li:hover
+{
+    background: #d6c8c3;
+}
+
+#nav li:nth-child(6):hover, #nav li:nth-child(6) li:hover
+{
+    background: #d6c8c3;
+}
+
+#nav li:last-child:hover
+{
+    background: #d6c8c3;
+}
+
+
+/* Couleur lors du click */
+#nav a:first-child:active
+{
+    color: white;
+}
+
+/* les a href */
+#nav a
+{
+    text-decoration: none;
+    display: block;
+    padding: 8px 32px;
+    color: #fff;
+    font-weight: bold;
+}
+
+#nav ul a
+{
+    padding: 8px 0;
+}
+
+#nav li:hover li a
+{
+    color: #fff;
+    text-transform: inherit;
+}
+
+#nav li:hover a, #nav li li:hover a
+{
+    color: #000;
+}

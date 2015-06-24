@@ -1,3 +1,8 @@
+body
+{
+    margin: 0;
+}
+
 h1{
     font-family: 'Sniglet', cursive;
     text-align: center;
@@ -125,4 +130,60 @@ h1{
     .error{
         font-size: 27px;
     }
+}
+
+label.connexion
+{
+    font-size: 150%;
+}
+
+div.news
+{
+    text-align: center;
+}
+
+span.news
+{
+    display: inline-block;
+    border: solid 1px black;
+    margin: 5% 2% 0 2%;
+}
+
+span.news .change
+{
+    width: 100%;
+    margin: 0;
+    margin: 0 auto;
+    font-size: 18px;
+    text-align: center;
+    font-style: normal;
+    border: 0;
+}
+
+span.news #supprimer
+{
+    background-color: #ff0000;
+}
+
+span.news #modifier
+{
+    background-color: yellow;
+}
+
+#inscritOrNo
+{
+    display: block;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    position: fixed;
+    bottom: 2%;
+
+    text-decoration: none;
+    color: #000000;
+}
+
+#inscritOrNo:hover
+{
+    color: #2ba6cb;
 }

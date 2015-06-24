@@ -1,3 +1,7 @@
+<?
+session_start();
+?>
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -14,37 +18,47 @@
     <h1>Tartiflette 2000</h1>
 </header>
 
-<form id="connexion" name="connexion" method="post">
-    <label for="connexion">Connexion</label>
-    <input class="input" id="pseudo" name="pseudo" type="text" placeholder="Pseudo"/>
+<form id="connexion" name="connexion" method="post" action="testConnexion.php" style="text-align: center">
+    <label class="connexion" for="connexion">Connexion</label>
+    <input class="input" id="pseudo" name="pseudo" type="text"
+           <?
+           if(isset($_COOKIE['member']))
+           {
+               echo "value=".$_COOKIE['member'];
+           }
+
+           else
+           {
+               ?>
+                placeholder="Pseudo"
+               <?
+           }
+               ?>
+           />
     <input class="input" id="password" name="password" type="password" placeholder="Mot de Passe"/>
-    <input type="submit" value="Valider" class="button" name="submit"/>
+    <input type="submit" id="submit" value="Valider" class="button" name="submit"/>
 </form>
+
+
+<a href="inscription.html" id="inscritOrNo">Vous n'êtes pas encore inscrit ?</a>
 
 <?php
 require 'Confirmation/confirmationModel.php';
 
-if(isset($_POST['submit']))
+if($_GET['check'] == 'false')
 {
-    if (checkMember(connect(), $_POST['pseudo'], $_POST['password']))
-    {
-        ?>
-        <script type='text/javascript'>document.location.replace('Accueil.php');</script>
-    <?
-    }
-
-    else
-    {
-        ?>
+    ?>
         <script>
             function appendAfter(el, nwEl)
             {
                 el.parentNode.insertBefore(nwEl, el.nextSibling);
             }
 
-            function fadeOut(element, callback) {
+            function fadeOut(element, callback)
+            {
                 var op = 1;
-                var timer = setInterval(function () {
+                var timer = setInterval(function ()
+                {
                     if (op <= 0.01){
                         if(callback)
                             callback();
@@ -64,10 +78,11 @@ if(isset($_POST['submit']))
         var wrapper = document.createElement("div");
         wrapper.className = "error-wrapper";
         var div = document.createElement("div");
+        div.style.marginTop = "30px";
         div.className = "error";
         div.innerHTML = str;
         wrapper.appendChild(div);
-        var header = document.getElementsByTagName("header")[0];
+        var header = document.getElementById("submit");
         appendAfter(header, wrapper);
         setTimeout(function() {fadeOut(wrapper); }, 2000);
         }
@@ -75,7 +90,6 @@ if(isset($_POST['submit']))
             Error("Mot de passe et/ou Pseudo incorrect");
         </script>
         <?
-    }
 }
 
 ?>

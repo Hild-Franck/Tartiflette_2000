@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 function connect(){
     try{
         $dsn = 'mysql:dbname=Tartiflette-2000;host=localhost;port=8889';
@@ -77,7 +79,6 @@ function checkMember($bdd, $pseudo, $password)
 
    if(!empty($member))
     {
-        session_start();
         $_SESSION['member'] = $member['pseudo'];
         return 1;
     }
@@ -97,4 +98,13 @@ function callNews()
 
     $news = $req->fetchAll(MYSQL_BOTH);
     return $news;
+}
+
+
+function deleteNews($ID_News)
+{
+    $req = connect()->prepare("DELETE FROM News
+                                                 WHERE ID_News = :news");
+
+    $req->execute(array(':news' => $ID_News));
 }
