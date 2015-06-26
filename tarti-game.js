@@ -8,9 +8,17 @@ debug = new Debug();
 var tilesheet = new Image();
 tilesheet.src = "resources/Outside_A2.png";
 
+var servTime;
+
+
 var xOffSet = 0;
 var yOffSet = 0;
 var objects = [];
+
+socket.on("tweet", function(tweet) {
+    servTime = tweet.time;
+    console.log("contents:", tweet.text);
+});
 
 
 
@@ -69,18 +77,23 @@ player = new Character();
  */
 
 function update() {
+    var time = new Date();
     debug.monitor("count: ", player.countDrawPlayer);
     debug.monitor("xOffset: ", xOffSet);
     debug.monitor("yOffset: ", yOffSet);
+    debug.monitor("Lag: ", (time.getTime() - servTime) + " ms");
+    debug.monitor("ServTime: ", servTime);
+    debug.monitor("CliTime", time.getTime());
     debug.monitor("Player x position: ", player.x);
     debug.monitor("Player y position: ", player.y);
+    debug.addAssert(socket.connected, "Connection serveur");
     debug.addAssert(player.x + xOffSet == 220 || player.x + xOffSet == 100 || player.y + yOffSet == 100 || player.y + yOffSet == 220, "Perso au bord du portView");
     context.clearRect(0, 0, canvas.width, canvas.height);
     dispMap();
     player.move();
     portview(player,100, 100);
     player.drawChar();
-    socket.emit('message', 'Position x : ' + player.x);
+    /*socket.emit('message', 'Position x : ' + player.x);*/
 }
 
 var charTilesheet = new Image();

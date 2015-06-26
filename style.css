@@ -187,3 +187,23 @@ span.news #modifier
 {
     color: #2ba6cb;
 }
+
+ul#debug{
+    float: left;
+    padding-left: 20px;
+    margin: 0;
+}
+
+canvas#canvas{
+    float: left;
+    border-bottom: solid rgba(0, 0, 0, 0.25) 1px;
+    border-right: solid rgba(0, 0, 0, 0.25) 1px;
+}
+
+.pass{
+    color: green;
+}
+
+.fail{
+    color: red;
+}
