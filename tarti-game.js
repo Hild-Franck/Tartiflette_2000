@@ -12,27 +12,6 @@ var xOffSet = 0;
 var yOffSet = 0;
 var objects = [];
 
-/**
- *
- * @constructor
- */
-
-function Decors(){
-    this.spritesheet = new Image();
-    this.spritesheet.src = "resources/Outside_B.png";
-
-    this.x= 0;
-    this.y = 0;
-    this.xSpot = 16;
-    this.ySpot = 16;
-    this.frame = 0;
-
-
-}
-
-function draw(obj,sprInd){
-    context.drawImage(obj.spritesheet, obj.frame * 32, sprInd * 32, 32, 32, obj.x + xOffSet - obj.xSpot, obj.y + yOffSet - obj.ySpot, 32, 32);
-}
 
 
 /**
@@ -40,11 +19,11 @@ function draw(obj,sprInd){
  * @constructor
  */
 function Character(){
-    this.spritesheet = new Image();
-    this.spritesheet.src = "resources/Actor1.png";
+    this.charSpritesheet = new Image();
+    this.charSpritesheet.src = "resources/Actor1.png";
 
     this.countDrawPlayer = 0;
-    this.frame = 0;
+    this.framePlayer = 0;
     this.x = 160;
     this.y = 160;
     this.xPrev = 0;
@@ -85,9 +64,6 @@ function Character(){
 
 player = new Character();
 
-objDeco = new Decors();
-
-
 /**
  * Fonction update regroupant toutes les fonctions principales
  */
@@ -103,7 +79,6 @@ function update() {
     dispMap();
     player.move();
     portview(player,100, 100);
-    draw(objDeco,2);
     player.drawChar();
 }
 
@@ -136,16 +111,16 @@ function dispMap() {
  * @param obj L'objet à afficher / animer
  */
 function animate(obj) {
-    draw(obj,obj.sprInd);
+    context.drawImage(obj.charSpritesheet, obj.framePlayer * 32, obj.sprInd * 32, 32, 32, obj.x + xOffSet - obj.xSpot, obj.y + yOffSet - obj.ySpot, 32, 32);
     obj.countDrawPlayer++;
 
 
     if (obj.countDrawPlayer > fps)
         obj.countDrawPlayer = 0;
     if (obj.countDrawPlayer % 12 == 0)
-        obj.frame++;
-    if (obj.frame > 2)
-        obj.frame = 0;
+        obj.framePlayer++;
+    if (obj.framePlayer > 2)
+        obj.framePlayer = 0;
 
     if (obj.rightSwitch)
         obj.sprInd = 2;
@@ -157,7 +132,7 @@ function animate(obj) {
         obj.sprInd = 0;
 
     if (obj.xPrev == obj.x && obj.yPrev == obj.y)
-        obj.frame = 1;
+        obj.framePlayer = 1;
 }
 
 /**
