@@ -149,7 +149,7 @@ span.news
     margin: 5% 2% 0 2%;
 }
 
-span.news .change
+span.news button
 {
     width: 100%;
     margin: 0;
@@ -160,14 +160,24 @@ span.news .change
     border: 0;
 }
 
-span.news #supprimer
+span.news .supprimer
 {
     background-color: #ff0000;
 }
 
-span.news #modifier
+span.news .supprimer:hover
+{
+    background-color: #a94442;
+}
+
+span.news .modifier
 {
     background-color: yellow;
+}
+
+span.news .modifier:hover
+{
+    background-color: khaki;
 }
 
 #inscritOrNo
@@ -186,4 +196,22 @@ span.news #modifier
 #inscritOrNo:hover
 {
     color: #2ba6cb;
+}
+
+div#infos
+{
+    text-align: center;
+}
+
+.changePassword
+{
+    text-align: center;
+}
+
+button#changePassword
+{
+    display: inline-block;
+    width: 10%;
+    margin: auto;
+    margin-top: 5%;
 }

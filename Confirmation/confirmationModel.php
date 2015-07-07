@@ -54,13 +54,27 @@ function removeKey($str, $bdd){
     ));
 }
 
-function setMember($email, $pseudo, $password, $bdd){
+function setMember($email, $pseudo, $password, $bdd)
+{
     $req = $bdd->prepare("INSERT INTO members(mail, pseudo, password)
                                               VALUES(:nwEmail, :nwPseudo, :nwPassword)");
     $req->execute(array(
         "nwEmail" => $email,
         "nwPseudo" => $pseudo,
         "nwPassword" => sha1($password)
+    ));
+}
+
+
+function newPassword($password, $pseudo)
+{
+    $req = connect()->prepare("UPDATE members
+                                                      SET password = :password
+                                                      WHERE pseudo = :pseudo");
+
+    $req->execute(array(
+        ':pseudo' => $pseudo,
+        ':password' => sha1($password)
     ));
 }
 
@@ -79,7 +93,7 @@ function checkMember($bdd, $pseudo, $password)
 
    if(!empty($member))
     {
-        $_SESSION['member'] = $member['pseudo'];
+        $_SESSION['pseudo'] = $member['pseudo'];
         return 1;
     }
 
@@ -107,4 +121,47 @@ function deleteNews($ID_News)
                                                  WHERE ID_News = :news");
 
     $req->execute(array(':news' => $ID_News));
+}
+
+
+function createNews($titre, $news)
+{
+    $req = connect()->prepare("INSERT INTO News(TitreNews, TextNews)
+                                                 VALUES(:titre, :news)");
+
+    $req->execute(array(
+        ":titre" => $titre,
+        ":news" => $news
+    ));
+}
+
+function afficheInfosCompte()
+{
+    session_start();
+
+    $req = connect()->prepare("SELECT pseudo, mail
+                                                 FROM members
+                                                 WHERE pseudo = :pseudo");
+
+    $req->execute(array(
+        ":pseudo" => $_SESSION['pseudo']
+    ));
+
+    $infos = $req->fetchAll(MYSQL_BOTH);
+    return $infos;
+}
+
+
+function textNews($idNews)
+{
+    $req = connect()->prepare("SELECT TextNews
+                                                      FROM News
+                                                      WHERE ID_News = :idNews");
+
+    $req->execute(array(
+        ":idNews" => $idNews
+    ));
+
+    $textNews = $req->fetch(MYSQL_BOTH);
+    return $textNews;
 }

@@ -3,7 +3,7 @@
 <nav>
         <ul id="nav">
             <li><a href="Accueil.php">ACCUEIL</a></li>
-            <li><a href="">LE JEUX</a>
+            <li><a href="#">LE JEUX</a>
                 <ul>
                     <li><a href="#">HISTOIRE</a></li>
                     <li><a href="#">PERSONNAGES</a></li>
@@ -11,10 +11,10 @@
                 </ul>
             </li>
             <li><a href="game.php">JOUER</a></li>
-            <li><a href="">COMPTE</a>
+            <li><a href="#">COMPTE</a>
                 <ul>
                     <?
-                    if(isset($_SESSION['member']))
+                    if(isset($_SESSION['pseudo']))
                     {
                         ?>
                             <li><a href="Mon Compte.php">GERER MON COMPTE</a></li>
@@ -32,17 +32,17 @@
                     ?>
                 </ul>
             </li>
-            <li><a href="">CONTACT</a></li>
+            <li><a href="#">CONTACT</a></li>
 
             <?
-            if($_SESSION['member'] == "jerome" ||
-                $_SESSION['member'] == "Knarfux" ||
-                $_SESSION['member'] == "AzSiAz" ||
-                $_SESSION['member'] == "Swex")
+            if($_SESSION['pseudo'] == "jerome" ||
+                $_SESSION['pseudo'] == "Knarfux" ||
+                $_SESSION['pseudo'] == "AzSiAz" ||
+                $_SESSION['pseudo'] == "Swex")
             {
                 ?>
 
-            <li><a href="">NEWS</a>
+            <li><a href="#">NEWS</a>
                 <ul>
                     <li><a href="createNews.php">AJOUTER NEWS</a></li>
                     <li><a href="modifiedNews.php">MODIFIER NEWS</a></li>

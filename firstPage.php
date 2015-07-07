@@ -1,11 +1,11 @@
 <?php
 if(isset($_COOKIE['member']))
 {
-    header('Location: Connexion.php');
+    include 'Connexion.php';
 }
 
 else
 {
-    header('Location: inscription.html');
+   include 'inscription.html';
 }
 ?>

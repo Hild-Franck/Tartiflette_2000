@@ -18,23 +18,23 @@ session_start();
     <h1>Tartiflette 2000</h1>
 </header>
 
-<form id="connexion" name="connexion" method="post" action="testConnexion.php" style="text-align: center">
+<form id="connexion" name="connexion" style="text-align: center">
     <label class="connexion" for="connexion">Connexion</label>
     <input class="input" id="pseudo" name="pseudo" type="text"
-           <?
-           if(isset($_COOKIE['member']))
-           {
-               echo "value=".$_COOKIE['member'];
-           }
+        <?
+        if(isset($_COOKIE['member']))
+        {
+            echo "value=".$_COOKIE['member'];
+        }
 
-           else
-           {
-               ?>
-                placeholder="Pseudo"
-               <?
-           }
-               ?>
-           />
+        else
+        {
+            ?>
+            placeholder="Pseudo"
+        <?
+        }
+        ?>
+        />
     <input class="input" id="password" name="password" type="password" placeholder="Mot de Passe"/>
     <input type="submit" id="submit" value="Valider" class="button" name="submit"/>
 </form>
@@ -42,7 +42,91 @@ session_start();
 
 <a href="inscription.html" id="inscritOrNo">Vous n'êtes pas encore inscrit ?</a>
 
-<?php
+
+<script>
+    document.getElementById("connexion").onsubmit = function(event)
+    {
+        event.preventDefault();
+        SendData(Response);
+    }
+
+
+    function SendData(callback)
+    {
+        var form = document.forms.namedItem("connexion");
+        var data = new FormData(form);
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function ()
+        {
+            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
+            {
+                callback(xhr.responseText);
+            }
+        };
+        xhr.open("POST", "connexionHandler.php", true);
+        xhr.send(data);
+    }
+
+
+    function Response(gData)
+    {
+        var response = gData;
+        if(response == 1)
+        {
+            document.getElementsByTagName("body")[0].remove();
+
+            //window.location.replace('Accueil.php');
+        }
+        else
+        {
+            Error("faux");
+        }
+    }
+
+    function appendAfter(el, nwEl)
+    {
+        el.parentNode.insertBefore(nwEl, el.nextSibling);
+    }
+
+    function fadeOut(element, callback)
+    {
+        var op = 1;
+        var timer = setInterval(function ()
+        {
+            if (op <= 0.01){
+                if(callback)
+                    callback();
+                clearInterval(timer);
+                element.remove();
+            }
+            element.style.opacity = op;
+            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+            op -= op * 0.1;
+        }, 25);
+    }
+
+    function Error(str){
+        var error = document.getElementsByClassName("error-wrapper")[0];
+        if(error != undefined)
+            error.remove();
+        var wrapper = document.createElement("div");
+        wrapper.className = "error-wrapper";
+        var div = document.createElement("div");
+        div.style.marginTop = "30px";
+        div.className = "error";
+        div.innerHTML = str;
+        wrapper.appendChild(div);
+        var header = document.getElementById("submit");
+        appendAfter(header, wrapper);
+        setTimeout(function() {fadeOut(wrapper); }, 2000);
+    }
+
+</script>
+
+
+<?php/*
 require 'Confirmation/confirmationModel.php';
 
 if($_GET['check'] == 'false')
@@ -91,7 +175,7 @@ if($_GET['check'] == 'false')
         </script>
         <?
 }
-
+*/
 ?>
 
 
