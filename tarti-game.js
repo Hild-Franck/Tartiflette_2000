@@ -8,45 +8,39 @@ debug = new Debug();
 var tilesheet = new Image();
 tilesheet.src = "resources/Outside_A2.png";
 
+var servTime;
+var lstServTime;
+
+var lastX;
+
 var xOffSet = 0;
 var yOffSet = 0;
 var objects = [];
 
-/**
- * Objet de Décors
- * @constructor
- */
-function Decors(){
-    this.spritesheet = new Image();
-    this.spritesheet.src = "resources/Outside_B.png";
+socket.on("message", function(message) {
+    refresh(message);
+});
 
-    this.x= 0;
-    this.y = 0;
-    this.xSpot = 16;
-    this.ySpot = 16;
-    this.frame = 0;
 
-}
-
-function draw(obj,frame,sprInd){
-    context.drawImage(obj.spritesheet, frame * 32 , sprInd * 32, 32, 32, obj.x + xOffSet - obj.xSpot, obj.y + yOffSet - obj.ySpot, 32, 32);
-}
 
 /**
  * Objet de personnage
  * @constructor
  */
 function Character(){
-    this.spritesheet = new Image();
-    this.spritesheet.src = "resources/Actor1.png";
+    objects.push(this);
+    this.spriteSheet = new Image();
+    this.spriteSheet.src = "resources/Actor1.png";
 
     this.countDraw = 0;
     this.frame = 0;
+    this.nbrFrame = 3;
     this.x = 160;
     this.y = 160;
     this.xPrev = 0;
     this.yPrev = 0;
     this.sprInd = 0;
+    this.sprite = 1;
     this.leftSwitch = false;
     this.rightSwitch = false;
     this.upSwitch = false;
@@ -60,7 +54,7 @@ function Character(){
     /**
      * Dessine le personnage sur le canvas
      */
-    this.drawChar = function(){
+    this.draw = function(){
         animate(this);
     };
     /**
@@ -82,25 +76,59 @@ function Character(){
 
 player = new Character();
 
-decors = new Decors();
-
 /**
  * Fonction update regroupant toutes les fonctions principales
  */
 
 function update() {
+    var time = new Date();
     debug.monitor("count: ", player.countDraw);
     debug.monitor("xOffset: ", xOffSet);
     debug.monitor("yOffset: ", yOffSet);
+    debug.monitor("Lag: ", (time.getTime() - servTime) + " ms");
+    debug.monitor("ServTime: ", servTime);
+    debug.monitor("CliTime", time.getTime());
     debug.monitor("Player x position: ", player.x);
     debug.monitor("Player y position: ", player.y);
+    debug.addAssert(socket.connected, "Connection serveur");
     debug.addAssert(player.x + xOffSet == 220 || player.x + xOffSet == 100 || player.y + yOffSet == 100 || player.y + yOffSet == 220, "Perso au bord du portView");
+    debug.occurrence(player.countDraw == 2, "Count occurence: ");
+    //-------- Fin des tests --------
+
     context.clearRect(0, 0, canvas.width, canvas.height);
     dispMap();
     player.move();
     portview(player,100, 100);
-    draw(decors,3,5);
-    player.drawChar();
+    drawObjects();
+}
+
+function refresh(data){
+    var check = false;
+    var time = new Date();
+    servTime = data.date;
+    for(var i = 0; i < objects.length; i++){
+        if(data.enemy.id === objects[i].id){
+            objects[i].y = data.enemy.y;
+            objects[i].x = data.enemy.x/* + ((fps/1000)*objects[i].speed)*(time.getTime() - servTime)*/;
+            objects[i].dirX = data.enemy.dirX;
+            check = true;
+            break;
+        }
+    }
+    if(!check){
+        data.enemy.draw = function(){
+            var time = new Date();
+            console.log(data.enemy.dirX);
+            data.enemy.x += (((fps/1000)*this.speed)*(time.getTime() - servTime)) * data.enemy.dirX;
+            animate(this);
+        };
+        data.enemy.sprInd = 0;
+        data.enemy.frame = 0;
+        data.enemy.countDraw = 0;
+        data.enemy.spriteSheet = new Image();
+        data.enemy.spriteSheet.src = "resources/monster2.png";
+        objects.push(data.enemy);
+    }
 }
 
 var charTilesheet = new Image();
@@ -132,15 +160,15 @@ function dispMap() {
  * @param obj L'objet à afficher / animer
  */
 function animate(obj) {
-    draw(obj,obj.frame,obj.sprInd);
+    context.drawImage(obj.spriteSheet, (obj.frame + 3 * obj.sprite) * 32, obj.sprInd * 32, 32, 32, obj.x + xOffSet - obj.xSpot, obj.y + yOffSet - obj.ySpot, 32, 32);
     obj.countDraw++;
 
 
     if (obj.countDraw > fps)
         obj.countDraw = 0;
-    if (obj.countDraw % 12 == 0)
+    if (obj.countDraw % Math.floor(fps / obj.nbrFrame) == 0)
         obj.frame++;
-    if (obj.frame > 2)
+    if (obj.frame >= obj.nbrFrame)
         obj.frame = 0;
 
     if (obj.rightSwitch)

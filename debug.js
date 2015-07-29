@@ -10,6 +10,8 @@
 function Debug(){
     this.ul = document.getElementById("debug");
     this.li = [];
+    this.occ = [];
+    this.ind = 0;
     this.tests = null;
     if(this.ul == null) {
         this.ul = document.createElement("ul");
@@ -46,6 +48,7 @@ function Debug(){
             this.li[i].remove();
         }
         this.li = [];
+        this.ind = 0;
     };
 
     /**
@@ -97,6 +100,17 @@ function Debug(){
         if(!value)
             this.tests.parentNode.className = "fail";
 
+    };
+    this.occurrence = function(value, desc){
+        if(this.occ[this.ind] === undefined && value){
+            this.occ[this.ind] = 1;
+        }
+        else if(value) {
+            this.occ[this.ind] += 1;
+        }
+        var nwLi = document.createElement("li");
+        nwLi.appendChild(document.createTextNode(desc + this.occ[this.ind]));
+        this.li.push(nwLi);
+        this.ind += 1;
     }
-
 }
