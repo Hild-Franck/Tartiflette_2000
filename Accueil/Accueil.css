@@ -1,0 +1,54 @@
+h2.titre
+{
+    text-align: center;
+    vertical-align: bottom;
+}
+
+p.texte
+{
+    display: inline-block;
+}
+
+p.date
+{
+    padding-right: 2%;
+}
+
+div.image
+{
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+
+    opacity: 0.5;
+
+    background-size: cover;
+}
+
+span.news:hover div.image
+{
+    filter: blur(1px);
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+
+    opacity: 0.8;
+}
+
+span.news:hover
+{
+    padding: 2px;
+    font-family: fantasy;
+}
+
+span.news
+{
+    padding: 2px;
+    font-family: fantasy;
+}
+
+
+

@@ -12,13 +12,13 @@
     <meta charset="utf-8" />
     <title>Tarti-game</title>
     <link rel="stylesheet" href="style.css">
-    <link href="Menu.css" rel="stylesheet" type="text/css"/>
+    <link href="Menu/Menu.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
 
 <header>
-    <? include 'Menu.php'; ?>
+    <? include 'Menu/Menu.php'; ?>
 </header>
 
     <canvas id="canvas" width="320" height="320">

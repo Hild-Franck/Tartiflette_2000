@@ -14,7 +14,7 @@ if(isset($_POST['submit']))
 
     else
     {
-        require "Confirmation/confirmationModel.php";
+        require "../Confirmation/confirmationModel.php";
         createNews($_POST['titre'], $_POST['editor1']);
         echo 1;
     }

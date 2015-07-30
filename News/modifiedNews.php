@@ -1,22 +1,28 @@
+<?
+include 'kikou.php';
+?>
+
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="user-scalable=0" />
     <title>Tartiflette 2000</title>
-<link href="style.css" rel="stylesheet" type="text/css"/>
-<link href="Menu.css" rel="stylesheet" type="text/css"/>
+    <link href="http://localhost:7777/Tartiflette_2000/style.css" rel="stylesheet" type="text/css"/>
+    <link href="modifiedNews.css" rel="stylesheet" type="text/css"/>
+    <link href="http://localhost:7777/Tartiflette_2000/Menu/Menu.css" rel="stylesheet" type="text/css"/>
 
 </head>
 
 <body>
 
 <header>
-    <? include 'Menu.php'; ?>
+    <? include '../Menu/Menu.php'; ?>
 </header>
 
-<div class="news" id="news">
+<div class="news">
     <?
-    require 'Confirmation/confirmationModel.php';
+    require '../Confirmation/confirmationModel.php';
+    ?><script language="JavaScript" type="text/javascript" src="../Accueil/onclick.js"></script><?
     $news = callNews();
 
     foreach ($news as $numeroNews => $arrayNews)
@@ -29,39 +35,40 @@
     {
         switch ($contenant)
         {
-            case 0:
-                ?>
-                <div id="idNews<? echo "$contenu" ?>" class="idNews" style="display: none"><? echo "$contenu" ?></div>
-                <?
-                break;
+            // idNews non apparent
+        case 0:
+            ?>
+            <div class="idNews" style="display: none"><? echo $contenu ?></div>
+                    <?
+        break;
 
-            case 1:
-                ?>
-                <table class="news">
-                <thead>
-                <tr>
-                    <th><? echo wordwrap($contenu, 30, "<br>", false) . "<br>"; ?></th>
-                </tr>
-                </thead>
-                <?
-                break;
 
-            case 2:
-                ?>
-                <tbody>
-                <tr>
-                    <td><? echo wordwrap($contenu, 30, "<br>", true) . "<br>"; ?></td>
-                </tr>
-                <?
-                break;
+        // Ligne 1: TitreNews
+        case 1:
+        ?>
+                            <h2 class="titre"><? echo $contenu ?></h2>
+                     <?
+        break;
 
-            case 3:
-                ?>
-                <tr>
-                    <td class="date">Publié le <time><? echo $contenu; ?></time></td>
-                </tr>
-                </tbody>
-                </table>
+        // Ligne 2: TextNews
+        case 2:
+        ?>
+                     <script>
+            var img = document.getElementsByTagName("img")[0];
+            document.getElementsByClassName("news")[0].style.backgroundImage = img;
+        </script>
+                     <?
+        /* $contenu = (strlen($contenu) > 25 ) ? substr($contenu, 0, 25) . '...' : ($contenu);
+         ?>
+                 <p class="texte"><? echo $contenu ?></p>
+         <?*/
+        break;
+
+        // Ligne 3:  DateNews
+        case 3:
+        ?>
+                <p class="date">Publié le <time><? echo $contenu; ?></time></p>
+
                 <button name="supprimer" class="supprimer"  value="Supprimer" onclick="deleteNews(this.parentNode.childNodes[1].textContent)">Supprimer</button>
                 <br>
                 <button name="modifier" class="modifier" value="Modifier" onclick="modifiedNews(this.parentNode.childNodes[1].textContent)">Modifier</button>
@@ -86,7 +93,6 @@
 
     function SendData(idNews, callback)
     {
-
         var xhr = new XMLHttpRequest();
 
         xhr.onreadystatechange = function ()

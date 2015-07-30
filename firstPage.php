@@ -1,11 +1,13 @@
 <?php
+
+// Si le cookie existe, on charge la page Connexion
 if(isset($_COOKIE['member']))
 {
-    include 'Connexion.php';
+    include 'Connexion/Connexion.php';
 }
 
+// Sinon, on charge la page Inscription
 else
 {
-   include 'inscription.html';
+   include 'Inscription/inscription.html';
 }
-?>

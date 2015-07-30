@@ -1,44 +1,56 @@
 <?php
 session_start();
 
-function connect(){
-    try{
+// Retourne la BDD
+function connect()
+{
+    try
+    {
         $dsn = 'mysql:dbname=Tartiflette-2000;host=localhost;port=8889';
         $user = 'root';
         $password = 'root';
 
         $bdd = new PDO($dsn, $user, $password);
         $bdd->exec("SET CHARACTER SET utf8");
-    }
-    catch(EXEPTION $e){
+    } catch (EXEPTION $e)
+    {
         die('ERREUR : ' . $e->getMessage());
     }
     return $bdd;
 }
 
-function checkEmail($str, $bdd){
+
+// Compare les clés aléatoires correspondent à celle en BDD
+function checkEmail($str, $bdd)
+{
     $req = $bdd->prepare("SELECT randKey, email FROM inscription WHERE randKey = :ckKey LIMIT 0, 1");
     $req->execute(array(
         "ckKey" => $str
     ));
-    if(!$req->fetch())
+    if (!$req->fetch())
         return false;
     else
         return true;
 }
 
-function checkInscr($str, $bdd){
+
+// Vérifie que l'email entré existe en BDD
+function checkInscr($str, $bdd)
+{
     $req = $bdd->prepare("SELECT mail FROM members WHERE mail = :ckMail LIMIT 0, 1");
     $req->execute(array(
         "ckMail" => $str
     ));
-    if(!$req->fetch())
+    if (!$req->fetch())
         return false;
     else
         return true;
 }
 
-function getEmail($str, $bdd){
+
+// Retourne l'email correspondant à la clé aléatoire
+function getEmail($str, $bdd)
+{
     $req = $bdd->prepare("SELECT email FROM inscription WHERE randKey = :ckKey LIMIT 0, 1");
     $req->execute(array(
         "ckKey" => $str
@@ -47,13 +59,18 @@ function getEmail($str, $bdd){
     return $email['email'];
 }
 
-function removeKey($str, $bdd){
+
+// Supprime la clé en BDD
+function removeKey($str, $bdd)
+{
     $req = $bdd->prepare("DELETE FROM inscription WHERE randKey = :ckKey");
     $req->execute(array(
         "ckKey" => $str
     ));
 }
 
+
+// Crée un membre en BDD
 function setMember($email, $pseudo, $password, $bdd)
 {
     $req = $bdd->prepare("INSERT INTO members(mail, pseudo, password)
@@ -61,11 +78,12 @@ function setMember($email, $pseudo, $password, $bdd)
     $req->execute(array(
         "nwEmail" => $email,
         "nwPseudo" => $pseudo,
-        "nwPassword" => sha1($password)
+        "nwPassword" => sha1($password) // Cryptage du mot de passe
     ));
 }
 
 
+// Changement de mot de passe
 function newPassword($password, $pseudo)
 {
     $req = connect()->prepare("UPDATE members
@@ -79,6 +97,7 @@ function newPassword($password, $pseudo)
 }
 
 
+// Test si le pseudo et le password entrés existent
 function checkMember($bdd, $pseudo, $password)
 {
     $req = $bdd->prepare("SELECT pseudo
@@ -91,7 +110,7 @@ function checkMember($bdd, $pseudo, $password)
     ));
     $member = $req->fetch();
 
-   if(!empty($member))
+    if (!empty($member))
     {
         $_SESSION['pseudo'] = $member['pseudo'];
         return 1;
@@ -104,6 +123,7 @@ function checkMember($bdd, $pseudo, $password)
 }
 
 
+// Appelle de toutes les news en BDD
 function callNews()
 {
     $req = connect()->prepare("SELECT *
@@ -115,6 +135,7 @@ function callNews()
 }
 
 
+// Supprime la news sélectionnée
 function deleteNews($ID_News)
 {
     $req = connect()->prepare("DELETE FROM News
@@ -124,6 +145,7 @@ function deleteNews($ID_News)
 }
 
 
+// Crée une news
 function createNews($titre, $news)
 {
     $req = connect()->prepare("INSERT INTO News(TitreNews, TextNews)
@@ -135,6 +157,8 @@ function createNews($titre, $news)
     ));
 }
 
+
+//  Affiche pseudo et mail de la personne connectée
 function afficheInfosCompte()
 {
     session_start();
@@ -152,6 +176,7 @@ function afficheInfosCompte()
 }
 
 
+// Selectionne l'annonce (texte uniquement) entrée
 function textNews($idNews)
 {
     $req = connect()->prepare("SELECT TextNews
@@ -164,4 +189,53 @@ function textNews($idNews)
 
     $textNews = $req->fetch(MYSQL_BOTH);
     return $textNews;
+}
+
+
+// Modifie le texte d'une news
+function modifyNews($idNews, $TitleNews, $TextNews)
+{
+    $req = connect()->prepare("UPDATE News
+                                                      SET TitreNews = :TitleNews,
+                                                      TextNews = :TextNews
+                                                      WHERE ID_News = :idNews");
+    $req->execute(array(
+        ':TitleNews' => $TitleNews,
+        ':TextNews' => $TextNews,
+        ':idNews' => $idNews
+    ));
+
+    return 1;
+}
+
+
+// Renvoie le titre de la news selon l'ID
+function titleNews($idNews)
+{
+    $req = connect()->prepare("SELECT TitreNews
+                                                      FROM News
+                                                      WHERE ID_News = :idNews");
+
+    $req->execute(array(
+        ":idNews" => $idNews
+    ));
+
+    $titleNews = $req->fetch();
+    return $titleNews['TitreNews'];
+}
+
+
+function afficheNews($idNews)
+{
+    $req = connect()->prepare("SELECT *
+                                                      FROM News
+                                                      WHERE ID_News = :idNews");
+
+    $req->execute(array(
+        ":idNews" => $idNews
+    ));
+
+    $news = $req->fetchAll(MYSQL_BOTH);
+
+    return $news;
 }

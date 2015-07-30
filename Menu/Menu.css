@@ -5,6 +5,11 @@ header
     background-color: #2E9DC3;
 }
 
+nav
+{
+    z-index: 1000;
+}
+
 #nav, #nav ul
 {
     padding: 0;

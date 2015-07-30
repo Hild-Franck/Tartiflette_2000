@@ -9,13 +9,13 @@ session_start();
     <title>Tartiflette 2000</title>
     <link href='http://fonts.googleapis.com/css?family=Sniglet:800' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Sniglet' rel='stylesheet' type='text/css' />
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="http://localhost:7777/Tartiflette_2000/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 
 <header>
-    <h1>Tartiflette 2000</h1>
+    <h1 id="tartiflette">Tartiflette 2000</h1>
 </header>
 
 <form id="connexion" name="connexion" style="text-align: center">
@@ -24,6 +24,8 @@ session_start();
         <?
         if(isset($_COOKIE['member']))
         {
+            // Affiche le pseudo si il est enregistré dans le cookie
+            // Permet d'éviter de retaper son pseudo
             echo "value=".$_COOKIE['member'];
         }
 
@@ -31,7 +33,7 @@ session_start();
         {
             ?>
             placeholder="Pseudo"
-        <?
+            <?
         }
         ?>
         />
@@ -40,7 +42,7 @@ session_start();
 </form>
 
 
-<a href="inscription.html" id="inscritOrNo">Vous n'êtes pas encore inscrit ?</a>
+<a href="http://localhost:7777/Tartiflette_2000/Inscription/inscription.html" id="inscritOrNo">Vous n'êtes pas encore inscrit ?</a>
 
 
 <script>
@@ -65,7 +67,7 @@ session_start();
                 callback(xhr.responseText);
             }
         };
-        xhr.open("POST", "connexionHandler.php", true);
+        xhr.open("POST", "http://localhost:7777/Tartiflette_2000/Connexion/connexionHandler.php", true);
         xhr.send(data);
     }
 
@@ -73,15 +75,18 @@ session_start();
     function Response(gData)
     {
         var response = gData;
+
+        // Si les identifiants entrés existent, alors on redirige vers l'Accueil
         if(response == 1)
         {
-            document.getElementsByTagName("body")[0].remove();
+            //document.getElementsByTagName("body")[0].remove();
 
-            //window.location.replace('Accueil.php');
+            document.location = 'http://localhost:7777/Tartiflette_2000/Accueil/Accueil.php';
         }
+
         else
         {
-            Error("faux");
+            Error("Mauvais Mot de Passe");
         }
     }
 
@@ -124,60 +129,6 @@ session_start();
     }
 
 </script>
-
-
-<?php/*
-require 'Confirmation/confirmationModel.php';
-
-if($_GET['check'] == 'false')
-{
-    ?>
-        <script>
-            function appendAfter(el, nwEl)
-            {
-                el.parentNode.insertBefore(nwEl, el.nextSibling);
-            }
-
-            function fadeOut(element, callback)
-            {
-                var op = 1;
-                var timer = setInterval(function ()
-                {
-                    if (op <= 0.01){
-                        if(callback)
-                            callback();
-                        clearInterval(timer);
-                        element.remove();
-                    }
-                    element.style.opacity = op;
-                    element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-                    op -= op * 0.1;
-                }, 25);
-            }
-
-        function Error(str){
-        var error = document.getElementsByClassName("error-wrapper")[0];
-        if(error != undefined)
-        error.remove();
-        var wrapper = document.createElement("div");
-        wrapper.className = "error-wrapper";
-        var div = document.createElement("div");
-        div.style.marginTop = "30px";
-        div.className = "error";
-        div.innerHTML = str;
-        wrapper.appendChild(div);
-        var header = document.getElementById("submit");
-        appendAfter(header, wrapper);
-        setTimeout(function() {fadeOut(wrapper); }, 2000);
-        }
-
-            Error("Mot de passe et/ou Pseudo incorrect");
-        </script>
-        <?
-}
-*/
-?>
-
 
 </body>
 </html>

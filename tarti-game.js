@@ -148,8 +148,8 @@ function dispTile(tile, x, y) {
  * Fonction qui permet d'afficher une carte de jeu
  */
 function dispMap() {
-    for (var i = 0; i < 10; i++) {
-        for (var y = 0; y < 10; y++) {
+    for (var i = 0; i < 30; i++) {
+        for (var y = 0; y < 30; y++) {
             dispTile(tilesheet, 32 * i + xOffSet, 32 * y + yOffSet);
         }
     }
