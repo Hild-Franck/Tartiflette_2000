@@ -258,3 +258,16 @@ div.contenuNews
 {
     display: none;
 }
+.pass{
+    color: green;
+}
+
+.fail{
+    color: red;
+}
+canvas{
+    float: left;
+}
+.canvas{
+    float: left;
+}
