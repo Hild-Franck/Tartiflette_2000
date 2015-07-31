@@ -88,6 +88,8 @@ var game = {
                 player.upSwitch = false;
             if(event.keyCode == 83)
                 player.downSwitch = false;
+            if(event.keyCode == 69)
+                player.attack();
         }, true);
     },
     animate: function(obj){
@@ -100,6 +102,9 @@ var game = {
             obj.frame++;
         if (obj.frame >= obj.nbrFrame)
             obj.frame = 0;
+
+        if(obj.xPrev == obj.x && obj.yPrev == obj.y)
+            obj.frame = 1;
     },
     drawObjects: function(){
         for(var i = 0; i < game.objects[0].length; i++){
@@ -119,7 +124,7 @@ var player = {
     countDraw: 0,
     frame: 0,
     nbrFrame: 3,
-    sprite: 0,
+    sprite: 1,
     sprInd: 0,
 
     heigth: 32,
@@ -146,6 +151,11 @@ var player = {
         this.sprite = (_sprite !== undefined) ? _sprite : this.sprite;
     },
 
+    attack: function(){
+        console.log("Attaque !");
+        socket.emit('message', 'Attaque lancée !');
+    },
+
     draw: function(){
         game.animate(this);
     },
@@ -153,14 +163,23 @@ var player = {
     update: function(){
         this.xPrev = this.x;
         this.yPrev = this.y;
-        if(this.leftSwitch)
+
+        if(this.leftSwitch) {
             this.x -= this.speed;
-        if(this.rightSwitch)
+            this.sprInd = 1;
+        }
+        if(this.rightSwitch) {
             this.x += this.speed;
-        if(this.upSwitch)
+            this.sprInd = 2;
+        }
+        if(this.upSwitch) {
             this.y -= this.speed;
-        if(this.downSwitch)
+            this.sprInd = 3;
+        }
+        if(this.downSwitch) {
             this.y += this.speed;
+            this.sprInd = 0;
+        }
     }
 };
 debug = new Debug();
