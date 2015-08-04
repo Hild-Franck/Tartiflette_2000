@@ -93,7 +93,7 @@ var game = {
         }, true);
     },
     animate: function(obj){
-        this.draw(obj, (obj.frame + 3 * obj.sprite) * 32, obj.sprInd * 32,obj.x + this.xOffSet - obj.xSpot,obj.y + this.yOffSet - obj.ySpot);
+        this.drawObj(obj, (obj.frame + 3 * obj.sprite), obj.sprInd,obj.x,obj.y);
         obj.countDraw++;
 
         if (obj.countDraw == game.fps)
@@ -111,13 +111,13 @@ var game = {
             game.objects[0][i].draw();
         }
     },
-    draw: function(obj,sprIndX,sprIndY,posX,posY,width,height){
+    drawObj: function(obj,sprIndX,sprIndY,posX,posY,width,height){
         width = typeof width !== 'undefined' ?  width : 1;
         height = typeof height !== 'undefined' ?  height : 1;
         posX = typeof posX !== 'undefined' ? posX : obj.x;
         posY= typeof posY !== 'undefined' ? posY : obj.y;
 
-        this.context.drawImage(obj.spriteSheet,  sprIndX * 32 , sprIndY * 32, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
+        game.context.drawImage(obj.spriteSheet,  sprIndX * 32 , sprIndY * 32, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
     },
     writeText: function(text,x,y,color,opacity,isStatic){
         color = typeof color !== 'undefined' ? color : "black";
@@ -150,9 +150,9 @@ var game = {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.map.drawMap();
         this.portview(player,100,100);
-        this.textFx.headText('Bonsoir',player.x,player.y);
         player.update();
         player.draw();
+        player.drawLife();
     }
 };
 
@@ -175,6 +175,9 @@ var player = {
     xSpot: 16,
     ySpot: 16,
     speed: 4,
+
+    maxHp: 1000,
+    currentHp: 920,
 
     leftSwitch: false,
     rightSwitch: false,
@@ -201,29 +204,48 @@ var player = {
         game.context.strokeRect(5,5,101,21);
         game.context.fillStyle = "#E00000";
         game.context.fillRect(6,6,this.currentHp / this.maxHp * 99,19);
-        writeText("HP",110,20,"E00000",1,true);
+        game.writeText("HP",110,20,"E00000",1,true);
     },
 
     update: function(){
         this.xPrev = this.x;
         this.yPrev = this.y;
 
-        if(this.leftSwitch) {
-            this.x -= this.speed;
-            this.sprInd = 1;
+        if(this.leftSwitch && this.upSwitch){
+            this.x -= this.speed/Math.sqrt(2);
+            this.y -= this.speed/Math.sqrt(2);
         }
-        if(this.rightSwitch) {
-            this.x += this.speed;
-            this.sprInd = 2;
+        else if(this.leftSwitch && this.downSwitch){
+            this.x -= this.speed/Math.sqrt(2);
+            this.y += this.speed/Math.sqrt(2);
         }
-        if(this.upSwitch) {
-            this.y -= this.speed;
-            this.sprInd = 3;
+        else if(this.rightSwitch && this.upSwitch){
+            this.x += this.speed/Math.sqrt(2);
+            this.y -= this.speed/Math.sqrt(2);
         }
-        if(this.downSwitch) {
-            this.y += this.speed;
-            this.sprInd = 0;
+        else if(this.rightSwitch && this.downSwitch){
+            this.x += this.speed/Math.sqrt(2);
+            this.y += this.speed/Math.sqrt(2);
         }
+        else{
+            if(this.leftSwitch) {
+                this.x -= this.speed;
+                this.sprInd = 1;
+            }
+            if(this.rightSwitch) {
+                this.x += this.speed;
+                this.sprInd = 2;
+            }
+            if(this.upSwitch) {
+                this.y -= this.speed;
+                this.sprInd = 3;
+            }
+            if(this.downSwitch) {
+                this.y += this.speed;
+                this.sprInd = 0;
+            }
+        }
+
     }
 };
 debug = new Debug();
