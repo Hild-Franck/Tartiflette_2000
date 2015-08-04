@@ -93,7 +93,7 @@ var game = {
         }, true);
     },
     animate: function(obj){
-        this.context.drawImage(obj.spriteSheet, (obj.frame + 3 * obj.sprite) * 32, obj.sprInd * 32, 32, 32, obj.x + this.xOffSet - obj.xSpot, obj.y + this.yOffSet - obj.ySpot, 32, 32);
+        this.draw(obj, (obj.frame + 3 * obj.sprite) * 32, obj.sprInd * 32,obj.x + this.xOffSet - obj.xSpot,obj.y + this.yOffSet - obj.ySpot);
         obj.countDraw++;
 
         if (obj.countDraw == game.fps)
@@ -111,9 +111,46 @@ var game = {
             game.objects[0][i].draw();
         }
     },
+    draw: function(obj,sprIndX,sprIndY,posX,posY,width,height){
+        width = typeof width !== 'undefined' ?  width : 1;
+        height = typeof height !== 'undefined' ?  height : 1;
+        posX = typeof posX !== 'undefined' ? posX : obj.x;
+        posY= typeof posY !== 'undefined' ? posY : obj.y;
+
+        this.context.drawImage(obj.spriteSheet,  sprIndX * 32 , sprIndY * 32, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
+    },
+    writeText: function(text,x,y,color,opacity,isStatic){
+        color = typeof color !== 'undefined' ? color : "black";
+        opacity = typeof opacity !== 'undefined' ? opacity : 1;
+        isStatic = typeof isStatic !== 'undefined' ? isStatic : false;
+
+        this.context.globalAlpha = opacity;
+        this.context.fillStyle = color;
+        if(isStatic)
+            this.context.fillText(text,x,y);
+        else
+            this.context.fillText(text,x + game.xOffSet,y + game.yOffSet);
+        this.context.globalAlpha = 1;
+    },
+    textFx: {
+        x: 0,
+        y: 0,
+        opacity: 1,
+        yShift: 0,
+
+        headText: function(text,x,y,color){
+            if(this.opacity > 0){
+                game.writeText(text,x,y - this.yShift,color,this.opacity);
+                this.yShift++;
+                this.opacity -= 0.03;
+            }
+        }
+    },
     update: function(){
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.map.drawMap();
+        this.portview(player,100,100);
+        this.textFx.headText('Bonsoir',player.x,player.y);
         player.update();
         player.draw();
     }
@@ -160,6 +197,13 @@ var player = {
         game.animate(this);
     },
 
+    drawLife: function(){
+        game.context.strokeRect(5,5,101,21);
+        game.context.fillStyle = "#E00000";
+        game.context.fillRect(6,6,this.currentHp / this.maxHp * 99,19);
+        writeText("HP",110,20,"E00000",1,true);
+    },
+
     update: function(){
         this.xPrev = this.x;
         this.yPrev = this.y;
@@ -192,5 +236,6 @@ setInterval(function(){
     debug.monitor("x: ", player.x);
     debug.monitor("y: ", player.y);
     debug.monitor("frame: ", player.frame);
+    debug.monitor("opacity ",game.textFx.opacity);
     debug.show();
 }, 1000/game.fps);
