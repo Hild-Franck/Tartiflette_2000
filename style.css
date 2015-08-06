@@ -267,7 +267,5 @@ div.contenuNews
 }
 canvas{
     float: left;
-}
-.canvas{
-    float: left;
+    margin-right: 20px;
 }

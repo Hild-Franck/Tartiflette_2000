@@ -2,26 +2,51 @@
  * Created by Hild Franck on 7/8/2015.
  */
 
+/**
+ * L'objet du jeu
+ * @class
+ * @property {HTMLCanvasElement} canvas Le canvas dans lequel le jeu tourne
+ * @property {CanvasRenderingContext2D} context Spécification des méthodes et propriétés du canvas
+ * @property {Number} fps Nombre de frames par seconde
+ * @property {Number} xOffSet Nombre de pixel de décalage entre l'origine du dessin et l'origine du canvas sur l'axe x
+ * @property {Number} yOffSet Nombre de pixel de décalage entre l'origine du dessin et l'origine du canvas sur l'axe y
+ */
 var game = {
+    /** @lends game */
     canvas: document.getElementById("canvas"),
     context: canvas.getContext("2d"),
 
     fps: 60,
     xOffSet: 0,
     yOffSet: 0,
-
+    /**
+     * @class
+     */
     objects:{
-        length: 0,
+        entities: [],
+        gui: [],
 
-        add: function(obj){
-            Array.prototype.push.call(this, obj);
+        /**
+         * Fonction d'ajout d'un objet dans un tableau d'objets
+         * @param arr Le tableau dans lequel l'objet est placé
+         * @param obj L'objet à placer
+         */
+        add: function(arr, obj){
+            arr.push(obj);
         },
+        /**
+         * Fonction qui rafraichi une liste d'objets à afficher
+         * @param arr Le tableau à rafraichir
+         * @param obj L'objet à rajouter au tableau
+         */
         refresh: function(arr, obj){
-            this.length = 0;
             arr.push(obj);
             Array.prototype.push.call(this, arr);
             this.arrange();
         },
+        /**
+         * Fonction qui tri les objets selon leur variable y
+         */
         arrange: function(){
                 game.objects[0].sort(function(a, b){
                     if(a.y < b.y)
@@ -32,10 +57,23 @@ var game = {
                 });
         }
     },
+    /**
+     * L'objet de la carte
+     * @class
+     * @property {Object} tileSheet Contient le fichier du layout de la map
+     * @property {Number} height Hauteur de la map (nombre de tiles)
+     * @property {Number} width Largeur de la map (nombre de tiles)
+     */
     map:{
         tileSheet: new Image(),
         height: 10,
         width: 10,
+        /**
+         * Fonction qui initialise la map
+         * @param {Object} tileSheetFile Le fichier de tiles à utiliser
+         * @param {Number} [_width=10] Largeur de la map
+         * @param {Number} [_height=10] Hauteur de la map
+         */
         init: function(tileSheetFile, _width, _height){
             this.tileSheet.src = "resources/graphics/" + tileSheetFile;
             if(_width !== undefined)
@@ -43,9 +81,17 @@ var game = {
             if(_height !== undefined)
                 this.height = _height;
         },
+        /**
+         * Fonction qui dessine une tile
+         * @param x Coordonnée x de la tile sur le tilesheet
+         * @param y Coordonnée y de la tile sur le tilesheet
+         */
         dispTile: function(x, y){
             game.context.drawImage(this.tileSheet, 0, 0, 32, 32, x, y, 32, 32);
         },
+        /**
+         * Fonction qui dessine la map
+         */
         drawMap: function(){
             for (var i = 0; i < this.width; i++) {
                 for (var j = 0; j < this.height; j++) {
@@ -54,10 +100,19 @@ var game = {
             }
         }
     },
+    /**
+     * Fonction qui initialise le jeu
+     */
     init: function(){
         this.map.init("Outside_A2.png");
         this.addListeners();
     },
+    /**
+     * Fonction qui centre la caméra sur un objet
+     * @param obj L'objet sur lequel la caméra sera centrée
+     * @param pVwWdtOffset La largeur à partir de laquelle la caméra suit l'objet
+     * @param pVwHgtOffset La hauteur à partir de laquelle la caméra suit l'objet
+     */
     portview: function(obj, pVwWdtOffset, pVwHgtOffset){
         if(obj.x + this.xOffSet > this.canvas.width - pVwWdtOffset)
             this.xOffSet += (this.canvas.width - pVwWdtOffset) - (obj.x + this.xOffSet);
@@ -68,6 +123,9 @@ var game = {
         if(obj.y + this.yOffSet < 0 + pVwWdtOffset)
             this.yOffSet += pVwHgtOffset - (obj.y + this.yOffSet);
     },
+    /**
+     * Ajoute les gestionnaires d'évènement
+     */
     addListeners: function(){
         addEventListener("keydown", function(event){
             if(event.keyCode == 68)
@@ -92,6 +150,10 @@ var game = {
                 player.attack();
         }, true);
     },
+    /**
+     * Anime le sprite d'un objet
+     * @param obj L'objet à animer
+     */
     animate: function(obj){
         this.drawObj(obj, (obj.frame + 3 * obj.sprite), obj.sprInd,obj.x,obj.y);
         obj.countDraw++;
@@ -106,9 +168,15 @@ var game = {
         if(obj.xPrev == obj.x && obj.yPrev == obj.y)
             obj.frame = 1;
     },
+    /**
+     * Dessine les objets listés
+     */
     drawObjects: function(){
-        for(var i = 0; i < game.objects[0].length; i++){
-            game.objects[0][i].draw();
+        for(var i = 0; i < game.objects.entities.length; i++){
+            game.objects.entities[i].draw();
+        }
+        for(i = 0; i < game.objects.gui.length; i++){
+            game.objects.gui[i].draw();
         }
     },
     drawObj: function(obj,sprIndX,sprIndY,posX,posY,width,height){
@@ -119,43 +187,88 @@ var game = {
 
         game.context.drawImage(obj.spriteSheet,  sprIndX * 32 , sprIndY * 32, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
     },
-    writeText: function(text,x,y,color,opacity,isStatic){
-        color = typeof color !== 'undefined' ? color : "black";
-        opacity = typeof opacity !== 'undefined' ? opacity : 1;
+    /**
+     * Fonction permettant d'écirire du texte à l'écran
+     * @param text Le texte à afficher
+     * @param x La coordonnée x de l'affichage
+     * @param y La coordonnée x de l'affichage
+     * @param color La couleur du texte
+     * @param opacity
+     * @param size
+     * @param align
+     * @param isStatic
+     */
+    writeText: function(text, x, y, color, opacity, size, align, isStatic){
+        this.context.font = typeof size !== "undefined" ? size.toString() +  "px sans-serif" : "10px sans-serif";
+        this.context.textAlign = typeof align !== "undefined" ? align : "left";
+        this.context.fillStyle = typeof color !== 'undefined' ? color : "black";
+        this.context.globalAlpha = typeof opacity !== 'undefined' ? opacity : 1;
         isStatic = typeof isStatic !== 'undefined' ? isStatic : false;
-
-        this.context.globalAlpha = opacity;
-        this.context.fillStyle = color;
         if(isStatic)
             this.context.fillText(text,x,y);
         else
             this.context.fillText(text,x + game.xOffSet,y + game.yOffSet);
         this.context.globalAlpha = 1;
     },
-    textFx: {
-        x: 0,
-        y: 0,
-        opacity: 1,
-        yShift: 0,
+    /**
+     * Constructeur d'un objet de texte spécial
+     * @param _creator L'objet à l'origine de la création du texte
+     * @param _text Le texte à afficher
+     * @constructor
+     */
+    TextFx: function(_creator, _text){
+        this.creator = _creator;
+        this.text = _text;
 
-        headText: function(text,x,y,color){
+        this.yOffset = 0;
+        this.x = this.creator.x;
+        this.y = this.creator.y - 20;
+        this.opacity = 1;
+
+
+        this.draw = function(){
             if(this.opacity > 0){
-                game.writeText(text,x,y - this.yShift,color,this.opacity);
-                this.yShift++;
+                game.writeText(this.text,this.x,this.y - this.yOffset,"blue",this.opacity, 15, "center");
+                this.yOffset++;
                 this.opacity -= 0.03;
             }
+            else
+                game.objects.gui.splice(game.objects.gui.indexOf(this), 1);
         }
     },
+    /**
+     * Fonction qui permet de créer un objet de texte spécial
+     * @param creator Le créateur du texte
+     * @param text Le texte à afficher
+     * @returns {game.TextFx} Retourne l'objet texte
+     */
+    createTxtFx: function(creator, text){
+        game.objects.gui.push(new this.TextFx(creator, text));
+    },
+    /**
+     * Fonction lancée à chaque frame
+     */
     update: function(){
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.map.drawMap();
-        this.portview(player,100,100);
         player.update();
-        player.draw();
+        this.portview(player,100,100);
+        game.drawObjects();
+        //player.draw();
         player.drawLife();
+        if(!socket.connected){
+            this.context.font = "20px Arial";
+            this.context.fillStyle = "red";
+            this.context.textAlign = "center";
+            this.context.fillText("Connexion en cours...", this.canvas.width/2, this.canvas.height/2)
+        }
     }
 };
 
+/**
+ * L'objet du joueur
+ * @class
+ */
 var player = {
     spriteSheet: new Image(),
     countDraw: 0,
@@ -184,29 +297,45 @@ var player = {
     upSwitch: false,
     downSwitch: false,
 
+    /**
+     * Fonction d'initialisation du personnage
+     * @param _sprite Sprite du personnage
+     * @param xStart Coordonnée x de départ du personnage
+     * @param yStart Coordonnée y de départ du personnage
+     */
     init: function(_sprite, xStart, yStart){
         this.spriteSheet.src = "resources/graphics/Actor1.png";
         this.x = (xStart !== undefined) ? xStart : this.x;
         this.y = (yStart !== undefined) ? yStart : this.y;
         this.sprite = (_sprite !== undefined) ? _sprite : this.sprite;
+        game.objects.add(game.objects.entities, this);
     },
 
+    /**
+     * Gère l'attaque du personnage
+     */
     attack: function(){
         console.log("Attaque !");
+        game.createTxtFx(this, "Attaque lancée !");
         socket.emit('message', 'Attaque lancée !');
     },
 
     draw: function(){
         game.animate(this);
     },
-
+    /**
+     * Dessine la vie du joueur
+     */
     drawLife: function(){
         game.context.strokeRect(5,5,101,21);
         game.context.fillStyle = "#E00000";
         game.context.fillRect(6,6,this.currentHp / this.maxHp * 99,19);
-        game.writeText("HP",110,20,"E00000",1,true);
+        game.writeText("HP",110,20,"E00000",1, 10,"left", true);
     },
 
+    /**
+     * Fonction de mise à jour du personnage à chaque frame
+     */
     update: function(){
         this.xPrev = this.x;
         this.yPrev = this.y;
@@ -248,16 +377,18 @@ var player = {
 
     }
 };
+//--- Initialisation ---
 debug = new Debug();
 game.init();
 player.init();
 
+//--- Game loop ---
 setInterval(function(){
     debug.clear();
     game.update();
     debug.monitor("x: ", player.x);
     debug.monitor("y: ", player.y);
     debug.monitor("frame: ", player.frame);
-    debug.monitor("opacity ",game.textFx.opacity);
+    console.log(game.objects.gui);
     debug.show();
 }, 1000/game.fps);

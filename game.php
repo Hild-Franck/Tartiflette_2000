@@ -30,6 +30,6 @@
         socket.emit('message', 'Client connecté de ' + navigator.userAgent);
     </script>
 <script src="debug.js" charset="utf-8"></script>
-<script src="tarti-game.js" charset="utf-8"></script>
+<script src="Tarti-game.v0.2.0.js" charset="utf-8"></script>
 </body>
 </html>
