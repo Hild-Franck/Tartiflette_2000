@@ -1,0 +1,1 @@
+start /D jsdoc-master /B jsdoc C:\wamp\www\Tartiflette_2000\Tarti-game.v0.2.0.js

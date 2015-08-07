@@ -20,6 +20,7 @@ var game = {
     xOffSet: 0,
     yOffSet: 0,
     /**
+     * Gère les objets dans le jeu
      * @class
      */
     objects:{
@@ -152,15 +153,19 @@ var game = {
     },
     /**
      * Anime le sprite d'un objet
-     * @param obj L'objet à animer
+     * @param {Object} obj L'objet à animer
+     * @param {Number} [animSpeed=1] La vitesse d'animation, 1 étant la vitesse normale
+     * @param {Number} [width] La largeur du sprite en pixel
+     * @param {Number} [height] La hauteur du sprite en pixel
      */
-    animate: function(obj){
-        this.drawObj(obj, (obj.frame + 3 * obj.sprite), obj.sprInd,obj.x,obj.y);
+    animate: function(obj, animSpeed, width, height){
+        animSpeed = typeof animSpeed !== "undefined" ? animSpeed : 1;
+        this.drawObj(obj, (obj.frame + 3 * obj.sprite), obj.sprInd,obj.x,obj.y, width, height);
         obj.countDraw++;
 
-        if (obj.countDraw == game.fps)
+        if (obj.countDraw >= game.fps/animSpeed)
             obj.countDraw = 0;
-        if (obj.countDraw % Math.floor(game.fps / obj.nbrFrame) == 0)
+        if (obj.countDraw % Math.round((game.fps/animSpeed) / obj.nbrFrame) == 0)
             obj.frame++;
         if (obj.frame >= obj.nbrFrame)
             obj.frame = 0;
@@ -176,7 +181,8 @@ var game = {
             game.objects.entities[i].draw();
         }
         for(i = 0; i < game.objects.gui.length; i++){
-            game.objects.gui[i].draw();
+            if(!game.objects.gui[i].draw())
+                i--;
         }
     },
     drawObj: function(obj,sprIndX,sprIndY,posX,posY,width,height){
@@ -185,18 +191,18 @@ var game = {
         posX = typeof posX !== 'undefined' ? posX : obj.x;
         posY= typeof posY !== 'undefined' ? posY : obj.y;
 
-        game.context.drawImage(obj.spriteSheet,  sprIndX * 32 , sprIndY * 32, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
+        game.context.drawImage(obj.spriteSheet,  sprIndX * 32 * width , sprIndY * 32 * width, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
     },
     /**
      * Fonction permettant d'écirire du texte à l'écran
-     * @param text Le texte à afficher
-     * @param x La coordonnée x de l'affichage
-     * @param y La coordonnée x de l'affichage
-     * @param color La couleur du texte
-     * @param opacity
-     * @param size
-     * @param align
-     * @param isStatic
+     * @param {String} text Le texte à afficher
+     * @param {Number} x La coordonnée x de l'affichage
+     * @param {Number} y La coordonnée x de l'affichage
+     * @param {String} [color="black"] La couleur du texte
+     * @param {Number} [opacity=1] La transparence du texte
+     * @param {Number} [size=10] La taille de la police
+     * @param {String} [align="left"] Le placement du texte
+     * @param {Boolean} [isStatic=false] Défini si le texte suis la est fixe sur l'affichage ou non
      */
     writeText: function(text, x, y, color, opacity, size, align, isStatic){
         this.context.font = typeof size !== "undefined" ? size.toString() +  "px sans-serif" : "10px sans-serif";
@@ -212,8 +218,8 @@ var game = {
     },
     /**
      * Constructeur d'un objet de texte spécial
-     * @param _creator L'objet à l'origine de la création du texte
-     * @param _text Le texte à afficher
+     * @param {Object} _creator L'objet à l'origine de la création du texte
+     * @param {String} _text Le texte à afficher
      * @constructor
      */
     TextFx: function(_creator, _text){
@@ -225,25 +231,75 @@ var game = {
         this.y = this.creator.y - 20;
         this.opacity = 1;
 
-
+        /**
+         * Dessine le texte
+         * @returns {Boolean} Si l'objet est encore dans le tableau
+         * @instance
+         */
         this.draw = function(){
             if(this.opacity > 0){
                 game.writeText(this.text,this.x,this.y - this.yOffset,"blue",this.opacity, 15, "center");
                 this.yOffset++;
                 this.opacity -= 0.03;
+                return true;
             }
-            else
+            else {
                 game.objects.gui.splice(game.objects.gui.indexOf(this), 1);
+                return false;
+            }
         }
     },
     /**
      * Fonction qui permet de créer un objet de texte spécial
-     * @param creator Le créateur du texte
-     * @param text Le texte à afficher
-     * @returns {game.TextFx} Retourne l'objet texte
+     * @param {Object} creator Le créateur du texte
+     * @param {String} text Le texte à afficher
      */
     createTxtFx: function(creator, text){
         game.objects.gui.push(new this.TextFx(creator, text));
+    },
+    /**
+     * Constructeur d'un objet d'effet spécial
+     * @param {String} _sprite Le sprite à afficher
+     * @param {Number} _nbrFrame Le nombre de frames de l'animation
+     * @param {Number} _animSpeed La vitesse d'animation du sprite
+     * @param {Number} [_loop=0] Le nombre de fois que l'animation doit se lancer
+     * @param {Object} [_linker=undefined] L'objet auquel lier l'effet
+     * @param {Boolean} [_isLinked=false] Détermine si l'effet doit être attaché à un objet
+     * @constructor
+     */
+    SpriteFx: function(_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLinked){
+        this.sprite = 0;
+        this.nbrFrame = _nbrFrame;
+        this.looped = typeof _loop !== "undefined" ? _loop : 0;
+        this.creator = typeof _linker !== "undefined" ? _linker : undefined;
+        this.isLinked = typeof _isLinked !== "undefined" ? _isLinked : false;
+        this.animSpeed = typeof _animSpeed !== "undefined" ? _animSpeed : 1;
+
+
+        this.spriteSheet = new Image();
+        this.spriteSheet.src = "resources/graphics/fx/" + _sprite + ".png";
+        this.frame = 0;
+        this.sprInd = 0;
+        this.countDraw = 0;
+        this.x = 150;
+        this.y = 150;
+        this.xSpot = 0;
+        this.ySpot = 0;
+        /**
+         * Dessine l'effet spécial
+         */
+        this.draw = function(){
+            game.animate(this,this.animSpeed, 6, 6);
+            console.log("CountDraw: " + this.countDraw);
+            console.log("Frame: " + this.frame);
+            if(this.frame >= this.nbrFrame - 1 && this.countDraw == (game.fps/this.animSpeed) - 1){
+                game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
+                return false;
+            }
+        }
+    },
+    createSpriteFx: function(sprite, nbrFrame, animSpeed, loop, linker, isLinked){
+        game.objects.entities.push(new this.SpriteFx(sprite, nbrFrame, animSpeed, loop, linker, isLinked));
     },
     /**
      * Fonction lancée à chaque frame
@@ -268,6 +324,23 @@ var game = {
 /**
  * L'objet du joueur
  * @class
+ * @property {Object} spriteSheet Contient le fichier de sprites du personnage
+ * @property {Number} countDraw Compte le nombre de frame
+ * @property {Number} frame Frame de l'animation rn cours
+ * @property {Number} nbrFrame Nombre de frame dans une animation
+ * @property {Number} sprite Origine du spriteSheet du personnage
+ * @property {Number} sprInd Contient le fichier de sprites du personnage
+ * @property {Number} heigth Hauteur d'un sprite en pixel
+ * @property {Number} width Largeur d'un sprite en pixel
+ * @property {Number} x La coordonnée x du personnage
+ * @property {Number} y La coordonnée y du personnage
+ * @property {Number} xPrev La coordonnée y du personnage à la frame précédente
+ * @property {Number} yPrev La coordonnée y du personnage à la frame précédente
+ * @property {Number} xSpot La coordonnée x de l'origine du dessin
+ * @property {Number} ySpot La coordonnée y de l'origine du dessin
+ * @property {Number} speed La vitesse du personnage en pixel
+ * @property {Number} maxHp Le nombre de point de vie maximum pour le personnage
+ * @property {Number} currentHp Le nombre de points de vie actuel du personnage
  */
 var player = {
     spriteSheet: new Image(),
@@ -299,9 +372,9 @@ var player = {
 
     /**
      * Fonction d'initialisation du personnage
-     * @param _sprite Sprite du personnage
-     * @param xStart Coordonnée x de départ du personnage
-     * @param yStart Coordonnée y de départ du personnage
+     * @param {Number} [_sprite=1] Sprite du personnage
+     * @param {Number} [xStart=10] Coordonnée x de départ du personnage
+     * @param {Number} [yStart=10] Coordonnée y de départ du personnage
      */
     init: function(_sprite, xStart, yStart){
         this.spriteSheet.src = "resources/graphics/Actor1.png";
@@ -316,12 +389,14 @@ var player = {
      */
     attack: function(){
         console.log("Attaque !");
+        game.createSpriteFx("Attack1", 3, 3);
         game.createTxtFx(this, "Attaque lancée !");
         socket.emit('message', 'Attaque lancée !');
     },
 
     draw: function(){
         game.animate(this);
+        return true;
     },
     /**
      * Dessine la vie du joueur
@@ -389,6 +464,5 @@ setInterval(function(){
     debug.monitor("x: ", player.x);
     debug.monitor("y: ", player.y);
     debug.monitor("frame: ", player.frame);
-    console.log(game.objects.gui);
     debug.show();
 }, 1000/game.fps);
