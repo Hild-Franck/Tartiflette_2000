@@ -18,7 +18,7 @@ var yOffSet = 0;
 var objects = [];
 
 socket.on("message", function(message) {
-    refresh(message);
+    console.log(message);
 });
 
 

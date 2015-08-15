@@ -1,46 +1,13 @@
-
-
-var enemies = [];
-function Enemy(_x, _y){
-    enemies.push(this);
-    this.id = 0;
-    this.dirX = 1;
-    this.x = _x;
-    this.y = _y;
-    this.xPrev = 0;
-    this.yPrev = 0;
-    this.xSpot = 16;
-    this.ySpot = 16;
-    this.health = 100;
-    this.strength = 10;
-    this.speed = 4;
-    this.closerPlayer = null;
-    this.sprite = 0;
-    this.sprInd = 1;
-    this.spawnCoolDown = 5;
-    this.attack = "Attack7";
-    this.update = function(){
-        this.xPrev = this.x;
-        this.x += this.speed * this.dirX;
-        if(this.x >= 320) {
-            this.x = 316;
-            this.dirX *= -1;
-        }
-        else if(this.x <= 0){
-            this.x = 4;
-            this.dirX *= -1;
-        }
-    }
-}
-var badGuy = new Enemy(10, 10);
-
+var http = require('http');
 //---DATABASE---
 //---------------------------------------------
-var loki = require('lokijs');
-var db = new loki('game.json');
-db.loadDatabase({}, function(result) {
-    if(db.getCollection('Enemies') !== null)
-        console.log('Base de donnée correctement chargée !');
+
+var db = require('./databases/databases.js');
+
+db.on('ready', function(){
+    console.log("Base de données OK");
+    console.log(db.database.getCollection('EnemiesOnMap').find()[0].$loki);
+
 });
 
 //---------------------------------------------
@@ -49,30 +16,30 @@ var timers = [];
 var data = {};
 
 //---------------------------------------------
-var http = require('http');
 
 var server = http.createServer();
-
 var io = require('socket.io').listen(server);
+
 var time = 0;
 setInterval(function(){
     var date = new Date();
-
-    badGuy.update();
+    for(var i = 0; i < db.database.getCollection('EnemiesOnMap').find().length; i++){
+        var enemy = db.database.getCollection('EnemiesOnMap').find()[i];
+        eval("enemy.ia = " + enemy.update);
+        enemy.ia();
+        db.database.getCollection('EnemiesOnMap').update(enemy)
+    }
 
     data.date = date.getTime();
-    data.enemy = badGuy;
+    data.enemies = db.database.getCollection('EnemiesOnMap').find();
 
     io.sockets.emit('message', data);
 }, 1000/60);
 
-
 io.sockets.on('connection', function(socket){
-
     console.log('Un client est connecté !');
     socket.on('message', function (message) {
         console.log(message);
-
     });
 });
 

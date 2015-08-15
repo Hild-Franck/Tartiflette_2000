@@ -11,6 +11,7 @@
  * @property {Number} xOffSet Nombre de pixel de décalage entre l'origine du dessin et l'origine du canvas sur l'axe x
  * @property {Number} yOffSet Nombre de pixel de décalage entre l'origine du dessin et l'origine du canvas sur l'axe y
  */
+
 var game = {
     /** @lends game */
     canvas: document.getElementById("canvas"),
@@ -26,6 +27,7 @@ var game = {
     objects:{
         entities: [],
         gui: [],
+        servTime: 0,
 
         /**
          * Fonction d'ajout d'un objet dans un tableau d'objets
@@ -40,16 +42,56 @@ var game = {
          * @param arr Le tableau à rafraichir
          * @param obj L'objet à rajouter au tableau
          */
-        refresh: function(arr, obj){
-            arr.push(obj);
-            Array.prototype.push.call(this, arr);
-            this.arrange();
+        refresh: function(data){
+            var check = false;
+            var time = new Date();
+            this.servTime = data.date;
+
+            data.enemies.forEach(function(element, index, array){
+                for (var i = 0; i < game.objects.entities.length; i++){
+                    if (element.$loki === game.objects.entities[i].$loki){
+                        game.objects.entities[i].y = element.y;
+                        game.objects.entities[i].x = element.x;
+                        game.objects.entities[i].dirX = element.dirX;
+                        break;
+                    }
+                    else if(element.$loki === undefined)
+                        break;
+                }
+                if(i == game.objects.entities.length) {
+                    console.log("Création d'un objet");
+                    element.xPrev = element.x;
+                    element.yPrev = element.y;
+                    element.sprInd = 0;
+                    element.frame = 0;
+                    element.nbrFrame = 3;
+                    element.countDraw = 0;
+                    element.spriteSheet = new Image();
+                    element.spriteSheet.src = "resources/monster2.png";
+                    element.draw = function () {
+
+                        var time = new Date();
+                        element.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * element.dirX;
+                        if(this.dirX == -1)
+                            this.sprInd = 1;
+                        if(this.dirX == 1)
+                            this.sprInd = 2;
+                        if(this.y > this.yPrev)
+                            this.sprInd = 3;
+                        if(this.y < this.yPrev)
+                            this.sprInd = 0;
+                        game.animate(this, 1.5);
+                    };
+                    game.objects.entities.push(element);
+                }
+            });
+            game.objects.arrange();
         },
         /**
          * Fonction qui tri les objets selon leur variable y
          */
         arrange: function(){
-                game.objects[0].sort(function(a, b){
+                game.objects.entities.sort(function(a, b){
                     if(a.y < b.y)
                         return -1;
                     if(a.y > b.y)
@@ -150,6 +192,9 @@ var game = {
             if(event.keyCode == 69)
                 player.attack();
         }, true);
+        socket.on("message", function(message){
+            game.objects.refresh(message);
+        });
     },
     /**
      * Anime le sprite d'un objet
@@ -389,13 +434,13 @@ var player = {
      */
     attack: function(){
         console.log("Attaque !");
-        game.createSpriteFx("Attack1", 3, 3);
+        game.createSpriteFx("Attack1", 3, 5);
         game.createTxtFx(this, "Attaque lancée !");
         socket.emit('message', 'Attaque lancée !');
     },
 
     draw: function(){
-        game.animate(this);
+        game.animate(this, 2);
         return true;
     },
     /**
@@ -464,5 +509,6 @@ setInterval(function(){
     debug.monitor("x: ", player.x);
     debug.monitor("y: ", player.y);
     debug.monitor("frame: ", player.frame);
+    debug.monitor("frame enemy: ", game.objects.entities[0].frame);
     debug.show();
 }, 1000/game.fps);

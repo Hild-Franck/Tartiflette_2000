@@ -1,633 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ee278232-4bcf-41b1-90d3-1dee038255ae" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/graphics/fx/Attack1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/graphics/fx/Attack7.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Bold-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Bold-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-BoldItalic-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-BoldItalic-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Italic-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Italic-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Light-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Light-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-LightItalic-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-LightItalic-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Regular-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Regular-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/js.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/.editorconfig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/.eslintignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/.eslintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/.npmignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/scripts/prettify/Apache-License-2.0.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/Apache_License_2.0.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/CHANGES.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/js2xmlparser/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/tv4/LICENSE.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/async/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/marked/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/underscore/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/url/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/wrench/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/MPL_2.0.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Bold-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-BoldItalic-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Italic-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Light-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-LightItalic-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/fonts/OpenSans-Regular-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/buffer-browserify/node_modules/base64-js/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/taffydb/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/tv4/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/url/node_modules/punycode/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/haruki/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/src/_ignored.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/abstracttag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/abstracttag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/accesstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/accesstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/alias.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/alias.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/alias2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/alias3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/alias4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/aliasglobal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/aliasglobal2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/aliasresolve.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/aliasresolve2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/aliastag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/also.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/also.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/also2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/any.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/app.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/opts/argparser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/opts/argparser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/opts/args.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/opts/args.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/duplicateDefined/asdf.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/duplicateDefined/asdf.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/assert.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/assert.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/lib/ast-node-factory.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/lib/ast-node-types.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/src/astbuilder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/jsdoc/src/astbuilder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/src/astbuilder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/src/astnode.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/src/astnode.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/async-callback.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/async/lib/async.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/async.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/augment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/augment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/augmentall.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/augmentall2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/augments.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/augmentstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/augmentstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/augmentstag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/augmentstag3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/augmentstag4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/augmentstag5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/augmentstag6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/authortag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/authortag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/buffer-browserify/node_modules/base64-js/lib/b64.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/bind.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/bluebird.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/borrow.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/borrow.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/borrowstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/borrowstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/borrowstag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/borrowstag3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/buffer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/buffer-browserify/buffer_ieee754.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/build.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/call_get.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/callback.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/callbacktag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/cancel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/captured_trace.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/util/cast.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/util/cast.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/catch_filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/catharsis.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/classdesctag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/classdesctag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/classtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/classtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/classtag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/classwithoutname.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/classwithoutname.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/cli.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/lib/comment-attachment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/commentConvert.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/specs/commentConvert.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/commentsOnly.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/conf.json.EXAMPLE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/const.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/constanttag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/constanttag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/constanttag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/constructor.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/constructortag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/constructortag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/constructstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/constructstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/constructstag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/constructstag3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/constructstag4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/constructstag5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/container.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/context.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/copyrighttag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/copyrighttag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/crypto.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/tv4/lang/de.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/debuggability.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/defaultparams.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/defaultparams.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/defaulttag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/defaulttag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/tag/dictionary/definitions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/tag/dictionary/definitions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/deprecatedtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/deprecatedtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/lib/describe.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/descriptiontag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/descriptiontag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/destructuring.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/details.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/tag/dictionary.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/tag/dictionary.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/direct_resolve.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/doclet.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/doclet.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/doclet.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/util/doop.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/util/doop.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/util/dumper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/util/dumper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/each.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/emptycomments.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/emptycomments.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/res/en.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/enumtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/enumtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/enumtag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/env.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/util/error.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/util/error.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/errors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/es5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/es6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/escapeHtml.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/specs/escapeHtml.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/espree.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/eventDumper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/eventfirestag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/eventfirestag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/eventorder.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/events.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/example.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/examples.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exampletag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/exampletag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/exceptions.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exceptiontag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/exceptiontag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exports.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/exports.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exportstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/exportstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exportstag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exportstag3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exportstag4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exportstag5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exportstag6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exportstag7.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/exportstag8.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/externaltag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/externaltag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/externaltag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/externaltag3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/lib/features.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/file.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/src/filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/src/filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/finally.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/src/_dir2/four.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/fs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node/fs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/fs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/rhino/fs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/funcExpression.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/funcExpression.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/funcExpression2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/funcExpression3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/functiontag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/functiontag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/genDoc.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/generators.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/getset.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/getset.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/getset2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/globaltag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/globaltag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/gulpfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/src/handlers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/src/handlers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/src/ignored.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/ignoretag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/ignoretag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/ignoretag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/implementstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/buffer-browserify/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/crypto-browserify/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/escape-string-regexp/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/marked/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/duplicateDefined/index.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/inheritdoctag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/inheritdoctag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/tag/inline.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/tag/inline.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/inlinecomment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/inlinecomment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/inlineparamcomment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/inlineparamcomment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/inlineparamcomment2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/inner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/inner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/innerscope.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/innerscope.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/innerscope2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/interface-implements.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/interfacetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/interfacetag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/jasmine-jsdoc.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/lib/jasmine.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/join.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/js2xmlparser/lib/js2xmlparser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/styles/jsdoc-default.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/jsdoc.cmd" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/jsdoc.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/jsdoc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/kindtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/kindtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/scripts/prettify/lang-css.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/layout.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/lends.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/lends.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/lends2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/lends3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/lends4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/lends5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/lends6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/lendsglobal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/lendstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/letkeyword.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/letkeyword.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/licensetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/licensetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/scripts/linenumber.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/linktag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/listenstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/listenstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/util/logger.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/util/logger.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/mainpage.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/map.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/util/markdown.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/markdown.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/fixtures/markdown.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/specs/markdown.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/util/markdown.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/markdowntest.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/marked/lib/marked.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/memberoftag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/memberoftag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/memberoftag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/memberoftag3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/memberoftag4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/memberoftag5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/memberoftagforced.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/members.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/membertag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/membertag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/lib/messages.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/method.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/method.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/methoddefinition.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/methoddefinition.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/mixestag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/mixins.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/mixintag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/mixintag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/mixintag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/modules/data/mod-1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/modules/data/mod-2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/modules/data/mod-3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduleinner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/moduleinner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduleisconstructor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/moduleisconstructor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduleisfunction.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/moduleisfunction.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/modules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/moduletag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag10.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag7.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag8.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/moduletag9.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/multiple.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/name.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/name.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/namespacetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/namespacetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/nametag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/nametag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/nodeify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/numericpropertytag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/objectkeys.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/objectkeys.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/objectlit.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/objectlit.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/objectlit2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/objectlit3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/objectpropertykeys.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/objectpropertykeys.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/src/one.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/os.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/rhino/os.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/overloadHelper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/fixtures/overloadHelper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/specs/overloadHelper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/overridetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/overridetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/overviewtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/package.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/package.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/async/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/buffer-browserify/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/buffer-browserify/node_modules/base64-js/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/crypto-browserify/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/escape-string-regexp/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/js2xmlparser/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/marked/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/strip-json-comments/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/taffydb/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/tv4/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/underscore/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/url/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/url/node_modules/punycode/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/wrench/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/params.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/paramtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/paramtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/paramtag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/paramtaginvalidtype.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/incomplete/parent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/incomplete/parent.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/src/parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/lib/parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/jsdoc/src/parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/src/parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/rhino/src/parser.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/partial.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/path.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/path.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/path.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/rhino/path.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/plugins.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/plugins.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/plugins.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/plugins/plugins.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/styles/prettify-jsdoc.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/styles/prettify-tomorrow.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/static/scripts/prettify/prettify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/privatetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/privatetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/privatetag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/progress.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/projecttag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/promise.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/promise_array.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/promise_resolver.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/promisify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/properties.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/propertytag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/propertytag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/props.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/protectedtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/protectedtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/protectedtag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/publish.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/haruki/publish.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/url/node_modules/punycode/punycode.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/querystring.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/queue.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/quotename.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/quotename.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/quotename2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/race.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/fixtures/railsTemplate.js.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/railsTemplate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/specs/railsTemplate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/readme.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/readme.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/escape-string-regexp/readme.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/readonlytag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/readonlytag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/reduce.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/reporter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/requirestag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/requirestag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/tutorial/resolver.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/tutorial/resolver.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/restparams.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/restparams.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/returns.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/returnstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/returnstag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/rhino-shim.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/crypto-browserify/rng.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/runner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/util/runtime.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/util/runtime.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/src/scanner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/src/scanner.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/schedule.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/schema.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/lib/schema.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/schema.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/scopetags.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/scopetags.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/seetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/seetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/settle.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/crypto-browserify/sha.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/shout.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/specs/shout.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/sincetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/sincetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/some.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/source.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/sourcetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/specs/sourcetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/spec-collection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/specialchars.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/specialchars.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/specialnames.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/specialnames.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/starbangstar.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/starbangstar.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/lib/string-map.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/lib/stringify.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/strip-json-comments/strip-json-comments.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/summarize.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/specs/summarize.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/summarytag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/summarytag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/synchronous_inspection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/src/syntax.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/lib/syntax.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/src/syntax.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/taffydb/taffy-test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/taffydb/taffy.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/tag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/tag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/template.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/template.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/util/templateHelper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/util/templateHelper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/test.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/test2.markdown" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/test3.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/test4.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/test5.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/test6.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/testPlugin1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/testPlugin2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/tutorials/recursive/test_recursive.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/thenables.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/this-and-objectlit.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/this.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/this.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/this2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/this3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/this4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/this5.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/thistag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/thistag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/src/dir1/three.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/timers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/todotag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/todotag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/lib/token-info.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/tutorial.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/tutorial.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/tutorial.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/tutorialtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/tutorialtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/tv4/tv4.async-jquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/tv4/tv4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/src/two.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/tag/type.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/tag/type.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/templates/default/tmpl/type.tmpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/typedeftag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/typedeftag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/typekind.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/typekind.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/lib/types.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/typetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/typetag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/typetag2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/typetaginline.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/typetaginline.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/typetagwithnewline.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/typetagwithnewline.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.array.builders.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.array.selectors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.collections.walk.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.function.arity.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.function.combinators.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.function.dispatch.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.function.iterators.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.function.predicates.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/underscore/underscore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/underscore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/fixtures/underscore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/plugins/test/specs/underscore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.object.builders.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.object.selectors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.util.existential.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.util.operators.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.util.strings.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/catharsis/node_modules/underscore-contrib/underscore.util.trampolines.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/undocumentedtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/undocumentedtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/url/url.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/using.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/utf8.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/bluebird/js/main/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/tag/validator.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/tag/validator.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/var.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/var.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/variations.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/variations.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/variationtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/variationtag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/versiontag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/tags/versiontag.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/virtual.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/documentation/virtual.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/virtual2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/fixtures/virtual3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/src/visitor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/rhino/jsdoc/src/visitor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/src/visitor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/rhino/src/visitor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/lib/jsdoc/src/walker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/specs/jsdoc/src/walker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/wrench/lib/wrench.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/test/tutorials/src/x.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc-master/node_modules/espree/lib/xhtml-entities.js" />
-      <change type="DELETED" beforePath="C:\wamp\www\Tartiflette_2000\resources\Attack7.png" afterPath="" />
+    <list default="true" id="ee278232-4bcf-41b1-90d3-1dee038255ae" name="Default" comment="Refonte serveur et amélioration moteur&#10;- Optimisation et amélioration du serveur&#10;- Traitement des données serveurs dans le moteur">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/databases/databases.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/entities/enemies.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/bat/pm2/kill.bat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/restartServ.bat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/bat/pm2/stop.bat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/stopServ.bat" />
+      <change type="DELETED" beforePath="C:\wamp\www\Tartiflette_2000\server\databases\enemies.json" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tarti-game.v0.2.0.js" afterPath="$PROJECT_DIR$/Tarti-game.v0.2.0.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/game.json" afterPath="$PROJECT_DIR$/server/game.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/server.js" afterPath="$PROJECT_DIR$/server/server.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/startServ.bat" afterPath="$PROJECT_DIR$/server/startServ.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tarti-game.js" afterPath="$PROJECT_DIR$/tarti-game.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Tartiflette_2000.iws" />
@@ -665,14 +51,14 @@
     <favorites_list name="Tartiflette_2000" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.48325634">
+    <splitter split-orientation="horizontal" split-proportion="0.57329375">
       <split-first>
         <leaf>
           <file leaf-file-name="game.php" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/game.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="578">
-                  <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+                <state vertical-scroll-proportion="-18.307692" vertical-offset="0" max-vertical-offset="578">
+                  <caret line="34" column="7" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="7" />
                   <folding />
                 </state>
               </provider>
@@ -681,42 +67,56 @@
           <file leaf-file-name="Tarti-game.v0.2.0.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Tarti-game.v0.2.0.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.60190076" vertical-offset="2014" max-vertical-offset="6256">
-                  <caret line="211" column="53" selection-start-line="211" selection-start-column="53" selection-end-line="211" selection-end-column="53" />
+                <state vertical-scroll-proportion="0.69482577" vertical-offset="277" max-vertical-offset="6834">
+                  <caret line="76" column="40" selection-start-line="76" selection-start-column="40" selection-end-line="76" selection-end-column="40" />
                   <folding>
                     <element signature="e#48#551#0" expanded="false" />
-                    <element signature="e#723#783#0" expanded="false" />
-                    <element signature="e#846#1027#0" expanded="false" />
-                    <element signature="e#1107#1284#0" expanded="false" />
-                    <element signature="e#1446#1522#0" expanded="false" />
-                    <element signature="e#1813#2078#0" expanded="false" />
-                    <element signature="e#2168#2412#0" expanded="false" />
-                    <element signature="e#2711#2889#0" expanded="false" />
-                    <element signature="e#3023#3077#0" expanded="false" />
-                    <element signature="e#3348#3397#0" expanded="false" />
-                    <element signature="e#3501#3786#0" expanded="false" />
-                    <element signature="e#4404#4459#0" expanded="false" />
-                    <element signature="e#7083#7645#0" expanded="false" />
-                    <element signature="e#8352#8556#0" expanded="false" />
-                    <element signature="e#8789#8921#0" expanded="false" />
-                    <element signature="e#9367#9540#0" expanded="false" />
-                    <element signature="e#11593#11642#0" expanded="false" />
-                    <element signature="e#12206#13385#0" expanded="false" />
-                    <element signature="e#13773#14031#0" expanded="false" />
-                    <element signature="e#14397#14444#0" expanded="false" />
-                    <element signature="e#14743#14786#0" expanded="false" />
-                    <element signature="e#15051#15122#0" expanded="false" />
+                    <element signature="e#724#784#0" expanded="false" />
+                    <element signature="e#868#1049#0" expanded="false" />
+                    <element signature="e#1129#1306#0" expanded="false" />
+                    <element signature="e#3322#3398#0" expanded="false" />
+                    <element signature="e#3695#3960#0" expanded="false" />
+                    <element signature="e#4050#4294#0" expanded="false" />
+                    <element signature="e#4593#4771#0" expanded="false" />
+                    <element signature="e#4905#4959#0" expanded="false" />
+                    <element signature="e#5230#5279#0" expanded="false" />
+                    <element signature="e#5383#5668#0" expanded="false" />
+                    <element signature="e#6286#6341#0" expanded="false" />
+                    <element signature="e#7321#7621#0" expanded="false" />
+                    <element signature="e#8213#8257#0" expanded="false" />
+                    <element signature="e#9068#9630#0" expanded="false" />
+                    <element signature="e#10774#10906#0" expanded="false" />
+                    <element signature="e#11352#11525#0" expanded="false" />
+                    <element signature="e#11642#12152#0" expanded="false" />
+                    <element signature="e#13578#13627#0" expanded="false" />
+                    <element signature="e#14191#15370#0" expanded="false" />
+                    <element signature="e#15758#16016#0" expanded="false" />
+                    <element signature="e#16382#16429#0" expanded="false" />
+                    <element signature="e#16731#16774#0" expanded="false" />
+                    <element signature="e#17039#17110#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="tarti-game.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tarti-game.js">
+          <file leaf-file-name="debug.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/debug.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="1009" max-vertical-offset="4284">
-                  <caret line="90" column="51" selection-start-line="90" selection-start-column="51" selection-end-line="90" selection-end-column="51" />
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2023">
+                  <caret line="37" column="67" selection-start-line="37" selection-start-column="67" selection-end-line="37" selection-end-column="67" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="databases.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/server/databases/databases.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
+                  <caret line="35" column="3" selection-start-line="35" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
+                  <folding>
+                    <element signature="e#0#47#0" expanded="false" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -725,34 +125,68 @@
       </split-first>
       <split-second>
         <leaf>
+          <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/server/server.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+                  <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="enemies.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/server/entities/enemies.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
+                  <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#47#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="tarti-game.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/tarti-game.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4284">
+                  <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="Tarti-game.v0.2.0.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Tarti-game.v0.2.0.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.71805704" vertical-offset="2533" max-vertical-offset="6256">
-                  <caret line="261" column="51" selection-start-line="261" selection-start-column="51" selection-end-line="261" selection-end-column="51" />
+                <state vertical-scroll-proportion="0.5332629" vertical-offset="5700" max-vertical-offset="6834">
+                  <caret line="482" column="13" selection-start-line="482" selection-start-column="13" selection-end-line="482" selection-end-column="13" />
                   <folding>
                     <element signature="e#48#551#0" expanded="false" />
-                    <element signature="e#723#783#0" expanded="false" />
-                    <element signature="e#846#1027#0" expanded="false" />
-                    <element signature="e#1107#1284#0" expanded="false" />
-                    <element signature="e#1446#1522#0" expanded="false" />
-                    <element signature="e#1813#2078#0" expanded="false" />
-                    <element signature="e#2168#2412#0" expanded="false" />
-                    <element signature="e#2711#2889#0" expanded="false" />
-                    <element signature="e#3023#3077#0" expanded="false" />
-                    <element signature="e#3348#3397#0" expanded="false" />
-                    <element signature="e#3501#3786#0" expanded="false" />
-                    <element signature="e#4404#4459#0" expanded="false" />
-                    <element signature="e#7083#7645#0" expanded="false" />
-                    <element signature="e#8352#8556#0" expanded="false" />
-                    <element signature="e#8789#8921#0" expanded="false" />
-                    <element signature="e#9367#9540#0" expanded="false" />
-                    <element signature="e#11593#11642#0" expanded="false" />
-                    <element signature="e#12206#13385#0" expanded="false" />
-                    <element signature="e#13773#14031#0" expanded="false" />
-                    <element signature="e#14397#14444#0" expanded="false" />
-                    <element signature="e#14743#14786#0" expanded="false" />
-                    <element signature="e#15051#15122#0" expanded="false" />
+                    <element signature="e#724#784#0" expanded="false" />
+                    <element signature="e#868#1049#0" expanded="false" />
+                    <element signature="e#1129#1306#0" expanded="false" />
+                    <element signature="e#3322#3398#0" expanded="false" />
+                    <element signature="e#3695#3960#0" expanded="false" />
+                    <element signature="e#4050#4294#0" expanded="false" />
+                    <element signature="e#4593#4771#0" expanded="false" />
+                    <element signature="e#4905#4959#0" expanded="false" />
+                    <element signature="e#5230#5279#0" expanded="false" />
+                    <element signature="e#5383#5668#0" expanded="false" />
+                    <element signature="e#6286#6341#0" expanded="false" />
+                    <element signature="e#7321#7621#0" expanded="false" />
+                    <element signature="e#8213#8257#0" expanded="false" />
+                    <element signature="e#9068#9630#0" expanded="false" />
+                    <element signature="e#10774#10906#0" expanded="false" />
+                    <element signature="e#11352#11525#0" expanded="false" />
+                    <element signature="e#11642#12152#0" expanded="false" />
+                    <element signature="e#13578#13627#0" expanded="false" />
+                    <element signature="e#14191#15370#0" expanded="false" />
+                    <element signature="e#15758#16016#0" expanded="false" />
+                    <element signature="e#16382#16429#0" expanded="false" />
+                    <element signature="e#16731#16774#0" expanded="false" />
+                    <element signature="e#17039#17110#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -783,8 +217,14 @@
       <list>
         <option value="$PROJECT_DIR$/Menu/Menu.css" />
         <option value="$PROJECT_DIR$/style.css" />
-        <option value="$USER_HOME$/server.js" />
+        <option value="$PROJECT_DIR$/tarti-game.js" />
         <option value="$PROJECT_DIR$/game.php" />
+        <option value="$USER_HOME$/index.html" />
+        <option value="$USER_HOME$/server.js" />
+        <option value="$PROJECT_DIR$/server/entities/enemies.js" />
+        <option value="$PROJECT_DIR$/server/server.js" />
+        <option value="$PROJECT_DIR$/debug.js" />
+        <option value="$PROJECT_DIR$/server/databases/databases.js" />
         <option value="$PROJECT_DIR$/Tarti-game.v0.2.0.js" />
       </list>
     </option>
@@ -823,6 +263,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -855,9 +296,26 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tartiflette_2000" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tartiflette_2000" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="entities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -918,15 +376,15 @@
       <BehatRunner />
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
       <tasks />
       <pass-parent-env-vars>false</pass-parent-env-vars>
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -972,7 +430,13 @@
       <option name="project" value="LOCAL" />
       <updated>1438869056296</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Amélioration moteur et doc&#10;**New Features **&#10;- Génération d'fx&#10;- Génération de documentation&#10;**Improvements**&#10;- Documentation&#10;- Vitesse d'animation des objets&#10;**Bugfix**&#10;- Clignotement d'un texte&#10;**Bug**&#10;- Frame skip sur certaines animations">
+      <created>1438951586796</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1438951586796</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -985,20 +449,20 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.09791667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.122395836" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913843" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281704" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1018,9 +482,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15126051" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1042,50 +506,16 @@
     <MESSAGE value="update from git" />
     <MESSAGE value="Ressources&#10;- Nouveaux spritesheet&#10;- Ajout socket.io" />
     <MESSAGE value="Gros commit&#10;- Ajout du server&#10;- Ajout d'une doc en HTML&#10;- Bugfixes&#10;- Optimisations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Gros commit&#10;- Ajout du server&#10;- Ajout d'une doc en HTML&#10;- Bugfixes&#10;- Optimisations" />
+    <MESSAGE value="Amélioration moteur et doc&#10;**New Features **&#10;- Génération d'fx&#10;- Génération de documentation&#10;**Improvements**&#10;- Documentation&#10;- Vitesse d'animation des objets&#10;**Bugfix**&#10;- Clignotement d'un texte&#10;**Bug**&#10;- Frame skip sur certaines animations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Amélioration moteur et doc&#10;**New Features **&#10;- Génération d'fx&#10;- Génération de documentation&#10;**Improvements**&#10;- Documentation&#10;- Vitesse d'animation des objets&#10;**Bugfix**&#10;- Clignotement d'un texte&#10;**Bug**&#10;- Frame skip sur certaines animations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/debug.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="2023">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Menu/Menu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="1377">
-          <caret line="4" column="72" selection-start-line="4" selection-start-column="72" selection-end-line="4" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2890" max-vertical-offset="4522">
-          <caret line="170" column="20" selection-start-line="170" selection-start-column="20" selection-end-line="170" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Accueil/Accueil.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="748" max-vertical-offset="1020">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Menu/Menu.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2550">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Inscription/inscription.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -1357,13 +787,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1445">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Menu/Menu.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6251277" vertical-offset="204" max-vertical-offset="1377">
@@ -1378,56 +801,111 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/debug.js">
+    <entry file="file://$PROJECT_DIR$/server/node_modules/colors/examples/normal-usage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.8241415" vertical-offset="792" max-vertical-offset="3927">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1343">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="934">
+          <caret line="0" column="9" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.77916664" vertical-offset="0" max-vertical-offset="1904">
+          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="578">
-          <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+        <state vertical-scroll-proportion="-18.307692" vertical-offset="0" max-vertical-offset="578">
+          <caret line="34" column="7" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/debug.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2023">
+          <caret line="37" column="67" selection-start-line="37" selection-start-column="67" selection-end-line="37" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tarti-game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1162" max-vertical-offset="4284">
-          <caret line="90" column="51" selection-start-line="90" selection-start-column="51" selection-end-line="90" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4284">
+          <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/databases/databases.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="663">
+          <caret line="35" column="3" selection-start-line="35" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#47#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/entities/enemies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#47#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tarti-game.v0.2.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71805704" vertical-offset="2533" max-vertical-offset="6256">
-          <caret line="261" column="51" selection-start-line="261" selection-start-column="51" selection-end-line="261" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.69482577" vertical-offset="277" max-vertical-offset="6834">
+          <caret line="76" column="40" selection-start-line="76" selection-start-column="40" selection-end-line="76" selection-end-column="40" />
           <folding>
             <element signature="e#48#551#0" expanded="false" />
-            <element signature="e#723#783#0" expanded="false" />
-            <element signature="e#846#1027#0" expanded="false" />
-            <element signature="e#1107#1284#0" expanded="false" />
-            <element signature="e#1446#1522#0" expanded="false" />
-            <element signature="e#1813#2078#0" expanded="false" />
-            <element signature="e#2168#2412#0" expanded="false" />
-            <element signature="e#2711#2889#0" expanded="false" />
-            <element signature="e#3023#3077#0" expanded="false" />
-            <element signature="e#3348#3397#0" expanded="false" />
-            <element signature="e#3501#3786#0" expanded="false" />
-            <element signature="e#4404#4459#0" expanded="false" />
-            <element signature="e#7083#7645#0" expanded="false" />
-            <element signature="e#8352#8556#0" expanded="false" />
-            <element signature="e#8789#8921#0" expanded="false" />
-            <element signature="e#9367#9540#0" expanded="false" />
-            <element signature="e#11593#11642#0" expanded="false" />
-            <element signature="e#12206#13385#0" expanded="false" />
-            <element signature="e#13773#14031#0" expanded="false" />
-            <element signature="e#14397#14444#0" expanded="false" />
-            <element signature="e#14743#14786#0" expanded="false" />
-            <element signature="e#15051#15122#0" expanded="false" />
+            <element signature="e#724#784#0" expanded="false" />
+            <element signature="e#868#1049#0" expanded="false" />
+            <element signature="e#1129#1306#0" expanded="false" />
+            <element signature="e#3322#3398#0" expanded="false" />
+            <element signature="e#3695#3960#0" expanded="false" />
+            <element signature="e#4050#4294#0" expanded="false" />
+            <element signature="e#4593#4771#0" expanded="false" />
+            <element signature="e#4905#4959#0" expanded="false" />
+            <element signature="e#5230#5279#0" expanded="false" />
+            <element signature="e#5383#5668#0" expanded="false" />
+            <element signature="e#6286#6341#0" expanded="false" />
+            <element signature="e#7321#7621#0" expanded="false" />
+            <element signature="e#8213#8257#0" expanded="false" />
+            <element signature="e#9068#9630#0" expanded="false" />
+            <element signature="e#10774#10906#0" expanded="false" />
+            <element signature="e#11352#11525#0" expanded="false" />
+            <element signature="e#11642#12152#0" expanded="false" />
+            <element signature="e#13578#13627#0" expanded="false" />
+            <element signature="e#14191#15370#0" expanded="false" />
+            <element signature="e#15758#16016#0" expanded="false" />
+            <element signature="e#16382#16429#0" expanded="false" />
+            <element signature="e#16731#16774#0" expanded="false" />
+            <element signature="e#17039#17110#0" expanded="false" />
           </folding>
         </state>
       </provider>
