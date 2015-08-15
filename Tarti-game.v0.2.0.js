@@ -312,7 +312,10 @@ var game = {
      * @param {Boolean} [_isLinked=false] Détermine si l'effet doit être attaché à un objet
      * @constructor
      */
-    SpriteFx: function(_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLinked){
+    SpriteFx: function(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLinked){
+        this.x = _x;
+        this.y = _y;
+
         this.sprite = 0;
         this.nbrFrame = _nbrFrame;
         this.looped = typeof _loop !== "undefined" ? _loop : 0;
@@ -326,25 +329,22 @@ var game = {
         this.frame = 0;
         this.sprInd = 0;
         this.countDraw = 0;
-        this.x = 150;
-        this.y = 150;
-        this.xSpot = 0;
-        this.ySpot = 0;
+
+        this.xSpot = 16;
+        this.ySpot = 16;
         /**
          * Dessine l'effet spécial
          */
         this.draw = function(){
-            game.animate(this,this.animSpeed, 6, 6);
-            console.log("CountDraw: " + this.countDraw);
-            console.log("Frame: " + this.frame);
+            game.animate(this,this.animSpeed, 1, 1);
             if(this.frame >= this.nbrFrame - 1 && this.countDraw == (game.fps/this.animSpeed) - 1){
                 game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
                 return false;
             }
         }
     },
-    createSpriteFx: function(sprite, nbrFrame, animSpeed, loop, linker, isLinked){
-        game.objects.entities.push(new this.SpriteFx(sprite, nbrFrame, animSpeed, loop, linker, isLinked));
+    createSpriteFx: function(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked){
+        game.objects.entities.push(new this.SpriteFx(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked));
     },
     /**
      * Fonction lancée à chaque frame
@@ -399,6 +399,14 @@ var player = {
     width: 32,
 
 
+    dirX: 0,
+    dirY: 1,
+    dir: [
+        [0,1],
+        [-1,0],
+        [1,0],
+        [0,-1]
+    ],
     x: 60,
     y: 60,
     xPrev: 0,
@@ -433,8 +441,8 @@ var player = {
      * Gère l'attaque du personnage
      */
     attack: function(){
-        console.log("Attaque !");
-        game.createSpriteFx("Attack1", 3, 5);
+        console.log(this.x + 30*this.dirX);
+        game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
         game.createTxtFx(this, "Attaque lancée !");
         socket.emit('message', 'Attaque lancée !');
     },
@@ -494,6 +502,8 @@ var player = {
                 this.sprInd = 0;
             }
         }
+        this.dirX = this.dir[this.sprInd][0];
+        this.dirY = this.dir[this.sprInd][1];
 
     }
 };
@@ -509,6 +519,7 @@ setInterval(function(){
     debug.monitor("x: ", player.x);
     debug.monitor("y: ", player.y);
     debug.monitor("frame: ", player.frame);
-    debug.monitor("frame enemy: ", game.objects.entities[0].frame);
+    debug.monitor("dirX: ", player.dirX);
+    debug.monitor("dirY: ", player.dirY);
     debug.show();
 }, 1000/game.fps);
