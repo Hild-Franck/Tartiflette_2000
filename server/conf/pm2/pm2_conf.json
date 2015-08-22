@@ -1,0 +1,10 @@
+{
+    "name"           : "game-app",
+    "script"         : "server.js",
+    "log_date_format": "DD-MM-YYYY HH-mm-ss Z",
+    "exec_mode"      : "fork",
+    "merge_logs"     : true,
+    "watch"          : false,
+    "max_restarts"   : 4,
+    "autorestart"    : false
+}

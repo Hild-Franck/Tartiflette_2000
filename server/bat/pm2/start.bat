@@ -1,1 +1,1 @@
-pm2 start server.js
+pm2 start ./conf/pm2/pm2_conf.json

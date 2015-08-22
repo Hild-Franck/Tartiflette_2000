@@ -1,1 +1,1 @@
-start /D jsdoc-master /B jsdoc C:\wamp\www\Tartiflette_2000\Tarti-game.v0.2.0.js
+start /D jsdoc-master /B jsdoc "../Tarti-game.v0.2.0.js" -d "../Doc HTML"

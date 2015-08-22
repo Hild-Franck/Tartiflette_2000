@@ -235,7 +235,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line14">line 14</a>
+        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -276,6 +276,9 @@
             <dd></dd>
         
             <dt><a href="game.objects.html">objects</a></dt>
+            <dd></dd>
+        
+            <dt><a href="game.SpriteFx.html">SpriteFx</a></dt>
             <dd></dd>
         
             <dt><a href="game.TextFx.html">TextFx</a></dt>
@@ -348,7 +351,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line129">line 129</a>
+        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -379,7 +382,7 @@
 
     
 
-    <h4 class="name" id=".animate"><span class="type-signature">(static) </span>animate<span class="signature">(obj)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".animate"><span class="type-signature">(static) </span>animate<span class="signature">(obj, animSpeed<span class="signature-attributes">opt</span>, width<span class="signature-attributes">opt</span>, height<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -410,7 +413,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -427,13 +434,143 @@
 
             <td class="type">
             
+                
+<span class="param-type">Object</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">L'objet à animer</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>animSpeed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">La vitesse d'animation, 1 étant la vitesse normale</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">La largeur du sprite en pixel</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>height</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">La hauteur du sprite en pixel</td>
         </tr>
 
     
@@ -474,7 +611,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line157">line 157</a>
+        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line207">line 207</a>
     </li></ul></dd>
     
 
@@ -505,7 +642,7 @@
 
     
 
-    <h4 class="name" id=".createTxtFx"><span class="type-signature">(static) </span>createTxtFx<span class="signature">(creator, text)</span><span class="type-signature"> &rarr; {<a href="game.TextFx.html">game.TextFx</a>}</span></h4>
+    <h4 class="name" id=".createTxtFx"><span class="type-signature">(static) </span>createTxtFx<span class="signature">(creator, text)</span><span class="type-signature"></span></h4>
 
     
 
@@ -553,6 +690,11 @@
 
             <td class="type">
             
+                
+<span class="param-type">Object</span>
+
+
+            
             </td>
 
             
@@ -570,6 +712,11 @@
             
 
             <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
             
             </td>
 
@@ -618,7 +765,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line245">line 245</a>
+        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line312">line 312</a>
     </li></ul></dd>
     
 
@@ -641,28 +788,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Retourne l'objet texte
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="game.TextFx.html">game.TextFx</a></span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -722,7 +847,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line174">line 174</a>
+        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line225">line 225</a>
     </li></ul></dd>
     
 
@@ -804,7 +929,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line106">line 106</a>
+        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line150">line 150</a>
     </li></ul></dd>
     
 
@@ -966,7 +1091,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line116">line 116</a>
+        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line160">line 160</a>
     </li></ul></dd>
     
 
@@ -1048,7 +1173,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line251">line 251</a>
+        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line367">line 367</a>
     </li></ul></dd>
     
 
@@ -1079,7 +1204,7 @@
 
     
 
-    <h4 class="name" id=".writeText"><span class="type-signature">(static) </span>writeText<span class="signature">(text, x, y, color, opacity, size, align, isStatic)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".writeText"><span class="type-signature">(static) </span>writeText<span class="signature">(text, x, y, color<span class="signature-attributes">opt</span>, opacity<span class="signature-attributes">opt</span>, size<span class="signature-attributes">opt</span>, align<span class="signature-attributes">opt</span>, isStatic<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -1110,7 +1235,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -1127,10 +1256,27 @@
 
             <td class="type">
             
+                
+<span class="param-type">String</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">Le texte à afficher</td>
@@ -1145,10 +1291,27 @@
 
             <td class="type">
             
+                
+<span class="param-type">Number</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">La coordonnée x de l'affichage</td>
@@ -1163,10 +1326,27 @@
 
             <td class="type">
             
+                
+<span class="param-type">Number</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">La coordonnée x de l'affichage</td>
@@ -1181,10 +1361,31 @@
 
             <td class="type">
             
+                
+<span class="param-type">String</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "black"
+                
+                </td>
             
 
             <td class="description last">La couleur du texte</td>
@@ -1199,13 +1400,34 @@
 
             <td class="type">
             
+                
+<span class="param-type">Number</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"></td>
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">La transparence du texte</td>
         </tr>
 
     
@@ -1217,13 +1439,34 @@
 
             <td class="type">
             
+                
+<span class="param-type">Number</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"></td>
+            
+                <td class="default">
+                
+                    10
+                
+                </td>
+            
+
+            <td class="description last">La taille de la police</td>
         </tr>
 
     
@@ -1235,13 +1478,34 @@
 
             <td class="type">
             
+                
+<span class="param-type">String</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"></td>
+            
+                <td class="default">
+                
+                    "left"
+                
+                </td>
+            
+
+            <td class="description last">Le placement du texte</td>
         </tr>
 
     
@@ -1253,13 +1517,34 @@
 
             <td class="type">
             
+                
+<span class="param-type">Boolean</span>
+
+
+            
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"></td>
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Défini si le texte suis la est fixe sur l'affichage ou non</td>
         </tr>
 
     
@@ -1300,7 +1585,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line201">line 201</a>
+        <a href="Tarti-game.v0.2.0.js.html">Tarti-game.v0.2.0.js</a>, <a href="Tarti-game.v0.2.0.js.html#line254">line 254</a>
     </li></ul></dd>
     
 
@@ -1342,13 +1627,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="game.html">game</a></li><li><a href="game.map.html">map</a></li><li><a href="game.objects.html">objects</a></li><li><a href="game.TextFx.html">TextFx</a></li><li><a href="player.html">player</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="game.html">game</a></li><li><a href="game.map.html">map</a></li><li><a href="game.objects.html">objects</a></li><li><a href="game.SpriteFx.html">SpriteFx</a></li><li><a href="game.TextFx.html">TextFx</a></li><li><a href="player.html">player</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Thu Aug 06 2015 15:05:39 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Fri Aug 21 2015 23:47:13 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

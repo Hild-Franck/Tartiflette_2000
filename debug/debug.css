@@ -1,0 +1,68 @@
+h3{
+    margin: 0;
+}
+#debug{
+    margin: 5px;
+    padding: 5px;
+    list-style-type: none;
+    background-color: #333333;
+    border: dimgrey solid 2px;
+    display: inline-block;
+    color: white;
+    font-weight: bolder;
+}
+.monitoring{
+    padding: 5px;
+    background-color: #b9def0;
+    border: #9acfea 2px solid;
+    color: #31708f;
+    border-radius: 10px;
+}
+.panel{
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    float: left;
+    min-width: 300px;
+}
+/* --- Panel head --- */
+.panel-head{
+    padding: 10px 15px;
+    margin: 0;
+}
+.panel-head-default{
+    background-color: #f5f5f5;
+}
+.panel-head-monitor{
+    background-color: #bce8f1;
+}
+/* --- Panel title --- */
+.panel-title{
+    font-weight: bold;
+}
+.panel-title-default{
+    color: black;
+}
+.panel-title-monitor{
+    color: #31708f;
+}
+/* --- Panel content --- */
+.panel-content{
+    padding: 15px;
+}
+.panel-content > ul{
+    padding: 0;
+}
+.panel-content li{
+    display: block;
+    margin: 5px 0 5px 0;
+    padding: 5px 0 5px 0;
+    background-color: #bce8f1;
+}
+.panel-content-default{
+    background-color: #ddd;
+    color: black;
+}
+.panel-content-monitor{
+    background-color: #d9edf7;
+    color: #31708f;
+}

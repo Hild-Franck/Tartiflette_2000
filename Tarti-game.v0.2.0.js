@@ -81,6 +81,7 @@ var game = {
                         if(this.y < this.yPrev)
                             this.sprInd = 0;
                         game.animate(this, 1.5);
+                        return true;
                     };
                     game.objects.entities.push(element);
                 }
@@ -208,9 +209,9 @@ var game = {
         this.drawObj(obj, (obj.frame + 3 * obj.sprite), obj.sprInd,obj.x,obj.y, width, height);
         obj.countDraw++;
 
-        if (obj.countDraw >= game.fps/animSpeed)
+        if (obj.countDraw >= Math.round((game.fps/obj.nbrFrame)/animSpeed) * obj.nbrFrame)
             obj.countDraw = 0;
-        if (obj.countDraw % Math.round((game.fps/animSpeed) / obj.nbrFrame) == 0)
+        if (obj.countDraw % Math.round((game.fps/obj.nbrFrame) / animSpeed) == 0)
             obj.frame++;
         if (obj.frame >= obj.nbrFrame)
             obj.frame = 0;
@@ -223,7 +224,8 @@ var game = {
      */
     drawObjects: function(){
         for(var i = 0; i < game.objects.entities.length; i++){
-            game.objects.entities[i].draw();
+            if(!game.objects.entities[i].draw())
+                i--;
         }
         for(i = 0; i < game.objects.gui.length; i++){
             if(!game.objects.gui[i].draw())
@@ -252,14 +254,22 @@ var game = {
     writeText: function(text, x, y, color, opacity, size, align, isStatic){
         this.context.font = typeof size !== "undefined" ? size.toString() +  "px sans-serif" : "10px sans-serif";
         this.context.textAlign = typeof align !== "undefined" ? align : "left";
-        this.context.fillStyle = typeof color !== 'undefined' ? color : "black";
+        this.context.fillStyle = typeof color !== 'undefined' ? color : "white";
         this.context.globalAlpha = typeof opacity !== 'undefined' ? opacity : 1;
         isStatic = typeof isStatic !== 'undefined' ? isStatic : false;
-        if(isStatic)
-            this.context.fillText(text,x,y);
-        else
-            this.context.fillText(text,x + game.xOffSet,y + game.yOffSet);
+
+        this.context.strokeStyle = "black";
+        this.context.lineWidth = 0.5;
+        if(isStatic) {
+            this.context.fillText(text, x, y);
+            this.context.strokeText(text, x, y);
+        }
+        else {
+            this.context.fillText(text, x + game.xOffSet, y + game.yOffSet);
+            this.context.strokeText(text, x + game.xOffSet, y + game.yOffSet);
+        }
         this.context.globalAlpha = 1;
+        this.context.lineWidth = 2;
     },
     /**
      * Constructeur d'un objet de texte spécial
@@ -304,6 +314,8 @@ var game = {
     },
     /**
      * Constructeur d'un objet d'effet spécial
+     * @param {Number} _x Coordonée x où apparait l'effet spécial
+     * @param {Number} _y Coordonnée y où apparait l'effet spécial
      * @param {String} _sprite Le sprite à afficher
      * @param {Number} _nbrFrame Le nombre de frames de l'animation
      * @param {Number} _animSpeed La vitesse d'animation du sprite
@@ -323,6 +335,7 @@ var game = {
         this.isLinked = typeof _isLinked !== "undefined" ? _isLinked : false;
         this.animSpeed = typeof _animSpeed !== "undefined" ? _animSpeed : 1;
 
+        
 
         this.spriteSheet = new Image();
         this.spriteSheet.src = "resources/graphics/fx/" + _sprite + ".png";
@@ -341,6 +354,8 @@ var game = {
                 game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
                 return false;
             }
+            else
+                return true;
         }
     },
     createSpriteFx: function(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked){
@@ -415,8 +430,11 @@ var player = {
     ySpot: 16,
     speed: 4,
 
-    maxHp: 1000,
-    currentHp: 920,
+    maxHp: 10,
+    currentHp: 10,
+
+    maxXp: 20,
+    currXp: 1,
 
     leftSwitch: false,
     rightSwitch: false,
@@ -455,10 +473,22 @@ var player = {
      * Dessine la vie du joueur
      */
     drawLife: function(){
+        //Vie
         game.context.strokeRect(5,5,101,21);
         game.context.fillStyle = "#E00000";
         game.context.fillRect(6,6,this.currentHp / this.maxHp * 99,19);
-        game.writeText("HP",110,20,"E00000",1, 10,"left", true);
+        game.writeText("HP",110,20,"E00000",1, "bold 12","left", true);
+        //Compétences (mana / force / concentration)
+        game.context.strokeRect(5,31,101,21);
+        game.context.fillStyle = "#CC9900";
+        game.context.fillRect(6,32,this.currentHp / this.maxHp * 99,19);
+        game.writeText("Strength",110,46,"CC9900",1, "bold 12","left", true);
+        //Expérience
+        game.context.strokeRect(20,game.canvas.height - 20,game.canvas.width - 40,16);
+        game.context.fillStyle = "#CC9900";
+        game.context.fillRect(21,game.canvas.height - 19,this.currXp / this.maxXp * (game.canvas.width - 42), 14);
+        game.writeText("XP",game.canvas.width/2,game.canvas.height - 25,"CC9900",1, "bold 15","center", true);
+
     },
 
     /**
@@ -508,7 +538,6 @@ var player = {
     }
 };
 //--- Initialisation ---
-debug = new Debug();
 game.init();
 player.init();
 

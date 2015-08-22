@@ -39,6 +39,7 @@
  * @property {Number} xOffSet Nombre de pixel de décalage entre l'origine du dessin et l'origine du canvas sur l'axe x
  * @property {Number} yOffSet Nombre de pixel de décalage entre l'origine du dessin et l'origine du canvas sur l'axe y
  */
+
 var game = {
     /** @lends game */
     canvas: document.getElementById("canvas"),
@@ -48,11 +49,13 @@ var game = {
     xOffSet: 0,
     yOffSet: 0,
     /**
+     * Gère les objets dans le jeu
      * @class
      */
     objects:{
         entities: [],
         gui: [],
+        servTime: 0,
 
         /**
          * Fonction d'ajout d'un objet dans un tableau d'objets
@@ -67,16 +70,57 @@ var game = {
          * @param arr Le tableau à rafraichir
          * @param obj L'objet à rajouter au tableau
          */
-        refresh: function(arr, obj){
-            arr.push(obj);
-            Array.prototype.push.call(this, arr);
-            this.arrange();
+        refresh: function(data){
+            var check = false;
+            var time = new Date();
+            this.servTime = data.date;
+
+            data.enemies.forEach(function(element, index, array){
+                for (var i = 0; i &lt; game.objects.entities.length; i++){
+                    if (element.$loki === game.objects.entities[i].$loki){
+                        game.objects.entities[i].y = element.y;
+                        game.objects.entities[i].x = element.x;
+                        game.objects.entities[i].dirX = element.dirX;
+                        break;
+                    }
+                    else if(element.$loki === undefined)
+                        break;
+                }
+                if(i == game.objects.entities.length) {
+                    console.log("Création d'un objet");
+                    element.xPrev = element.x;
+                    element.yPrev = element.y;
+                    element.sprInd = 0;
+                    element.frame = 0;
+                    element.nbrFrame = 3;
+                    element.countDraw = 0;
+                    element.spriteSheet = new Image();
+                    element.spriteSheet.src = "resources/monster2.png";
+                    element.draw = function () {
+
+                        var time = new Date();
+                        element.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * element.dirX;
+                        if(this.dirX == -1)
+                            this.sprInd = 1;
+                        if(this.dirX == 1)
+                            this.sprInd = 2;
+                        if(this.y > this.yPrev)
+                            this.sprInd = 3;
+                        if(this.y &lt; this.yPrev)
+                            this.sprInd = 0;
+                        game.animate(this, 1.5);
+                        return true;
+                    };
+                    game.objects.entities.push(element);
+                }
+            });
+            game.objects.arrange();
         },
         /**
          * Fonction qui tri les objets selon leur variable y
          */
         arrange: function(){
-                game.objects[0].sort(function(a, b){
+                game.objects.entities.sort(function(a, b){
                     if(a.y &lt; b.y)
                         return -1;
                     if(a.y > b.y)
@@ -177,18 +221,25 @@ var game = {
             if(event.keyCode == 69)
                 player.attack();
         }, true);
+        socket.on("message", function(message){
+            game.objects.refresh(message);
+        });
     },
     /**
      * Anime le sprite d'un objet
-     * @param obj L'objet à animer
+     * @param {Object} obj L'objet à animer
+     * @param {Number} [animSpeed=1] La vitesse d'animation, 1 étant la vitesse normale
+     * @param {Number} [width] La largeur du sprite en pixel
+     * @param {Number} [height] La hauteur du sprite en pixel
      */
-    animate: function(obj){
-        this.drawObj(obj, (obj.frame + 3 * obj.sprite), obj.sprInd,obj.x,obj.y);
+    animate: function(obj, animSpeed, width, height){
+        animSpeed = typeof animSpeed !== "undefined" ? animSpeed : 1;
+        this.drawObj(obj, (obj.frame + 3 * obj.sprite), obj.sprInd,obj.x,obj.y, width, height);
         obj.countDraw++;
 
-        if (obj.countDraw == game.fps)
+        if (obj.countDraw >= game.fps/animSpeed)
             obj.countDraw = 0;
-        if (obj.countDraw % Math.floor(game.fps / obj.nbrFrame) == 0)
+        if (obj.countDraw % Math.round((game.fps/animSpeed) / obj.nbrFrame) == 0)
             obj.frame++;
         if (obj.frame >= obj.nbrFrame)
             obj.frame = 0;
@@ -201,10 +252,12 @@ var game = {
      */
     drawObjects: function(){
         for(var i = 0; i &lt; game.objects.entities.length; i++){
-            game.objects.entities[i].draw();
+            if(!game.objects.entities[i].draw())
+                i--;
         }
         for(i = 0; i &lt; game.objects.gui.length; i++){
-            game.objects.gui[i].draw();
+            if(!game.objects.gui[i].draw())
+                i--;
         }
     },
     drawObj: function(obj,sprIndX,sprIndY,posX,posY,width,height){
@@ -213,35 +266,43 @@ var game = {
         posX = typeof posX !== 'undefined' ? posX : obj.x;
         posY= typeof posY !== 'undefined' ? posY : obj.y;
 
-        game.context.drawImage(obj.spriteSheet,  sprIndX * 32 , sprIndY * 32, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
+        game.context.drawImage(obj.spriteSheet,  sprIndX * 32 * width , sprIndY * 32 * width, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
     },
     /**
      * Fonction permettant d'écirire du texte à l'écran
-     * @param text Le texte à afficher
-     * @param x La coordonnée x de l'affichage
-     * @param y La coordonnée x de l'affichage
-     * @param color La couleur du texte
-     * @param opacity
-     * @param size
-     * @param align
-     * @param isStatic
+     * @param {String} text Le texte à afficher
+     * @param {Number} x La coordonnée x de l'affichage
+     * @param {Number} y La coordonnée x de l'affichage
+     * @param {String} [color="black"] La couleur du texte
+     * @param {Number} [opacity=1] La transparence du texte
+     * @param {Number} [size=10] La taille de la police
+     * @param {String} [align="left"] Le placement du texte
+     * @param {Boolean} [isStatic=false] Défini si le texte suis la est fixe sur l'affichage ou non
      */
     writeText: function(text, x, y, color, opacity, size, align, isStatic){
         this.context.font = typeof size !== "undefined" ? size.toString() +  "px sans-serif" : "10px sans-serif";
         this.context.textAlign = typeof align !== "undefined" ? align : "left";
-        this.context.fillStyle = typeof color !== 'undefined' ? color : "black";
+        this.context.fillStyle = typeof color !== 'undefined' ? color : "white";
         this.context.globalAlpha = typeof opacity !== 'undefined' ? opacity : 1;
         isStatic = typeof isStatic !== 'undefined' ? isStatic : false;
-        if(isStatic)
-            this.context.fillText(text,x,y);
-        else
-            this.context.fillText(text,x + game.xOffSet,y + game.yOffSet);
+
+        this.context.strokeStyle = "black";
+        this.context.lineWidth = 0.5;
+        if(isStatic) {
+            this.context.fillText(text, x, y);
+            this.context.strokeText(text, x, y);
+        }
+        else {
+            this.context.fillText(text, x + game.xOffSet, y + game.yOffSet);
+            this.context.strokeText(text, x + game.xOffSet, y + game.yOffSet);
+        }
         this.context.globalAlpha = 1;
+        this.context.lineWidth = 2;
     },
     /**
      * Constructeur d'un objet de texte spécial
-     * @param _creator L'objet à l'origine de la création du texte
-     * @param _text Le texte à afficher
+     * @param {Object} _creator L'objet à l'origine de la création du texte
+     * @param {String} _text Le texte à afficher
      * @constructor
      */
     TextFx: function(_creator, _text){
@@ -253,25 +314,80 @@ var game = {
         this.y = this.creator.y - 20;
         this.opacity = 1;
 
-
+        /**
+         * Dessine le texte
+         * @returns {Boolean} Si l'objet est encore dans le tableau
+         * @instance
+         */
         this.draw = function(){
             if(this.opacity > 0){
                 game.writeText(this.text,this.x,this.y - this.yOffset,"blue",this.opacity, 15, "center");
                 this.yOffset++;
                 this.opacity -= 0.03;
+                return true;
             }
-            else
+            else {
                 game.objects.gui.splice(game.objects.gui.indexOf(this), 1);
+                return false;
+            }
         }
     },
     /**
      * Fonction qui permet de créer un objet de texte spécial
-     * @param creator Le créateur du texte
-     * @param text Le texte à afficher
-     * @returns {game.TextFx} Retourne l'objet texte
+     * @param {Object} creator Le créateur du texte
+     * @param {String} text Le texte à afficher
      */
     createTxtFx: function(creator, text){
         game.objects.gui.push(new this.TextFx(creator, text));
+    },
+    /**
+     * Constructeur d'un objet d'effet spécial
+     * @param {Number} _x Coordonée x où apparait l'effet spécial
+     * @param {Number} _y Coordonnée y où apparait l'effet spécial
+     * @param {String} _sprite Le sprite à afficher
+     * @param {Number} _nbrFrame Le nombre de frames de l'animation
+     * @param {Number} _animSpeed La vitesse d'animation du sprite
+     * @param {Number} [_loop=0] Le nombre de fois que l'animation doit se lancer
+     * @param {Object} [_linker=undefined] L'objet auquel lier l'effet
+     * @param {Boolean} [_isLinked=false] Détermine si l'effet doit être attaché à un objet
+     * @constructor
+     */
+    SpriteFx: function(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLinked){
+        this.x = _x;
+        this.y = _y;
+
+        this.sprite = 0;
+        this.nbrFrame = _nbrFrame;
+        this.looped = typeof _loop !== "undefined" ? _loop : 0;
+        this.creator = typeof _linker !== "undefined" ? _linker : undefined;
+        this.isLinked = typeof _isLinked !== "undefined" ? _isLinked : false;
+        this.animSpeed = typeof _animSpeed !== "undefined" ? _animSpeed : 1;
+
+        
+
+        this.spriteSheet = new Image();
+        this.spriteSheet.src = "resources/graphics/fx/" + _sprite + ".png";
+        this.frame = 0;
+        this.sprInd = 0;
+        this.countDraw = 0;
+
+        this.xSpot = 16;
+        this.ySpot = 16;
+        /**
+         * Dessine l'effet spécial
+         */
+        this.draw = function(){
+            game.animate(this,this.animSpeed, 1, 1);
+            if(this.frame >= this.nbrFrame - 1 &amp;&amp; this.countDraw == (game.fps/this.animSpeed) - 1){
+                game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
+                return false;
+            }
+            else
+                return true;
+        }
+    },
+    createSpriteFx: function(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked){
+        game.objects.entities.push(new this.SpriteFx(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked));
     },
     /**
      * Fonction lancée à chaque frame
@@ -296,6 +412,23 @@ var game = {
 /**
  * L'objet du joueur
  * @class
+ * @property {Object} spriteSheet Contient le fichier de sprites du personnage
+ * @property {Number} countDraw Compte le nombre de frame
+ * @property {Number} frame Frame de l'animation rn cours
+ * @property {Number} nbrFrame Nombre de frame dans une animation
+ * @property {Number} sprite Origine du spriteSheet du personnage
+ * @property {Number} sprInd Contient le fichier de sprites du personnage
+ * @property {Number} heigth Hauteur d'un sprite en pixel
+ * @property {Number} width Largeur d'un sprite en pixel
+ * @property {Number} x La coordonnée x du personnage
+ * @property {Number} y La coordonnée y du personnage
+ * @property {Number} xPrev La coordonnée y du personnage à la frame précédente
+ * @property {Number} yPrev La coordonnée y du personnage à la frame précédente
+ * @property {Number} xSpot La coordonnée x de l'origine du dessin
+ * @property {Number} ySpot La coordonnée y de l'origine du dessin
+ * @property {Number} speed La vitesse du personnage en pixel
+ * @property {Number} maxHp Le nombre de point de vie maximum pour le personnage
+ * @property {Number} currentHp Le nombre de points de vie actuel du personnage
  */
 var player = {
     spriteSheet: new Image(),
@@ -309,6 +442,14 @@ var player = {
     width: 32,
 
 
+    dirX: 0,
+    dirY: 1,
+    dir: [
+        [0,1],
+        [-1,0],
+        [1,0],
+        [0,-1]
+    ],
     x: 60,
     y: 60,
     xPrev: 0,
@@ -317,8 +458,11 @@ var player = {
     ySpot: 16,
     speed: 4,
 
-    maxHp: 1000,
-    currentHp: 920,
+    maxHp: 10,
+    currentHp: 10,
+
+    maxXp: 20,
+    currXp: 1,
 
     leftSwitch: false,
     rightSwitch: false,
@@ -327,9 +471,9 @@ var player = {
 
     /**
      * Fonction d'initialisation du personnage
-     * @param _sprite Sprite du personnage
-     * @param xStart Coordonnée x de départ du personnage
-     * @param yStart Coordonnée y de départ du personnage
+     * @param {Number} [_sprite=1] Sprite du personnage
+     * @param {Number} [xStart=10] Coordonnée x de départ du personnage
+     * @param {Number} [yStart=10] Coordonnée y de départ du personnage
      */
     init: function(_sprite, xStart, yStart){
         this.spriteSheet.src = "resources/graphics/Actor1.png";
@@ -343,22 +487,36 @@ var player = {
      * Gère l'attaque du personnage
      */
     attack: function(){
-        console.log("Attaque !");
+        console.log(this.x + 30*this.dirX);
+        game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
         game.createTxtFx(this, "Attaque lancée !");
         socket.emit('message', 'Attaque lancée !');
     },
 
     draw: function(){
-        game.animate(this);
+        game.animate(this, 2);
+        return true;
     },
     /**
      * Dessine la vie du joueur
      */
     drawLife: function(){
+        //Vie
         game.context.strokeRect(5,5,101,21);
         game.context.fillStyle = "#E00000";
         game.context.fillRect(6,6,this.currentHp / this.maxHp * 99,19);
-        game.writeText("HP",110,20,"E00000",1, 10,"left", true);
+        game.writeText("HP",110,20,"E00000",1, "bold 12","left", true);
+        //Compétences (mana / force / concentration)
+        game.context.strokeRect(5,31,101,21);
+        game.context.fillStyle = "#CC9900";
+        game.context.fillRect(6,32,this.currentHp / this.maxHp * 99,19);
+        game.writeText("Strength",110,46,"CC9900",1, "bold 12","left", true);
+        //Expérience
+        game.context.strokeRect(20,game.canvas.height - 20,game.canvas.width - 40,16);
+        game.context.fillStyle = "#CC9900";
+        game.context.fillRect(21,game.canvas.height - 19,this.currXp / this.maxXp * (game.canvas.width - 42), 14);
+        game.writeText("XP",game.canvas.width/2,game.canvas.height - 25,"CC9900",1, "bold 15","center", true);
+
     },
 
     /**
@@ -402,11 +560,12 @@ var player = {
                 this.sprInd = 0;
             }
         }
+        this.dirX = this.dir[this.sprInd][0];
+        this.dirY = this.dir[this.sprInd][1];
 
     }
 };
 //--- Initialisation ---
-debug = new Debug();
 game.init();
 player.init();
 
@@ -417,7 +576,8 @@ setInterval(function(){
     debug.monitor("x: ", player.x);
     debug.monitor("y: ", player.y);
     debug.monitor("frame: ", player.frame);
-    console.log(game.objects.gui);
+    debug.monitor("dirX: ", player.dirX);
+    debug.monitor("dirY: ", player.dirY);
     debug.show();
 }, 1000/game.fps);</code></pre>
         </article>
@@ -429,13 +589,13 @@ setInterval(function(){
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="game.html">game</a></li><li><a href="game.map.html">map</a></li><li><a href="game.objects.html">objects</a></li><li><a href="game.TextFx.html">TextFx</a></li><li><a href="player.html">player</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="game.html">game</a></li><li><a href="game.map.html">map</a></li><li><a href="game.objects.html">objects</a></li><li><a href="game.SpriteFx.html">SpriteFx</a></li><li><a href="game.TextFx.html">TextFx</a></li><li><a href="player.html">player</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Thu Aug 06 2015 15:05:39 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Fri Aug 21 2015 23:47:13 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

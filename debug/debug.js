@@ -9,7 +9,7 @@
  */
 function Debug(){
     this.ul = document.getElementById("debug");
-    this.li = [];
+    this.monitoring = [];
     this.occ = [];
     this.ind = 0;
     this.tests = null;
@@ -23,8 +23,14 @@ function Debug(){
      * Permet d'afficher le résultat des test et du monitoring
      */
     this.show = function(){
-        for(var i = 0; i < this.li.length; i++){
-            this.ul.appendChild(this.li[i]);
+        if(this.monitoring.length != 0) {
+            var moniUl = this.ul.appendChild(document.createElement("li"));
+            moniUl.className ="monitoring";
+            moniUl.appendChild(document.createTextNode("Monitoring"));
+            var moniLi = moniUl.appendChild(document.createElement("ul"));
+            for (var i = 0; i < this.monitoring.length; i++) {
+                moniLi.appendChild(this.monitoring[i]);
+            }
         }
     };
 
@@ -36,7 +42,7 @@ function Debug(){
     this.monitor = function(desc, variable){
         var nwLi = document.createElement("li");
         nwLi.appendChild(document.createTextNode(desc + variable));
-        this.li.push(nwLi);
+        this.monitoring.push(nwLi);
 
     };
 
@@ -44,10 +50,10 @@ function Debug(){
      * Permet de supprimer les childNodes de la liste pour pouvoir les générer plus tard
      */
     this.clear = function(){
-        for(var i = 0; i < this.li.length; i++){
-            this.li[i].remove();
+        for(var i = 0; i < this.ul.childNodes.length; i++){
+            this.ul.childNodes[i].remove();
         }
-        this.li = [];
+        this.monitoring = [];
         this.ind = 0;
     };
 
