@@ -28,7 +28,6 @@
 <script src="./socket.io/node_modules/socket.io-client/socket.io.js"></script>
     <script>
         var socket = io.connect('http://localhost:8081');
-        socket.emit('message', 'Client connecté de ' + navigator.userAgent);
     </script>
 <script src="./debug/debug.v0.2.0.js" charset="utf-8"></script>
 <script src="Tarti-game.v0.2.0.js" charset="utf-8"></script>

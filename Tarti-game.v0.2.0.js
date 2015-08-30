@@ -31,23 +31,20 @@ var game = {
 
         /**
          * Fonction d'ajout d'un objet dans un tableau d'objets
-         * @param arr Le tableau dans lequel l'objet est placé
-         * @param obj L'objet à placer
+         * @param {Array} arr Le tableau dans lequel l'objet est placé
+         * @param {Object} obj L'objet à placer
          */
         add: function(arr, obj){
             arr.push(obj);
         },
         /**
          * Fonction qui rafraichi une liste d'objets à afficher
-         * @param arr Le tableau à rafraichir
-         * @param obj L'objet à rajouter au tableau
+         * @param {Object} data Les données serveur à traiter
          */
         refresh: function(data){
-            var check = false;
-            var time = new Date();
             this.servTime = data.date;
 
-            data.enemies.forEach(function(element, index, array){
+            data.enemies.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
                     if (element.$loki === game.objects.entities[i].$loki){
                         game.objects.entities[i].y = element.y;
@@ -349,6 +346,10 @@ var game = {
          * Dessine l'effet spécial
          */
         this.draw = function(){
+            if(this.isLinked && this.creator !== "undefined" ){
+                this.x = this.creator.x;
+                this.y = this.creator.y;
+            }
             game.animate(this,this.animSpeed, 1, 1);
             if(this.frame >= this.nbrFrame - 1 && this.countDraw == (game.fps/this.animSpeed) - 1){
                 game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
@@ -368,6 +369,10 @@ var game = {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.map.drawMap();
         player.update();
+        socket.emit('message',{
+            x: player.x,
+            y: player.y
+        });
         this.portview(player,100,100);
         game.drawObjects();
         //player.draw();
@@ -462,7 +467,10 @@ var player = {
         console.log(this.x + 30*this.dirX);
         game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
         game.createTxtFx(this, "Attaque lancée !");
-        socket.emit('message', 'Attaque lancée !');
+        socket.emit('attack', {
+            x: this.x + 30*this.dirX,
+            y: this.y + 30*this.dirY
+        });
     },
 
     draw: function(){
@@ -477,17 +485,17 @@ var player = {
         game.context.strokeRect(5,5,101,21);
         game.context.fillStyle = "#E00000";
         game.context.fillRect(6,6,this.currentHp / this.maxHp * 99,19);
-        game.writeText("HP",110,20,"E00000",1, "bold 12","left", true);
+        game.writeText("HP",110,20,"E00000",1, 12,"left", true);
         //Compétences (mana / force / concentration)
         game.context.strokeRect(5,31,101,21);
         game.context.fillStyle = "#CC9900";
         game.context.fillRect(6,32,this.currentHp / this.maxHp * 99,19);
-        game.writeText("Strength",110,46,"CC9900",1, "bold 12","left", true);
+        game.writeText("Strength",110,46,"CC9900",1, 12,"left", true);
         //Expérience
         game.context.strokeRect(20,game.canvas.height - 20,game.canvas.width - 40,16);
         game.context.fillStyle = "#CC9900";
         game.context.fillRect(21,game.canvas.height - 19,this.currXp / this.maxXp * (game.canvas.width - 42), 14);
-        game.writeText("XP",game.canvas.width/2,game.canvas.height - 25,"CC9900",1, "bold 15","center", true);
+        game.writeText("XP",game.canvas.width/2,game.canvas.height - 25,"CC9900",1, 15,"center", true);
 
     },
 
