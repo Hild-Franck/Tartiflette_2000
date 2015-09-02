@@ -7,7 +7,8 @@ module.exports = {
     level: 1,
     xp: 0,
     strength: 1,
-    stamina: 10,
+    maxStm: 10,
+    currentStm: 10,
     currHp: 10,
     maxHp: 10
 };

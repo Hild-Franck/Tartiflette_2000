@@ -43,7 +43,11 @@ var game = {
          */
         refresh: function(data){
             this.servTime = data.date;
-
+            data.fx.forEach(function(element){
+                game.createSpriteFx(element.x, element.y, element.graphic, 3, 5);
+            });
+            if(data.fx.length > 0)
+                console.log("Poulet !");
             data.enemies.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
                     if (element.$loki === game.objects.entities[i].$loki){
@@ -51,7 +55,6 @@ var game = {
                             game.objects.entities[i].y = element.y;
                             game.objects.entities[i].x = element.x;
                             game.objects.entities[i].dirX = element.dirX;
-                            console.log(element.hit);
                             if (!(element.hit === null))
                                 game.createTxtFx(game.objects.entities[i], element.hit.damage);
                         }
@@ -202,8 +205,10 @@ var game = {
         socket.on("message", function(message){
             game.objects.refresh(message);
         });
-        socket.on("player", function(player){
-            console.log(player);
+        socket.on("updtPly", function(plyData){
+            player.currentStm = plyData.currentStm;
+            player.currHp = plyData.currentHp;
+            player.currXp = plyData.xp;
         });
     },
     /**
@@ -452,6 +457,9 @@ var player = {
     maxHp: 10,
     currentHp: 10,
 
+    maxStm: 10,
+    currentStm: 10,
+
     maxXp: 20,
     currXp: 0,
 
@@ -478,7 +486,7 @@ var player = {
      * Gère l'attaque du personnage
      */
     attack: function(type){
-        game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
+        //game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
         socket.emit('attack', type);
     },
 
@@ -498,7 +506,7 @@ var player = {
         //Compétences (mana / force / concentration)
         game.context.strokeRect(5,31,101,21);
         game.context.fillStyle = "#CC9900";
-        game.context.fillRect(6,32,this.currentHp / this.maxHp * 99,19);
+        game.context.fillRect(6,32,this.currentStm / this.maxStm * 99,19);
         game.writeText("Stamina",110,46,"CC9900",1, 12,"left", true);
         //Expérience
         game.context.strokeRect(20,game.canvas.height - 20,game.canvas.width - 40,16);
