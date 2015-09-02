@@ -47,16 +47,25 @@ var game = {
             data.enemies.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
                     if (element.$loki === game.objects.entities[i].$loki){
-                        game.objects.entities[i].y = element.y;
-                        game.objects.entities[i].x = element.x;
-                        game.objects.entities[i].dirX = element.dirX;
+                        if(!element.dead) {
+                            game.objects.entities[i].y = element.y;
+                            game.objects.entities[i].x = element.x;
+                            game.objects.entities[i].dirX = element.dirX;
+                            console.log(element.hit);
+                            if (!(element.hit === null))
+                                game.createTxtFx(game.objects.entities[i], element.hit.damage);
+                        }
+                        else {
+                            game.objects.entities.splice(i, 1);
+                            i--;
+                        }
                         break;
                     }
                     else if(element.$loki === undefined)
                         break;
+
                 }
-                if(i == game.objects.entities.length) {
-                    console.log("Création d'un objet");
+                if(i == game.objects.entities.length && !element.dead) {
                     element.xPrev = element.x;
                     element.yPrev = element.y;
                     element.sprInd = 0;
@@ -188,10 +197,13 @@ var game = {
             if(event.keyCode == 83)
                 player.downSwitch = false;
             if(event.keyCode == 69)
-                player.attack();
+                player.attack("attackOne");
         }, true);
         socket.on("message", function(message){
             game.objects.refresh(message);
+        });
+        socket.on("player", function(player){
+            console.log(player);
         });
     },
     /**
@@ -234,8 +246,8 @@ var game = {
         height = typeof height !== 'undefined' ?  height : 1;
         posX = typeof posX !== 'undefined' ? posX : obj.x;
         posY= typeof posY !== 'undefined' ? posY : obj.y;
-
         game.context.drawImage(obj.spriteSheet,  sprIndX * 32 * width , sprIndY * 32 * width, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
+
     },
     /**
      * Fonction permettant d'écirire du texte à l'écran
@@ -290,7 +302,7 @@ var game = {
          */
         this.draw = function(){
             if(this.opacity > 0){
-                game.writeText(this.text,this.x,this.y - this.yOffset,"blue",this.opacity, 15, "center");
+                game.writeText(this.text,this.x,this.y - this.yOffset,"red",this.opacity, 15, "center");
                 this.yOffset++;
                 this.opacity -= 0.03;
                 return true;
@@ -371,7 +383,9 @@ var game = {
         player.update();
         socket.emit('message',{
             x: player.x,
-            y: player.y
+            y: player.y,
+            dirX: player.dirX,
+            dirY: player.dirY
         });
         this.portview(player,100,100);
         game.drawObjects();
@@ -439,7 +453,7 @@ var player = {
     currentHp: 10,
 
     maxXp: 20,
-    currXp: 1,
+    currXp: 0,
 
     leftSwitch: false,
     rightSwitch: false,
@@ -463,14 +477,9 @@ var player = {
     /**
      * Gère l'attaque du personnage
      */
-    attack: function(){
-        console.log(this.x + 30*this.dirX);
+    attack: function(type){
         game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
-        game.createTxtFx(this, "Attaque lancée !");
-        socket.emit('attack', {
-            x: this.x + 30*this.dirX,
-            y: this.y + 30*this.dirY
-        });
+        socket.emit('attack', type);
     },
 
     draw: function(){
@@ -490,7 +499,7 @@ var player = {
         game.context.strokeRect(5,31,101,21);
         game.context.fillStyle = "#CC9900";
         game.context.fillRect(6,32,this.currentHp / this.maxHp * 99,19);
-        game.writeText("Strength",110,46,"CC9900",1, 12,"left", true);
+        game.writeText("Stamina",110,46,"CC9900",1, 12,"left", true);
         //Expérience
         game.context.strokeRect(20,game.canvas.height - 20,game.canvas.width - 40,16);
         game.context.fillStyle = "#CC9900";

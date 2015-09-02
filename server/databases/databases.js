@@ -4,6 +4,8 @@
 
 var loki = require('lokijs');
 var enemies = require('../entities/enemies.js');
+var attacks = require('../entities/attacks.js');
+var players = require('../entities/players.js');
 var EventEmitter = require('events').EventEmitter;
 
 module.exports = new EventEmitter();
@@ -13,7 +15,9 @@ var db = new loki('game.json');
 
 console.log("Chargement de la base de données");
 db.loadDatabase({}, function(){
-    if(db.getCollection('Players') !== null && db.getCollection('EnemiesOnMap') !== null){
+    if(db.getCollection('Players') !== null &&
+        db.getCollection('EnemiesOnMap') !== null &&
+        db.getCollection('Attacks') !== null){
         console.log("Base de données chargée");
         module.exports.database = db;
         module.exports.emit('ready');
@@ -22,13 +26,24 @@ db.loadDatabase({}, function(){
         console.log("Initialisation de la base de donnée...");
         if(db.getCollection('Players') === null){
             var playersDb = db.addCollection('Players');
+            playersDb.insert(players);
+            console.log("Base de donnée Player crée");
         }
         if(db.getCollection('EnemiesOnMap') === null){
             var enemiesOnMapDb = db.addCollection('EnemiesOnMap');
             enemiesOnMapDb.insert(new enemies.Flower(10,10));
             enemiesOnMapDb.insert(new enemies.Flower(300, 300));
+            console.log("Base de donnée EnemiesOnMap crée");
         }
-        console.log("Bases de données créée");
+        if(db.getCollection('Attacks') === null){
+            var attacksDb = db.addCollection('Attacks');
+            for(var attack in attacks) {
+                if(attacks.hasOwnProperty(attack))
+                    attacksDb.insert(attacks[attack]);
+            }
+            console.log("Base de donnée Attacks crée");
+        }
+        console.log("Bases de données créées");
         db.saveDatabase();
         module.exports.database = db;
         module.exports.emit('ready');
