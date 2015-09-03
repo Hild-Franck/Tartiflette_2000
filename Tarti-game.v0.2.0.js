@@ -375,10 +375,14 @@ var game = {
         this.draw = function(){
             if(this.isLinked && this.creator !== "undefined"){
                 this.x = this.creator.x;
-                this.y = this.creator.y + 8;
+                this.y = this.creator.y + 4;
             }
             game.animate(this,this.animSpeed, 1, 1);
-            if((this.frame >= this.nbrFrame - 1 && this.sprInd == Math.floor(this.nbrFrame / (this.spriteSheet.width / 32))  && this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
+            console.log("***************");
+            console.log("Frame: " + (this.frame >= this.nbrFrame - 1));
+            console.log("sprInd: " + (Math.floor(this.nbrFrame / (this.spriteSheet.width / 32))));
+            console.log("***************");
+            if((this.frame >= this.nbrFrame - 1 && this.sprInd == Math.floor((this.nbrFrame-1) / (this.spriteSheet.width / 32))  && this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
                 if(!this.looped || this.stop) {
                     game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
                     return false;
