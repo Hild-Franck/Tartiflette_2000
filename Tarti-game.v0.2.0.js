@@ -46,8 +46,6 @@ var game = {
             data.fx.forEach(function(element){
                 game.createSpriteFx(element.x, element.y, element.graphic, 3, 5);
             });
-            if(data.fx.length > 0)
-                console.log("Poulet !");
             data.enemies.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
                     if (element.$loki === game.objects.entities[i].$loki){
@@ -189,6 +187,8 @@ var game = {
                 player.upSwitch = true;
             if(event.keyCode == 83)
                 player.downSwitch = true;
+            if(event.keyCode == 104)
+                player.concentrate();
         }, true);
         addEventListener("keyup", function(event){
             if(event.keyCode == 68)
@@ -199,8 +199,12 @@ var game = {
                 player.upSwitch = false;
             if(event.keyCode == 83)
                 player.downSwitch = false;
-            if(event.keyCode == 69)
+            if(event.keyCode == 100)
                 player.attack("attackOne");
+            if(event.keyCode == 104){
+                player.conc.stop = true;
+                player.conc = null;
+            }
         }, true);
         socket.on("message", function(message){
             game.objects.refresh(message);
@@ -220,7 +224,8 @@ var game = {
      */
     animate: function(obj, animSpeed, width, height){
         animSpeed = typeof animSpeed !== "undefined" ? animSpeed : 1;
-        this.drawObj(obj, (obj.frame + 3 * obj.sprite), obj.sprInd,obj.x,obj.y, width, height);
+        var ind = 3; //obj === player ? 3 : 1;
+        this.drawObj(obj, (obj.frame % (obj.spriteSheet.width / 32) + ind * obj.sprite), obj.sprInd,obj.x,obj.y, width, height);
         obj.countDraw++;
 
         if (obj.countDraw >= Math.round((game.fps/obj.nbrFrame)/animSpeed) * obj.nbrFrame)
@@ -232,6 +237,9 @@ var game = {
 
         if(obj.xPrev == obj.x && obj.yPrev == obj.y)
             obj.frame = 1;
+        if((obj.frame - (obj.spriteSheet.width / 32) * obj.sprInd) >= obj.spriteSheet.width / 32 && ind == 3) {
+            obj.sprInd += 1;
+        }
     },
     /**
      * Dessine les objets listés
@@ -333,7 +341,7 @@ var game = {
      * @param {String} _sprite Le sprite à afficher
      * @param {Number} _nbrFrame Le nombre de frames de l'animation
      * @param {Number} _animSpeed La vitesse d'animation du sprite
-     * @param {Number} [_loop=0] Le nombre de fois que l'animation doit se lancer
+     * @param {Boolean} [_loop=false] Le nombre de fois que l'animation doit se lancer
      * @param {Object} [_linker=undefined] L'objet auquel lier l'effet
      * @param {Boolean} [_isLinked=false] Détermine si l'effet doit être attaché à un objet
      * @constructor
@@ -344,10 +352,12 @@ var game = {
 
         this.sprite = 0;
         this.nbrFrame = _nbrFrame;
-        this.looped = typeof _loop !== "undefined" ? _loop : 0;
+        this.looped = typeof _loop !== "undefined" ? _loop : false;
         this.creator = typeof _linker !== "undefined" ? _linker : undefined;
         this.isLinked = typeof _isLinked !== "undefined" ? _isLinked : false;
         this.animSpeed = typeof _animSpeed !== "undefined" ? _animSpeed : 1;
+
+        this.stop = false
 
         
 
@@ -363,21 +373,30 @@ var game = {
          * Dessine l'effet spécial
          */
         this.draw = function(){
-            if(this.isLinked && this.creator !== "undefined" ){
+            if(this.isLinked && this.creator !== "undefined"){
                 this.x = this.creator.x;
-                this.y = this.creator.y;
+                this.y = this.creator.y + 8;
             }
             game.animate(this,this.animSpeed, 1, 1);
-            if(this.frame >= this.nbrFrame - 1 && this.countDraw == (game.fps/this.animSpeed) - 1){
-                game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
-                return false;
+            if((this.frame >= this.nbrFrame - 1 && this.sprInd == Math.floor(this.nbrFrame / (this.spriteSheet.width / 32))  && this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
+                if(!this.looped || this.stop) {
+                    game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
+                    return false;
+                }
+                else{
+                    this.frame = 0;
+                    this.sprInd = 0;
+                    this.countDraw = 0;
+                    return true;
+                }
             }
             else
                 return true;
         }
     },
     createSpriteFx: function(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked){
-        game.objects.entities.push(new this.SpriteFx(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked));
+        var ind = game.objects.entities.push(new this.SpriteFx(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked));
+        return game.objects.entities[ind - 1];
     },
     /**
      * Fonction lancée à chaque frame
@@ -390,7 +409,8 @@ var game = {
             x: player.x,
             y: player.y,
             dirX: player.dirX,
-            dirY: player.dirY
+            dirY: player.dirY,
+            concentrate: player.conc !== null
         });
         this.portview(player,100,100);
         game.drawObjects();
@@ -463,6 +483,8 @@ var player = {
     maxXp: 20,
     currXp: 0,
 
+    conc: null,
+
     leftSwitch: false,
     rightSwitch: false,
     upSwitch: false,
@@ -489,6 +511,10 @@ var player = {
         //game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
         socket.emit('attack', type);
     },
+    concentrate: function(){
+        if(this.conc === null)
+            this.conc = game.createSpriteFx(player.x, player.y, "Special10", 7, 1, true, player, true);
+    },
 
     draw: function(){
         game.animate(this, 2);
@@ -513,7 +539,6 @@ var player = {
         game.context.fillStyle = "#CC9900";
         game.context.fillRect(21,game.canvas.height - 19,this.currXp / this.maxXp * (game.canvas.width - 42), 14);
         game.writeText("XP",game.canvas.width/2,game.canvas.height - 25,"CC9900",1, 15,"center", true);
-
     },
 
     /**
@@ -575,5 +600,6 @@ setInterval(function(){
     debug.monitor("frame: ", player.frame);
     debug.monitor("dirX: ", player.dirX);
     debug.monitor("dirY: ", player.dirY);
+    debug.monitor("conc: ", player.conc);
     debug.show();
 }, 1000/game.fps);

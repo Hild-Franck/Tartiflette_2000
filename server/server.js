@@ -95,7 +95,6 @@ setInterval(function(){
     data.date = date.getTime();
     data.enemies = enemies.find();
     data.fx = fx;
-    console.log(data.fx);
 
     io.sockets.emit('message', data);
     eventEmitter.emit('chicken');
@@ -112,19 +111,32 @@ io.sockets.on('connection', function(socket){
     var player = {};
     player.db = players.get(1);
     player.coll = {};
+    player.recover = 0;
     console.log('Un client est connecté !');
     socket.on('message', function (message) {
         for(prop in message)
             player.coll[prop] = message[prop];
         player.coll.width = 32;
         player.coll.height = 32;
+        if(message.concentrate){
+            if(player.recover == 0)
+                player.recover = (new Date()).getTime();
+            if((new Date()).getTime() - player.recover >= 1000){
+                console.log(player.db.currentStm);
+                player.db.currentStm += 1;
+                players.update(player.db);
+                player.recover = 0;
+            }
+        }
+        else
+            player.recover = 0;
+
     });
     socket.on('attack', function(attack){
         var date = new Date();
         if(lastAtck === undefined || date.getTime() - lastAtck  > 1000) {
             lastAtck = date.getTime();
             player.db.currentStm -= 1;
-            console.log("Attaque lancée !");
             var atckInd = players.get(1).attack;
             var atckPerks = attacks.get(atckInd);
             atckPerks.x = player.coll.x + player.coll.dirX * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
