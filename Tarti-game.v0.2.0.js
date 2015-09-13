@@ -17,6 +17,8 @@ var game = {
     canvas: document.getElementById("canvas"),
     context: canvas.getContext("2d"),
 
+    timeTest: (new Date()).getTime(),
+    lastTimeTest: 0,
     fps: 60,
     xOffSet: 0,
     yOffSet: 0,
@@ -42,11 +44,13 @@ var game = {
          * @param {Object} data Les données serveur à traiter
          */
         refresh: function(data){
-            this.servTime = data.date;
-            data.fx.forEach(function(element){
+            console.log(data);
+            this.servTime = data.servData.date;
+            data.servData.fx.forEach(function(element){
                 game.createSpriteFx(element.x, element.y, element.graphic, 3, 5);
             });
-            data.enemies.forEach(function(element){
+
+            data.servData.enemies.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
                     if (element.$loki === game.objects.entities[i].$loki){
                         if(!element.dead) {
@@ -93,7 +97,58 @@ var game = {
                     game.objects.entities.push(element);
                 }
             });
+
+            /*data.servData.players.forEach(function(element){
+                for (var i = 0; i < game.objects.entities.length; i++){
+                    if (element.$loki === game.objects.entities[i].$loki){
+                        if(!element.dead) {
+                            game.objects.entities[i].y = element.y;
+                            game.objects.entities[i].x = element.x;
+                            game.objects.entities[i].dirX = element.dirX;
+                            if (!(element.hit === null))
+                                game.createTxtFx(game.objects.entities[i], element.hit.damage);
+                        }
+                        else {
+                            game.objects.entities.splice(i, 1);
+                            i--;
+                        }
+                        break;
+                    }
+                    else if(element.$loki === undefined)
+                        break;
+
+                }
+                if(i == game.objects.entities.length && !element.dead) {
+                    element.xPrev = element.x;
+                    element.yPrev = element.y;
+                    element.sprInd = 0;
+                    element.frame = 0;
+                    element.nbrFrame = 3;
+                    element.countDraw = 0;
+                    element.spriteSheet = new Image();
+                    element.spriteSheet.src = "resources/monster2.png";
+                    element.draw = function () {
+
+                        var time = new Date();
+                        element.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * element.dirX;
+                        if(this.dirX == -1)
+                            this.sprInd = 1;
+                        if(this.dirX == 1)
+                            this.sprInd = 2;
+                        if(this.y > this.yPrev)
+                            this.sprInd = 3;
+                        if(this.y < this.yPrev)
+                            this.sprInd = 0;
+                        game.animate(this, 1.5);
+                        return true;
+                    };
+                    game.objects.entities.push(element);
+                }
+            });*/
             game.objects.arrange();
+            player.currentStm = data.plyData.currentStm;
+            player.currHp = data.plyData.currentHp;
+            player.currXp = data.plyData.xp;
         },
         /**
          * Fonction qui tri les objets selon leur variable y
@@ -178,15 +233,23 @@ var game = {
      * Ajoute les gestionnaires d'évènement
      */
     addListeners: function(){
-        addEventListener("keydown", function(event){
-            if(event.keyCode == 68)
+        addEventListener("keydown", function(event) {
+            if (event.keyCode == 68) {
                 player.rightSwitch = true;
-            if(event.keyCode == 81)
+                player.poi = 2;
+            }
+            if(event.keyCode == 81) {
                 player.leftSwitch = true;
-            if(event.keyCode == 90)
+                player.poi = 1;
+            }
+            if(event.keyCode == 90) {
                 player.upSwitch = true;
-            if(event.keyCode == 83)
+                player.poi = 3;
+            }
+            if(event.keyCode == 83) {
                 player.downSwitch = true;
+                player.poi = 0;
+            }
             if(event.keyCode == 104)
                 player.concentrate();
         }, true);
@@ -208,11 +271,6 @@ var game = {
         }, true);
         socket.on("message", function(message){
             game.objects.refresh(message);
-        });
-        socket.on("updtPly", function(plyData){
-            player.currentStm = plyData.currentStm;
-            player.currHp = plyData.currentHp;
-            player.currXp = plyData.xp;
         });
     },
     /**
@@ -378,10 +436,6 @@ var game = {
                 this.y = this.creator.y + 4;
             }
             game.animate(this,this.animSpeed, 1, 1);
-            console.log("***************");
-            console.log("Frame: " + (this.frame >= this.nbrFrame - 1));
-            console.log("sprInd: " + (Math.floor(this.nbrFrame / (this.spriteSheet.width / 32))));
-            console.log("***************");
             if((this.frame >= this.nbrFrame - 1 && this.sprInd == Math.floor((this.nbrFrame-1) / (this.spriteSheet.width / 32))  && this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
                 if(!this.looped || this.stop) {
                     game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
@@ -470,8 +524,10 @@ var player = {
         [1,0],
         [0,-1]
     ],
-    x: 60,
-    y: 60,
+    key: {id: -1, date: 0},
+    prevKey: {id: -1, date: 0},
+    x: 50,
+    y: 50,
     xPrev: 0,
     yPrev: 0,
     xSpot: 16,
@@ -489,10 +545,15 @@ var player = {
 
     conc: null,
 
-    leftSwitch: false,
+    keys: 0,
     rightSwitch: false,
+    leftSwitch: false,
     upSwitch: false,
     downSwitch: false,
+
+    lastKey: 0,
+
+    poi: -1,
 
     /**
      * Fonction d'initialisation du personnage
@@ -549,43 +610,37 @@ var player = {
      * Fonction de mise à jour du personnage à chaque frame
      */
     update: function(){
+        this.prevKey.id = this.key.id;
+        this.key.id = -1;
         this.xPrev = this.x;
         this.yPrev = this.y;
+        if(this.rightSwitch) {
+            player.poi = 2;
+        }
+        if(this.leftSwitch) {
+            player.poi = 1;
+        }
+        if(this.upSwitch) {
+            player.poi = 3;
+        }
+        if(this.downSwitch) {
+            player.poi = 0;
+        }
 
-        if(this.leftSwitch && this.upSwitch){
-            this.x -= this.speed/Math.sqrt(2);
-            this.y -= this.speed/Math.sqrt(2);
+        game.lastTimeTest = game.timeTest;
+        game.timeTest = (new Date()).getTime();
+        if((this.rightSwitch || this.leftSwitch || this.upSwitch || this.downSwitch)){
+            this.x += 0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest);
+            this.y += 0.06 * this.speed * this.dir[this.poi][1] * (game.timeTest - game.lastTimeTest);
+            this.sprInd = this.poi;
+            this.key.id = player.poi;
         }
-        else if(this.leftSwitch && this.downSwitch){
-            this.x -= this.speed/Math.sqrt(2);
-            this.y += this.speed/Math.sqrt(2);
-        }
-        else if(this.rightSwitch && this.upSwitch){
-            this.x += this.speed/Math.sqrt(2);
-            this.y -= this.speed/Math.sqrt(2);
-        }
-        else if(this.rightSwitch && this.downSwitch){
-            this.x += this.speed/Math.sqrt(2);
-            this.y += this.speed/Math.sqrt(2);
-        }
-        else{
-            if(this.leftSwitch) {
-                this.x -= this.speed;
-                this.sprInd = 1;
-            }
-            if(this.rightSwitch) {
-                this.x += this.speed;
-                this.sprInd = 2;
-            }
-            if(this.upSwitch) {
-                this.y -= this.speed;
-                this.sprInd = 3;
-            }
-            if(this.downSwitch) {
-                this.y += this.speed;
-                this.sprInd = 0;
-            }
-        }
+        else
+            this.key.id = -1;
+        this.key.date = (new Date()).getTime();
+        if(this.key.id != this.prevKey.id)
+            socket.emit("movement", this.key);
+
         this.dirX = this.dir[this.sprInd][0];
         this.dirY = this.dir[this.sprInd][1];
 
@@ -600,10 +655,11 @@ setInterval(function(){
     debug.clear();
     game.update();
     debug.monitor("x: ", player.x);
+    debug.monitor("x round: ", Math.round(player.x));
     debug.monitor("y: ", player.y);
     debug.monitor("frame: ", player.frame);
     debug.monitor("dirX: ", player.dirX);
     debug.monitor("dirY: ", player.dirY);
-    debug.monitor("conc: ", player.conc);
+    debug.monitor("poi: ", player.poi);
     debug.show();
 }, 1000/game.fps);

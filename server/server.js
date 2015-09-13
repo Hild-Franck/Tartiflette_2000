@@ -16,9 +16,19 @@ var attacks;
 var timers = [];
 var data = {};
 var attacksArr = [];
+var playersAvailable = [];
 var fx = [];
 var time = 0;
-
+//---Count----
+var count = 0;
+var playersConnected = [];
+//---Directions---
+var DIRECTION = [
+    [0,1],
+    [-1,0],
+    [1,0],
+    [0,-1]
+];
 //---DATABASE---
 //---------------------------------------------
 
@@ -52,8 +62,8 @@ var io = require('socket.io').listen(server);
 //---SERVER LOOP---
 //---------------------------------------------
 setInterval(function(){
-    tree.clear();
-    tree.insert(enemies.find());
+    /*tree.clear();
+    tree.insert(enemies.find());*/
     var date = new Date();
     for(var i = 0; i < enemies.find().length; i++){
         var enemy = enemies.find()[i];
@@ -70,11 +80,9 @@ setInterval(function(){
         for(var j = 0; j < attacksArr.length; j++){
             if(collision("rectangle", attacksArr[j], enemy)){
                 enemy.currHealth -= attacksArr[j].baseDamage + attacksArr[j].plrDmg;
-                console.log("Health of the enemy number " + enemy.$loki + ": " + enemy.currHealth);
                 if(enemy.currHealth <= 0) {
                     enemy.dead = true;
                     enemy.deadTime = date.getTime();
-                    console.log(attacksArr[j].creator);
                     attacksArr[j].creator.xp += 1;
                     players.update(attacksArr[j].creator);
                 }
@@ -82,6 +90,9 @@ setInterval(function(){
                     damage: attacksArr[j].baseDamage + attacksArr[j].plrDmg,
                     type: "physical",
                     hitter: attacksArr[j].creator
+                }
+                if(attacksArr[j].creator.perks.hlthSteal !== 0){
+                    attacksArr[j].creator.currHealth += 1;
                 }
             }
         }
@@ -94,35 +105,103 @@ setInterval(function(){
     attacksArr.length = 0;
     data.date = date.getTime();
     data.enemies = enemies.find();
+    data.players = players.get(1);
     data.fx = fx;
 
-    io.sockets.emit('message', data);
+    //io.sockets.emit('message', data);
     eventEmitter.emit('chicken');
     attacks.length = 0;
     fx.length = 0;
 }, 1000/60);
 
-io.sockets.on('connection', function(socket){
-
-    eventEmitter.on('chicken', function(){
-        socket.emit('updtPly', player.db);
-    });
-    var lastAtck;
+//---SOCKET---
+//---------------------------------------------
+io.sockets.on('connection', function (socket) {
+    //--Local variable---
     var player = {};
-    player.db = players.get(1);
-    player.coll = {};
-    player.recover = 0;
-    console.log('Un client est connecté !');
+    var lastAtck;
+    var lastKey = 0;
+    var freeSlot = true;
+    var uuid;
+    var register = false;
+
+    //---Register event from client---
+    socket.on('register', function (_uuid) {
+        uuid = _uuid;
+        //Check if this uuid already exist
+        if (playersConnected[uuid] !== undefined) {
+            if (playersConnected[uuid].disconnected) {
+                clearTimeout(player.timeout);
+                playersConnected[uuid].disconnected = false;
+            }
+            player.db = players.get(playersConnected[uuid].id);
+            console.log("Player number " + playersConnected[uuid].id + " is reconnected");
+        }
+        else {
+            //Check if a player slot is available
+            for (var i = 0; i < 2; i++) {
+                if (!(playersAvailable[i]) || playersAvailable[i] === undefined) {
+                    break;
+                }
+                if (i == 1) {
+                    freeSlot = false;
+                    console.log("Server full");
+                }
+            }
+            if (freeSlot) {
+                //Create player if the server is not full
+                playersConnected[uuid] = {id: i + 1, disconnected: false};
+                playersAvailable[i] = false;
+                player.db = players.get(playersConnected[uuid].id);
+                console.log("Player number " + playersConnected[uuid].id + " is connected");
+            }
+        }
+        register = true;
+    });
+    //---Disconnect event if no response from client---
+    socket.on('disconnect', function () {
+        playersConnected[uuid].disconnected = true;
+        console.log("Player number " + playersConnected[uuid].id + " lost connexion.");
+
+        player.timeout = setTimeout(function () {
+            if (playersConnected[uuid] !== undefined && playersConnected[uuid].disconnected) {
+                playersAvailable[playersConnected[uuid].id] = true;
+                console.log("Player number " + playersConnected[uuid].id + " is deconnected.");
+                delete playersConnected[uuid];
+            }
+        }, 5000)
+    });
+    //---Handle player movement---
+    socket.on("movement", function(key){
+        //Update positions
+        var time = key.date - lastKey;
+        var lastX = player.x;
+        if(lastKey != 0) {
+            if(player.key != -1) {
+                player.db.x += (0.06 * player.db.speed * DIRECTION[player.key][0]) * (key.date - lastKey);
+                player.db.y += (0.06 * player.db.speed * DIRECTION[player.key][1]) * ((new Date()).getTime() - lastKey);
+            }
+            console.log("Time: " + ((new Date()).getTime() - key.date));
+            console.log("x position of player: " + player.db.x);
+            console.log("x round position of player: " + Math.round(player.db.x));
+            console.log("Distance: " + Math.abs(lastX - player.db.x));
+            console.log("Speed: " + ((Math.abs(lastX - player.db.x))/time));
+
+        }
+        lastKey = key.date;
+        player.key = key.id;
+        players.update(player.db);
+    });
+/*
     socket.on('message', function (message) {
-        for(prop in message)
+        for (prop in message)
             player.coll[prop] = message[prop];
         player.coll.width = 32;
         player.coll.height = 32;
-        if(message.concentrate){
-            if(player.recover == 0)
+        if (message.concentrate) {
+            if (player.recover == 0)
                 player.recover = (new Date()).getTime();
-            if((new Date()).getTime() - player.recover >= 1000){
-                console.log(player.db.currentStm);
+            if ((new Date()).getTime() - player.recover >= 1000 && player.db.currentStm < player.db.maxStm) {
                 player.db.currentStm += 1;
                 players.update(player.db);
                 player.recover = 0;
@@ -132,30 +211,39 @@ io.sockets.on('connection', function(socket){
             player.recover = 0;
 
     });
-    socket.on('attack', function(attack){
+    socket.on('attack', function (attack) {
         var date = new Date();
-        if(lastAtck === undefined || date.getTime() - lastAtck  > 1000) {
+        if (lastAtck === undefined || date.getTime() - lastAtck > (1000 - player.db.perks.coolDown * 25) && player.db.currentStm > 0) {
             lastAtck = date.getTime();
             player.db.currentStm -= 1;
             var atckInd = players.get(1).attack;
             var atckPerks = attacks.get(atckInd);
             atckPerks.x = player.coll.x + player.coll.dirX * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
             atckPerks.y = player.coll.y + player.coll.dirY * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
-            atckPerks.x += (32-atckPerks.baseAoE)/2;
-            atckPerks.y += (32-atckPerks.baseAoE)/2;
+            atckPerks.x += (32 - atckPerks.baseAoE) / 2;
+            atckPerks.y += (32 - atckPerks.baseAoE) / 2;
             atckPerks.width = atckPerks.baseAoE;
             atckPerks.height = atckPerks.baseAoE;
-            atckPerks.plrDmg = player.db.strength;
+            atckPerks.plrDmg = player.db.strength + player.db.perks.damage;
             atckPerks.creator = player.db;
             attacksArr.push(atckPerks);
             players.update(player.db);
             fx.push({
-                x: atckPerks.x - (32-atckPerks.baseAoE)/2,
-                y: atckPerks.y - (32-atckPerks.baseAoE)/2,
+                x: atckPerks.x - (32 - atckPerks.baseAoE) / 2,
+                y: atckPerks.y - (32 - atckPerks.baseAoE) / 2,
                 graphic: atckPerks.graphic
             });
         }
-    })
+    });*/
+
+    eventEmitter.on('chicken', function () {
+        if (register) {
+            socket.emit('message', {
+                plyData: player.db,
+                servData: data
+            });
+        }
+    });
 });
 
 
