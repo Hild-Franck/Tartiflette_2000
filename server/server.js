@@ -184,7 +184,7 @@ io.sockets.on('connection', function (socket) {
             console.log("Time: " + (key.date - lastKey));
             console.log("key: " + key.date);
             console.log("lastKey " + lastKey);
-            //console.log("Distance: " + Math.abs(lastX - player.db.x));
+            //console.log("Distance: " + (lastX - player.db.x));
             //console.log("Speed: " + ((Math.abs(lastX - player.db.x))/time));
 
         }

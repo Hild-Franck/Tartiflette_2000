@@ -551,6 +551,7 @@ var player = {
     upSwitch: false,
     downSwitch: false,
     arrTest: [],
+    arrTestTwo: [],
 
     lastKey: 0,
     testKey: 0,
@@ -633,59 +634,49 @@ var player = {
 
 
         if((this.rightSwitch || this.leftSwitch || this.upSwitch || this.downSwitch)){
-            game.lastTimeTest = game.lastUpdt;
             game.timeTest = (new Date()).getTime();
+            game.lastTimeTest = game.lastUpdt;
             //console.log("Time: " + (game.timeTest - game.lastTimeTest));
             //console.log("Key: " + game.timeTest);
             //console.log("lastKey: " + game.lastTimeTest);
             if(this.testKey == 0) {
-                this.testKey = game.timeTest;
+                this.testKey = game.lastTimeTest;
             }
             this.arrTest.push(game.timeTest - game.lastTimeTest);
+            this.arrTestTwo.push((new Date()).getTime());
             this.sumX += game.timeTest - game.lastTimeTest;
-            console.log("*********");
-            console.log("Current difX 1: " + (game.timeTest - game.lastTimeTest));
             //console.log("Current sumX: " + this.sumX);
             this.x += 0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest);
             this.y += 0.06 * this.speed * this.dir[this.poi][1] * (game.timeTest - game.lastTimeTest);
             //console.log(Math.round(0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest)))
-            console.log("Current difX 2: " + (game.timeTest - game.lastTimeTest));
             this.sprInd = this.poi;
             this.key.id = player.poi;
-            console.log("Current difX 3: " + (game.timeTest - game.lastTimeTest));
-            console.log("game.timeTest: " + game.timeTest);
-            console.log("game.lastTimeTest: " + game.lastTimeTest);
             }
         else {
-            console.log("Current difX 4: " + (game.timeTest - game.lastTimeTest));
-            console.log("game.timeTest: " + game.timeTest);
-            console.log("game.lastTimeTest: " + game.lastTimeTest);
-            console.log("loop: " + this.loop);
+            game.timeTest = (new Date()).getTime();
             this.key.id = -1;
             if (this.sumX != 0) {
-                console.log("loop: " + this.loop);
-                console.log("Current difX 5: " + (game.timeTest - game.lastTimeTest));
-                console.log("game.timeTest: " + game.timeTest);
-                console.log("game.lastTimeTest: " + game.lastTimeTest);
-                console.log("*********");
-                //console.log("Current sumX: " + this.sumX);
-                //console.log("All times: " + this.arrTest);
-                //console.log("key: " + game.timeTest);
-                //console.log("lastKey: " + this.testKey);
-                //console.log("difX: " + (game.timeTest - this.testKey));
-                //console.log("sumX: " + this.sumX);
+                console.log("All times: " + this.arrTest);
+                console.log("All timeStamp: " + this.arrTestTwo);
+                console.log("timeTest: " + game.timeTest);
+                console.log("testKey: " + this.testKey);
+                console.log("lastUpdt: " + game.lastUpdt);
+                console.log("lastUpdt: " + game.lastTimeTest);
+                console.log("difX: " + (game.lastUpdt - this.testKey));
+                console.log("sumX: " + this.sumX);
                 this.testKey = 0;
                 this.sumX = 0;
                 this.arrTest = [];
+                this.arrTestTwo = [];
             }
         }
-        this.key.date = game.timeTest;
+        this.key.date = game.lastUpdt;
         if(this.key.id != this.prevKey.id)
             socket.emit("movement", this.key);
 
         this.dirX = this.dir[this.sprInd][0];
         this.dirY = this.dir[this.sprInd][1];
-        game.lastUpdt = (new Date()).getTime();
+        game.lastUpdt = game.timeTest;
     }
 };
 //--- Initialisation ---
