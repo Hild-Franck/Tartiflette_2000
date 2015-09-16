@@ -174,18 +174,18 @@ io.sockets.on('connection', function (socket) {
     //---Handle player movement---
     socket.on("movement", function(key){
         //Update positions
-        var time = key.date - lastKey;
-        var lastX = player.x;
+        var lastX = player.db.x;
         if(lastKey != 0) {
             if(player.key != -1) {
-                player.db.x += (0.06 * player.db.speed * DIRECTION[player.key][0]) * (key.date - lastKey);
-                player.db.y += (0.06 * player.db.speed * DIRECTION[player.key][1]) * ((new Date()).getTime() - lastKey);
+                player.db.x += 0.06 * player.db.speed * DIRECTION[player.key][0] * (key.date - lastKey);
+                player.db.y += 0.06 * player.db.speed * DIRECTION[player.key][1] * (key.date - lastKey);
+                console.log("Position: " + player.db.x);
             }
-            console.log("Time: " + ((new Date()).getTime() - key.date));
-            console.log("x position of player: " + player.db.x);
-            console.log("x round position of player: " + Math.round(player.db.x));
-            console.log("Distance: " + Math.abs(lastX - player.db.x));
-            console.log("Speed: " + ((Math.abs(lastX - player.db.x))/time));
+            console.log("Time: " + (key.date - lastKey));
+            console.log("key: " + key.date);
+            console.log("lastKey " + lastKey);
+            //console.log("Distance: " + Math.abs(lastX - player.db.x));
+            //console.log("Speed: " + ((Math.abs(lastX - player.db.x))/time));
 
         }
         lastKey = key.date;
@@ -210,7 +210,7 @@ io.sockets.on('connection', function (socket) {
         else
             player.recover = 0;
 
-    });
+    });*/
     socket.on('attack', function (attack) {
         var date = new Date();
         if (lastAtck === undefined || date.getTime() - lastAtck > (1000 - player.db.perks.coolDown * 25) && player.db.currentStm > 0) {
@@ -234,7 +234,7 @@ io.sockets.on('connection', function (socket) {
                 graphic: atckPerks.graphic
             });
         }
-    });*/
+    });
 
     eventEmitter.on('chicken', function () {
         if (register) {

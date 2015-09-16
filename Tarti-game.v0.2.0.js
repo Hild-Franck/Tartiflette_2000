@@ -44,7 +44,6 @@ var game = {
          * @param {Object} data Les données serveur à traiter
          */
         refresh: function(data){
-            console.log(data);
             this.servTime = data.servData.date;
             data.servData.fx.forEach(function(element){
                 game.createSpriteFx(element.x, element.y, element.graphic, 3, 5);
@@ -52,7 +51,7 @@ var game = {
 
             data.servData.enemies.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
-                    if (element.$loki === game.objects.entities[i].$loki){
+                    if (element.$loki === game.objects.entities[i].$loki && game.objects.entities[i].type === 'enemy'){
                         if(!element.dead) {
                             game.objects.entities[i].y = element.y;
                             game.objects.entities[i].x = element.x;
@@ -71,6 +70,7 @@ var game = {
 
                 }
                 if(i == game.objects.entities.length && !element.dead) {
+                    element.type = 'enemy';
                     element.xPrev = element.x;
                     element.yPrev = element.y;
                     element.sprInd = 0;
@@ -100,11 +100,10 @@ var game = {
 
             /*data.servData.players.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
-                    if (element.$loki === game.objects.entities[i].$loki){
+                    if (element.$loki === game.objects.entities[i].$loki && game.objects.entities[i].type === 'player'){
                         if(!element.dead) {
                             game.objects.entities[i].y = element.y;
                             game.objects.entities[i].x = element.x;
-                            game.objects.entities[i].dirX = element.dirX;
                             if (!(element.hit === null))
                                 game.createTxtFx(game.objects.entities[i], element.hit.damage);
                         }
@@ -126,11 +125,11 @@ var game = {
                     element.nbrFrame = 3;
                     element.countDraw = 0;
                     element.spriteSheet = new Image();
-                    element.spriteSheet.src = "resources/monster2.png";
+                    element.spriteSheet.src = "resources/Actor1.png";
                     element.draw = function () {
 
                         var time = new Date();
-                        element.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * element.dirX;
+                        element.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime));
                         if(this.dirX == -1)
                             this.sprInd = 1;
                         if(this.dirX == 1)
@@ -139,7 +138,7 @@ var game = {
                             this.sprInd = 3;
                         if(this.y < this.yPrev)
                             this.sprInd = 0;
-                        game.animate(this, 1.5);
+                        game.animate(this, 1);
                         return true;
                     };
                     game.objects.entities.push(element);
@@ -550,8 +549,11 @@ var player = {
     leftSwitch: false,
     upSwitch: false,
     downSwitch: false,
+    arrTest: [],
 
     lastKey: 0,
+    testKey: 0,
+    sumX :0,
 
     poi: -1,
 
@@ -630,14 +632,31 @@ var player = {
         game.lastTimeTest = game.timeTest;
         game.timeTest = (new Date()).getTime();
         if((this.rightSwitch || this.leftSwitch || this.upSwitch || this.downSwitch)){
+            //console.log("Time: " + (game.timeTest - game.lastTimeTest));
+            if(this.testKey == 0) {
+                this.testKey = game.timeTest;
+            }
+            this.arrTest.push(game.timeTest - game.lastTimeTest);
+            this.sumX += game.timeTest - game.lastTimeTest;
             this.x += 0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest);
             this.y += 0.06 * this.speed * this.dir[this.poi][1] * (game.timeTest - game.lastTimeTest);
+            //console.log(Math.round(0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest)))
             this.sprInd = this.poi;
             this.key.id = player.poi;
         }
-        else
+        else {
             this.key.id = -1;
-        this.key.date = (new Date()).getTime();
+            if(this.sumX != 0){
+                console.log("All times: " + this.arrTest);
+                console.log("key: " + this.testKey);
+                console.log("lastKey: " + game.timeTest);
+                this.testKey = 0;
+                console.log("sumX: " + this.sumX);
+                this.sumX = 0;
+                this.arrTest = [];
+            }
+        }
+        this.key.date = game.timeTest;
         if(this.key.id != this.prevKey.id)
             socket.emit("movement", this.key);
 
