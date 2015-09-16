@@ -19,6 +19,7 @@ var game = {
 
     timeTest: (new Date()).getTime(),
     lastTimeTest: 0,
+    lastUpdt: 0,
     fps: 60,
     xOffSet: 0,
     yOffSet: 0,
@@ -554,6 +555,7 @@ var player = {
     lastKey: 0,
     testKey: 0,
     sumX :0,
+    loop: 0,
 
     poi: -1,
 
@@ -629,29 +631,50 @@ var player = {
             player.poi = 0;
         }
 
-        game.lastTimeTest = game.timeTest;
-        game.timeTest = (new Date()).getTime();
+
         if((this.rightSwitch || this.leftSwitch || this.upSwitch || this.downSwitch)){
+            game.lastTimeTest = game.lastUpdt;
+            game.timeTest = (new Date()).getTime();
             //console.log("Time: " + (game.timeTest - game.lastTimeTest));
+            //console.log("Key: " + game.timeTest);
+            //console.log("lastKey: " + game.lastTimeTest);
             if(this.testKey == 0) {
                 this.testKey = game.timeTest;
             }
             this.arrTest.push(game.timeTest - game.lastTimeTest);
             this.sumX += game.timeTest - game.lastTimeTest;
+            console.log("*********");
+            console.log("Current difX 1: " + (game.timeTest - game.lastTimeTest));
+            //console.log("Current sumX: " + this.sumX);
             this.x += 0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest);
             this.y += 0.06 * this.speed * this.dir[this.poi][1] * (game.timeTest - game.lastTimeTest);
             //console.log(Math.round(0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest)))
+            console.log("Current difX 2: " + (game.timeTest - game.lastTimeTest));
             this.sprInd = this.poi;
             this.key.id = player.poi;
-        }
+            console.log("Current difX 3: " + (game.timeTest - game.lastTimeTest));
+            console.log("game.timeTest: " + game.timeTest);
+            console.log("game.lastTimeTest: " + game.lastTimeTest);
+            }
         else {
+            console.log("Current difX 4: " + (game.timeTest - game.lastTimeTest));
+            console.log("game.timeTest: " + game.timeTest);
+            console.log("game.lastTimeTest: " + game.lastTimeTest);
+            console.log("loop: " + this.loop);
             this.key.id = -1;
-            if(this.sumX != 0){
-                console.log("All times: " + this.arrTest);
-                console.log("key: " + this.testKey);
-                console.log("lastKey: " + game.timeTest);
+            if (this.sumX != 0) {
+                console.log("loop: " + this.loop);
+                console.log("Current difX 5: " + (game.timeTest - game.lastTimeTest));
+                console.log("game.timeTest: " + game.timeTest);
+                console.log("game.lastTimeTest: " + game.lastTimeTest);
+                console.log("*********");
+                //console.log("Current sumX: " + this.sumX);
+                //console.log("All times: " + this.arrTest);
+                //console.log("key: " + game.timeTest);
+                //console.log("lastKey: " + this.testKey);
+                //console.log("difX: " + (game.timeTest - this.testKey));
+                //console.log("sumX: " + this.sumX);
                 this.testKey = 0;
-                console.log("sumX: " + this.sumX);
                 this.sumX = 0;
                 this.arrTest = [];
             }
@@ -662,7 +685,7 @@ var player = {
 
         this.dirX = this.dir[this.sprInd][0];
         this.dirY = this.dir[this.sprInd][1];
-
+        game.lastUpdt = (new Date()).getTime();
     }
 };
 //--- Initialisation ---
