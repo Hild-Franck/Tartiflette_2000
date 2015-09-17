@@ -272,6 +272,13 @@ var game = {
         socket.on("message", function(message){
             game.objects.refresh(message);
         });
+        socket.on("servData", function(servData){
+            player.x = servData.xPlayer;
+            player.y = servData.yPlayer;
+            player.currentHp = servData.hlthPlayer;
+            player.currentStm = servData.stmnPlayer;
+            player.currXp = servData.xpPlayer;
+        });
     },
     /**
      * Anime le sprite d'un objet
@@ -694,5 +701,6 @@ setInterval(function(){
     debug.monitor("dirX: ", player.dirX);
     debug.monitor("dirY: ", player.dirY);
     debug.monitor("poi: ", player.poi);
+    debug.monitor("Health: ", player.currentHp);
     debug.show();
 }, 1000/game.fps);

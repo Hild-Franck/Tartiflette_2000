@@ -90,7 +90,7 @@ setInterval(function(){
                     damage: attacksArr[j].baseDamage + attacksArr[j].plrDmg,
                     type: "physical",
                     hitter: attacksArr[j].creator
-                }
+                };
                 if(attacksArr[j].creator.perks.hlthSteal !== 0){
                     attacksArr[j].creator.currHealth += 1;
                 }
@@ -135,6 +135,13 @@ io.sockets.on('connection', function (socket) {
                 playersConnected[uuid].disconnected = false;
             }
             player.db = players.get(playersConnected[uuid].id);
+            socket.emit("servData",{
+                xPlayer: player.db.x,
+                yPlayer: player.db.y,
+                hlthPlayer: player.db.currHp,
+                stmnPlayer: player.db.currentStm,
+                xpPlayer: player.db.xp
+            });
             console.log("Player number " + playersConnected[uuid].id + " is reconnected");
         }
         else {
