@@ -18,6 +18,7 @@ module.exports = {
         this.currentStm = 10;
         this.currHp = 10;
         this.maxHp = 10;
+        this.connected = false;
         this.perks = {
             damage: 0,
             state: "",

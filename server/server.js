@@ -105,7 +105,7 @@ setInterval(function(){
     attacksArr.length = 0;
     data.date = date.getTime();
     data.enemies = enemies.find();
-    data.players = players.get(1);
+    data.players = players.find({'connected': true});
     data.fx = fx;
 
     //io.sockets.emit('message', data);
@@ -135,6 +135,8 @@ io.sockets.on('connection', function (socket) {
                 playersConnected[uuid].disconnected = false;
             }
             player.db = players.get(playersConnected[uuid].id);
+            player.db.connected = true;
+            players.update(player.db);
             socket.emit("servData",{
                 xPlayer: player.db.x,
                 yPlayer: player.db.y,
@@ -146,8 +148,10 @@ io.sockets.on('connection', function (socket) {
         }
         else {
             //Check if a player slot is available
+            console.log("playersAvailable: " + playersAvailable);
+            console.log("playersAvailable[0]: " + playersAvailable[0]);
             for (var i = 0; i < 2; i++) {
-                if (!(playersAvailable[i]) || playersAvailable[i] === undefined) {
+                if ((playersAvailable[i]) || playersAvailable[i] === undefined) {
                     break;
                 }
                 if (i == 1) {
@@ -155,12 +159,17 @@ io.sockets.on('connection', function (socket) {
                     console.log("Server full");
                 }
             }
+            console.log(i);
             if (freeSlot) {
                 //Create player if the server is not full
                 playersConnected[uuid] = {id: i + 1, disconnected: false};
                 playersAvailable[i] = false;
                 player.db = players.get(playersConnected[uuid].id);
+                player.db.connected = true;
+                players.update(player.db);
                 console.log("Player number " + playersConnected[uuid].id + " is connected");
+                count++;
+                console.log("There is " + count + " players connected");
             }
         }
         register = true;
@@ -174,7 +183,11 @@ io.sockets.on('connection', function (socket) {
             if (playersConnected[uuid] !== undefined && playersConnected[uuid].disconnected) {
                 playersAvailable[playersConnected[uuid].id] = true;
                 console.log("Player number " + playersConnected[uuid].id + " is deconnected.");
+                player.db.connected = false;
+                players.update(player.db);
                 delete playersConnected[uuid];
+                count--;
+                console.log("There is " + count + " players connected");
             }
         }, 5000)
     });

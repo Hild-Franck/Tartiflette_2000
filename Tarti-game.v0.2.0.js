@@ -98,6 +98,7 @@ var game = {
                     game.objects.entities.push(element);
                 }
             });
+            console.log(data.servData.players);
 
             /*data.servData.players.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
