@@ -26,8 +26,8 @@ db.loadDatabase({}, function(){
         console.log("Initialisation de la base de donnée...");
         if(db.getCollection('Players') === null){
             var playersDb = db.addCollection('Players');
-            playersDb.insert(new players.Player(50, 50));
-            playersDb.insert(new players.Player(100, 50));
+            playersDb.insert(new players.Player(50, 50, 0));
+            playersDb.insert(new players.Player(100, 50, 1));
 
             console.log("Base de donnée Player crée");
         }

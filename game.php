@@ -27,7 +27,7 @@
 
 <script src="./socket.io/node_modules/socket.io-client/socket.io.js"></script>
     <script>
-        var socket = io.connect('http://localhost:8081');
+        var socket = io.connect('http://192.168.1.42:8081');
         socket.on('connect', function () {
             if (!(uuid = localStorage.getItem('uuid'))) {
                 var randomlyGeneratedUID = Math.random().toString(36).substring(3,16) + +new Date;

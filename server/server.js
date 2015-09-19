@@ -142,14 +142,14 @@ io.sockets.on('connection', function (socket) {
                 yPlayer: player.db.y,
                 hlthPlayer: player.db.currHp,
                 stmnPlayer: player.db.currentStm,
-                xpPlayer: player.db.xp
+                xpPlayer: player.db.xp,
+                idPlayer: playersConnected[uuid].id,
+                spritePlayer: player.db.sprite
             });
             console.log("Player number " + playersConnected[uuid].id + " is reconnected");
         }
         else {
             //Check if a player slot is available
-            console.log("playersAvailable: " + playersAvailable);
-            console.log("playersAvailable[0]: " + playersAvailable[0]);
             for (var i = 0; i < 2; i++) {
                 if ((playersAvailable[i]) || playersAvailable[i] === undefined) {
                     break;
@@ -167,6 +167,15 @@ io.sockets.on('connection', function (socket) {
                 player.db = players.get(playersConnected[uuid].id);
                 player.db.connected = true;
                 players.update(player.db);
+                socket.emit("servData",{
+                    xPlayer: player.db.x,
+                    yPlayer: player.db.y,
+                    hlthPlayer: player.db.currHp,
+                    stmnPlayer: player.db.currentStm,
+                    xpPlayer: player.db.xp,
+                    idPlayer: playersConnected[uuid].id,
+                    spritePlayer: player.db.sprite
+                });
                 console.log("Player number " + playersConnected[uuid].id + " is connected");
                 count++;
                 console.log("There is " + count + " players connected");
@@ -181,7 +190,7 @@ io.sockets.on('connection', function (socket) {
 
         player.timeout = setTimeout(function () {
             if (playersConnected[uuid] !== undefined && playersConnected[uuid].disconnected) {
-                playersAvailable[playersConnected[uuid].id] = true;
+                playersAvailable[playersConnected[uuid].id-1] = true;
                 console.log("Player number " + playersConnected[uuid].id + " is deconnected.");
                 player.db.connected = false;
                 players.update(player.db);
@@ -194,6 +203,7 @@ io.sockets.on('connection', function (socket) {
     //---Handle player movement---
     socket.on("movement", function(key){
         //Update positions
+        console.log("poulet");
         var lastX = player.db.x;
         if(lastKey != 0) {
             if(player.key != -1) {
@@ -210,6 +220,7 @@ io.sockets.on('connection', function (socket) {
         }
         lastKey = key.date;
         player.key = key.id;
+        player.db.key = player.key;
         players.update(player.db);
     });
 /*

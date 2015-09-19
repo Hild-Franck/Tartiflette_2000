@@ -98,54 +98,54 @@ var game = {
                     game.objects.entities.push(element);
                 }
             });
-            console.log(data.servData.players);
-
-            /*data.servData.players.forEach(function(element){
-                for (var i = 0; i < game.objects.entities.length; i++){
-                    if (element.$loki === game.objects.entities[i].$loki && game.objects.entities[i].type === 'player'){
-                        if(!element.dead) {
-                            game.objects.entities[i].y = element.y;
-                            game.objects.entities[i].x = element.x;
-                            if (!(element.hit === null))
-                                game.createTxtFx(game.objects.entities[i], element.hit.damage);
-                        }
-                        else {
-                            game.objects.entities.splice(i, 1);
-                            i--;
+            data.servData.players.forEach(function(element){
+                for (var i = 0; i < game.objects.entities.length; i++) {
+                    if (element.$loki === game.objects.entities[i].$loki && game.objects.entities[i].type === 'player' && element.$loki !== player.id) {
+                        if(game.objects.entities[i].key == element.key)
+                            break;
+                        else{
+                            console.log("jesus");
+                            game.objects.entities[i].key = element.key;
                         }
                         break;
                     }
-                    else if(element.$loki === undefined)
-                        break;
-
                 }
-                if(i == game.objects.entities.length && !element.dead) {
+                if (i == game.objects.entities.length && element.$loki !== player.id) {
+                    element.type = 'player';
                     element.xPrev = element.x;
                     element.yPrev = element.y;
                     element.sprInd = 0;
                     element.frame = 0;
+                    element.xSpot = 16;
+                    element.ySpot = 16;
                     element.nbrFrame = 3;
                     element.countDraw = 0;
+                    element.time = (new Date()).getTime();
+                    element.lastTime = element.date;
                     element.spriteSheet = new Image();
                     element.spriteSheet.src = "resources/Actor1.png";
                     element.draw = function () {
-
-                        var time = new Date();
-                        element.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime));
-                        if(this.dirX == -1)
-                            this.sprInd = 1;
-                        if(this.dirX == 1)
-                            this.sprInd = 2;
-                        if(this.y > this.yPrev)
-                            this.sprInd = 3;
-                        if(this.y < this.yPrev)
-                            this.sprInd = 0;
+                        console.log(element.x);
+                        element.time = (new Date()).getTime();
+                        if(element.key != -1) {
+                            element.x += 0.06 * element.speed * player.dir[element.key][0] * (element.time - element.lastTime);
+                            element.y += 0.06 * element.speed * player.dir[element.key][1] * (element.time - element.lastTime);
+                            if (this.xPrev > this.x)
+                                this.sprInd = 1;
+                            if (this.xPrev < this.x)
+                                this.sprInd = 2;
+                            if (this.y > this.yPrev)
+                                this.sprInd = 3;
+                            if (this.y < this.yPrev)
+                                this.sprInd = 0;
+                        }
                         game.animate(this, 1);
+                        element.lastTime = element.time;
                         return true;
                     };
                     game.objects.entities.push(element);
                 }
-            });*/
+            });
             game.objects.arrange();
             player.currentStm = data.plyData.currentStm;
             player.currHp = data.plyData.currentHp;
@@ -274,11 +274,14 @@ var game = {
             game.objects.refresh(message);
         });
         socket.on("servData", function(servData){
+            console.log(servData.spritePlayer);
             player.x = servData.xPlayer;
             player.y = servData.yPlayer;
             player.currentHp = servData.hlthPlayer;
             player.currentStm = servData.stmnPlayer;
             player.currXp = servData.xpPlayer;
+            player.id = servData.idPlayer;
+            player.sprite = servData.spritePlayer
         });
     },
     /**
@@ -644,19 +647,14 @@ var player = {
         if((this.rightSwitch || this.leftSwitch || this.upSwitch || this.downSwitch)){
             game.timeTest = (new Date()).getTime();
             game.lastTimeTest = game.lastUpdt;
-            //console.log("Time: " + (game.timeTest - game.lastTimeTest));
-            //console.log("Key: " + game.timeTest);
-            //console.log("lastKey: " + game.lastTimeTest);
-            if(this.testKey == 0) {
+            /*if(this.testKey == 0) {
                 this.testKey = game.lastTimeTest;
-            }
+            }*/
             this.arrTest.push(game.timeTest - game.lastTimeTest);
             this.arrTestTwo.push((new Date()).getTime());
             this.sumX += game.timeTest - game.lastTimeTest;
-            //console.log("Current sumX: " + this.sumX);
             this.x += 0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest);
             this.y += 0.06 * this.speed * this.dir[this.poi][1] * (game.timeTest - game.lastTimeTest);
-            //console.log(Math.round(0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest)))
             this.sprInd = this.poi;
             this.key.id = player.poi;
             }
@@ -664,14 +662,6 @@ var player = {
             game.timeTest = (new Date()).getTime();
             this.key.id = -1;
             if (this.sumX != 0) {
-                console.log("All times: " + this.arrTest);
-                console.log("All timeStamp: " + this.arrTestTwo);
-                console.log("timeTest: " + game.timeTest);
-                console.log("testKey: " + this.testKey);
-                console.log("lastUpdt: " + game.lastUpdt);
-                console.log("lastUpdt: " + game.lastTimeTest);
-                console.log("difX: " + (game.lastUpdt - this.testKey));
-                console.log("sumX: " + this.sumX);
                 this.testKey = 0;
                 this.sumX = 0;
                 this.arrTest = [];
@@ -696,12 +686,10 @@ setInterval(function(){
     debug.clear();
     game.update();
     debug.monitor("x: ", player.x);
-    debug.monitor("x round: ", Math.round(player.x));
     debug.monitor("y: ", player.y);
     debug.monitor("frame: ", player.frame);
     debug.monitor("dirX: ", player.dirX);
     debug.monitor("dirY: ", player.dirY);
-    debug.monitor("poi: ", player.poi);
-    debug.monitor("Health: ", player.currentHp);
+    debug.monitor("Player key: " + player.key);
     debug.show();
 }, 1000/game.fps);

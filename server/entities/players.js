@@ -3,12 +3,14 @@
  */
 
 module.exports = {
-    Player: function (x, y) {
+    Player: function (x, y, _sprite) {
         this.xStart = x;
         this.yStart = y;
+        this.sprite = _sprite;
         this.x = this.xStart;
         this.y = this.yStart;
         this.key = 0;
+        this.date = 0;
         this.speed = 4;
         this.attack = 1;
         this.level = 1;
