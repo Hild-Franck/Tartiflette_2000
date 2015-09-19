@@ -277,6 +277,7 @@ var game = {
             console.log(servData.spritePlayer);
             player.x = servData.xPlayer;
             player.y = servData.yPlayer;
+            player.poi = servData.dirPlayer;
             player.currentHp = servData.hlthPlayer;
             player.currentStm = servData.stmnPlayer;
             player.currXp = servData.xpPlayer;

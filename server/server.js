@@ -76,6 +76,8 @@ setInterval(function(){
                 continue;
         }
         enemy.hit = null;
+        if(attacksArr.length > 0)
+            console.log("Attack");
 
         for(var j = 0; j < attacksArr.length; j++){
             if(collision("rectangle", attacksArr[j], enemy)){
@@ -96,7 +98,6 @@ setInterval(function(){
                 }
             }
         }
-
         enemy.ia = function(){};
         eval("enemy.ia = " + enemy.update);
         enemy.ia();
@@ -140,6 +141,7 @@ io.sockets.on('connection', function (socket) {
             socket.emit("servData",{
                 xPlayer: player.db.x,
                 yPlayer: player.db.y,
+                dirPlayer: player.db.dir,
                 hlthPlayer: player.db.currHp,
                 stmnPlayer: player.db.currentStm,
                 xpPlayer: player.db.xp,
@@ -170,6 +172,7 @@ io.sockets.on('connection', function (socket) {
                 socket.emit("servData",{
                     xPlayer: player.db.x,
                     yPlayer: player.db.y,
+                    dirPlayer: player.db.dir,
                     hlthPlayer: player.db.currHp,
                     stmnPlayer: player.db.currentStm,
                     xpPlayer: player.db.xp,
@@ -203,19 +206,14 @@ io.sockets.on('connection', function (socket) {
     //---Handle player movement---
     socket.on("movement", function(key){
         //Update positions
-        console.log("poulet");
         var lastX = player.db.x;
         if(lastKey != 0) {
             if(player.key != -1) {
-                player.db.x += 0.06 * player.db.speed * DIRECTION[player.key][0] * (key.date - lastKey);
-                player.db.y += 0.06 * player.db.speed * DIRECTION[player.key][1] * (key.date - lastKey);
-                console.log("Position: " + player.db.x);
+                console.log("Key: " + key);
+                player.db.dir = player.key;
+                player.db.x += 0.06 * player.db.speed * DIRECTION[player.db.dir][0] * (key.date - lastKey);
+                player.db.y += 0.06 * player.db.speed * DIRECTION[player.db.dir][1] * (key.date - lastKey);
             }
-            console.log("Time: " + (key.date - lastKey));
-            console.log("key: " + key.date);
-            console.log("lastKey " + lastKey);
-            //console.log("Distance: " + (lastX - player.db.x));
-            //console.log("Speed: " + ((Math.abs(lastX - player.db.x))/time));
 
         }
         lastKey = key.date;
@@ -247,12 +245,15 @@ io.sockets.on('connection', function (socket) {
         if (lastAtck === undefined || date.getTime() - lastAtck > (1000 - player.db.perks.coolDown * 25) && player.db.currentStm > 0) {
             lastAtck = date.getTime();
             player.db.currentStm -= 1;
-            var atckInd = players.get(1).attack;
+            var atckInd = player.db.attack;
             var atckPerks = attacks.get(atckInd);
-            atckPerks.x = player.coll.x + player.coll.dirX * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
-            atckPerks.y = player.coll.y + player.coll.dirY * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
+            atckPerks.x = player.db.x + DIRECTION[player.db.dir][0] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
+            console.log("Fx x 1: " + atckPerks.x);
+            atckPerks.y = player.db.y + DIRECTION[player.db.dir][1] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
             atckPerks.x += (32 - atckPerks.baseAoE) / 2;
             atckPerks.y += (32 - atckPerks.baseAoE) / 2;
+            console.log("Player x: " + player.db.x);
+            console.log("Fx x 2: " + atckPerks.x);
             atckPerks.width = atckPerks.baseAoE;
             atckPerks.height = atckPerks.baseAoE;
             atckPerks.plrDmg = player.db.strength + player.db.perks.damage;

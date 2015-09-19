@@ -10,6 +10,7 @@ module.exports = {
         this.x = this.xStart;
         this.y = this.yStart;
         this.key = 0;
+        this.dir = 0;
         this.date = 0;
         this.speed = 4;
         this.attack = 1;
