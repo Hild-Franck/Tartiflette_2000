@@ -9,13 +9,14 @@ module.exports = {
         this.sprite = _sprite;
         this.x = this.xStart;
         this.y = this.yStart;
-        this.key = 0;
+        this.key = -1;
         this.dir = 0;
         this.date = 0;
         this.speed = 4;
         this.attack = 1;
         this.level = 1;
-        this.xp = 0;
+        this.currXp = 0;
+        this.maxXp = 20;
         this.strength = 1;
         this.maxStm = 10;
         this.currentStm = 10;
@@ -24,18 +25,21 @@ module.exports = {
         this.connected = false;
         this.perks = {
             damage: 0,
-            state: "",
-            charged: null,
-            coolDown: 0,
-            back: 0,
-            hlthSteal: 0,
-            hlth: 0,
-            hlthReg: 0,
-            staminaReg: 0,
-            armor: 0,
             speedMod: 0,
+            stmMod: 0,
+            hpMod: 0,
             xpMod: 0,
-            trapDtct: 0
+            coolDownMod: 0,
+            hpReg: 0,
+            staminaReg: 0,
+            hlthSteal: 0,
+            armor: 0,
+            charged: {
+                level: 0,
+                dmgBst: 0,
+                nbrHits: 0
+            },
+            back: 0,
         }
     }
 };

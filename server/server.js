@@ -76,16 +76,13 @@ setInterval(function(){
                 continue;
         }
         enemy.hit = null;
-        if(attacksArr.length > 0)
-            console.log("Attack");
-
         for(var j = 0; j < attacksArr.length; j++){
             if(collision("rectangle", attacksArr[j], enemy)){
                 enemy.currHealth -= attacksArr[j].baseDamage + attacksArr[j].plrDmg;
                 if(enemy.currHealth <= 0) {
                     enemy.dead = true;
                     enemy.deadTime = date.getTime();
-                    attacksArr[j].creator.xp += 1;
+                    attacksArr[j].creator.currXp += 1;
                     players.update(attacksArr[j].creator);
                 }
                 enemy.hit = {
@@ -144,7 +141,7 @@ io.sockets.on('connection', function (socket) {
                 dirPlayer: player.db.dir,
                 hlthPlayer: player.db.currHp,
                 stmnPlayer: player.db.currentStm,
-                xpPlayer: player.db.xp,
+                xpPlayer: player.db.currXp,
                 idPlayer: playersConnected[uuid].id,
                 spritePlayer: player.db.sprite
             });
@@ -175,7 +172,7 @@ io.sockets.on('connection', function (socket) {
                     dirPlayer: player.db.dir,
                     hlthPlayer: player.db.currHp,
                     stmnPlayer: player.db.currentStm,
-                    xpPlayer: player.db.xp,
+                    xpPlayer: player.db.currXp,
                     idPlayer: playersConnected[uuid].id,
                     spritePlayer: player.db.sprite
                 });
@@ -209,7 +206,6 @@ io.sockets.on('connection', function (socket) {
         var lastX = player.db.x;
         if(lastKey != 0) {
             if(player.key != -1) {
-                console.log("Key: " + key);
                 player.db.dir = player.key;
                 player.db.x += 0.06 * player.db.speed * DIRECTION[player.db.dir][0] * (key.date - lastKey);
                 player.db.y += 0.06 * player.db.speed * DIRECTION[player.db.dir][1] * (key.date - lastKey);
@@ -248,12 +244,9 @@ io.sockets.on('connection', function (socket) {
             var atckInd = player.db.attack;
             var atckPerks = attacks.get(atckInd);
             atckPerks.x = player.db.x + DIRECTION[player.db.dir][0] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
-            console.log("Fx x 1: " + atckPerks.x);
             atckPerks.y = player.db.y + DIRECTION[player.db.dir][1] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
             atckPerks.x += (32 - atckPerks.baseAoE) / 2;
             atckPerks.y += (32 - atckPerks.baseAoE) / 2;
-            console.log("Player x: " + player.db.x);
-            console.log("Fx x 2: " + atckPerks.x);
             atckPerks.width = atckPerks.baseAoE;
             atckPerks.height = atckPerks.baseAoE;
             atckPerks.plrDmg = player.db.strength + player.db.perks.damage;
@@ -270,6 +263,15 @@ io.sockets.on('connection', function (socket) {
 
     eventEmitter.on('chicken', function () {
         if (register) {
+            while(player.db.currXp >= player.db.maxXp){
+                player.db.currXp -= player.db.maxXp;
+                player.db.maxXp *= 2;
+                player.db.level += 1;
+                var rand = Math.floor(Math.random()*11);
+                var property = Object.getOwnPropertyNames(player.db.perks)[rand];
+                player.db.perks[property] += 1;
+                players.update(player.db);
+            }
             socket.emit('message', {
                 plyData: player.db,
                 servData: data

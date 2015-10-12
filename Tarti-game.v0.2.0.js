@@ -53,12 +53,12 @@ var game = {
             data.servData.enemies.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
                     if (element.$loki === game.objects.entities[i].$loki && game.objects.entities[i].type === 'enemy'){
+                        if (!(element.hit === null))
+                            game.createTxtFx(game.objects.entities[i], element.hit.damage);
                         if(!element.dead) {
                             game.objects.entities[i].y = element.y;
                             game.objects.entities[i].x = element.x;
                             game.objects.entities[i].dirX = element.dirX;
-                            if (!(element.hit === null))
-                                game.createTxtFx(game.objects.entities[i], element.hit.damage);
                         }
                         else {
                             game.objects.entities.splice(i, 1);
@@ -104,7 +104,6 @@ var game = {
                         if(game.objects.entities[i].key == element.key)
                             break;
                         else{
-                            console.log("jesus");
                             game.objects.entities[i].key = element.key;
                         }
                         break;
@@ -125,9 +124,11 @@ var game = {
                     element.spriteSheet = new Image();
                     element.spriteSheet.src = "resources/Actor1.png";
                     element.draw = function () {
-                        console.log(element.x);
                         element.time = (new Date()).getTime();
                         if(element.key != -1) {
+                            console.log("element.time: " + element.time);
+                            console.log("element.lastTime: " + element.lastTime);
+                            console.log("element.y: " + element.y);
                             element.x += 0.06 * element.speed * player.dir[element.key][0] * (element.time - element.lastTime);
                             element.y += 0.06 * element.speed * player.dir[element.key][1] * (element.time - element.lastTime);
                             if (this.xPrev > this.x)
@@ -146,10 +147,15 @@ var game = {
                     game.objects.entities.push(element);
                 }
             });
+            if(player.maxXp != data.plyData.maxXp)
+                game.createTxtFx({x: game.canvas.width / 2, y: game.canvas.height - 25}, "Level up !", 30, true);
+            if(player.currentHp < data.plyData.currHp)
+                game.createTxtFx(player, "+" + data.plyData.currHp - player.currentHp, 30, true);
             game.objects.arrange();
             player.currentStm = data.plyData.currentStm;
-            player.currHp = data.plyData.currentHp;
-            player.currXp = data.plyData.xp;
+            player.currentHp = data.plyData.currHp;
+            player.currXp = data.plyData.currXp;
+            player.maxXp = data.plyData.maxXp;
         },
         /**
          * Fonction qui tri les objets selon leur variable y
@@ -274,7 +280,6 @@ var game = {
             game.objects.refresh(message);
         });
         socket.on("servData", function(servData){
-            console.log(servData.spritePlayer);
             player.x = servData.xPlayer;
             player.y = servData.yPlayer;
             player.poi = servData.dirPlayer;
@@ -369,7 +374,7 @@ var game = {
      * @param {String} _text Le texte à afficher
      * @constructor
      */
-    TextFx: function(_creator, _text){
+    TextFx: function(_creator, _text, size, isStatic){
         this.creator = _creator;
         this.text = _text;
 
@@ -385,7 +390,7 @@ var game = {
          */
         this.draw = function(){
             if(this.opacity > 0){
-                game.writeText(this.text,this.x,this.y - this.yOffset,"red",this.opacity, 15, "center");
+                game.writeText(this.text,this.x,this.y - this.yOffset,"red",this.opacity, size, "center", isStatic);
                 this.yOffset++;
                 this.opacity -= 0.03;
                 return true;
@@ -401,8 +406,8 @@ var game = {
      * @param {Object} creator Le créateur du texte
      * @param {String} text Le texte à afficher
      */
-    createTxtFx: function(creator, text){
-        game.objects.gui.push(new this.TextFx(creator, text));
+    createTxtFx: function(creator, text,size, isStatic){
+        game.objects.gui.push(new this.TextFx(creator, text, size, isStatic));
     },
     /**
      * Constructeur d'un objet d'effet spécial
