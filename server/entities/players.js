@@ -29,7 +29,7 @@ module.exports = {
             stmMod: 0,
             hpMod: 0,
             xpMod: 0,
-            coolDownMod: 0,
+            coolDown: 0,
             hpReg: 0,
             staminaReg: 0,
             hlthSteal: 0,

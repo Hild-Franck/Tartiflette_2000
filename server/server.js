@@ -203,7 +203,6 @@ io.sockets.on('connection', function (socket) {
     //---Handle player movement---
     socket.on("movement", function(key){
         //Update positions
-        var lastX = player.db.x;
         if(lastKey != 0) {
             if(player.key != -1) {
                 player.db.dir = player.key;
@@ -236,9 +235,12 @@ io.sockets.on('connection', function (socket) {
             player.recover = 0;
 
     });*/
-    socket.on('attack', function (attack) {
+    socket.on('attack', function () {
         var date = new Date();
+        var lastAtck;
+        console.log("lastAtck: " + lastAtck);
         if (lastAtck === undefined || date.getTime() - lastAtck > (1000 - player.db.perks.coolDown * 25) && player.db.currentStm > 0) {
+            console.log("Inside if statement");
             lastAtck = date.getTime();
             player.db.currentStm -= 1;
             var atckInd = player.db.attack;
