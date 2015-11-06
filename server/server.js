@@ -82,7 +82,7 @@ setInterval(function(){
                 if(enemy.currHealth <= 0) {
                     enemy.dead = true;
                     enemy.deadTime = date.getTime();
-                    attacksArr[j].creator.currXp += 1;
+                    attacksArr[j].creator.currXp += 15;
                     players.update(attacksArr[j].creator);
                 }
                 enemy.hit = {
@@ -122,6 +122,7 @@ io.sockets.on('connection', function (socket) {
     var freeSlot = true;
     var uuid;
     var register = false;
+    var level = [];
 
     //---Register event from client---
     socket.on('register', function (_uuid) {
@@ -174,7 +175,8 @@ io.sockets.on('connection', function (socket) {
                     stmnPlayer: player.db.currentStm,
                     xpPlayer: player.db.currXp,
                     idPlayer: playersConnected[uuid].id,
-                    spritePlayer: player.db.sprite
+                    spritePlayer: player.db.sprite,
+                    chrgdTmPlayer: player.db.chrgdTmPlayer + player.db.perks.chargedTimeMod
                 });
                 console.log("Player number " + playersConnected[uuid].id + " is connected");
                 count++;
@@ -238,9 +240,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('attack', function () {
         var date = new Date();
         var lastAtck;
-        console.log("lastAtck: " + lastAtck);
         if (lastAtck === undefined || date.getTime() - lastAtck > (1000 - player.db.perks.coolDown * 25) && player.db.currentStm > 0) {
-            console.log("Inside if statement");
             lastAtck = date.getTime();
             player.db.currentStm -= 1;
             var atckInd = player.db.attack;
@@ -271,13 +271,18 @@ io.sockets.on('connection', function (socket) {
                 player.db.level += 1;
                 var rand = Math.floor(Math.random()*11);
                 var property = Object.getOwnPropertyNames(player.db.perks)[rand];
+                level.push(property);
                 player.db.perks[property] += 1;
                 players.update(player.db);
             }
             socket.emit('message', {
-                plyData: player.db,
+                plyData:{
+                    data: player.db,
+                    level: level
+                },
                 servData: data
             });
+            level = [];
         }
     });
 });

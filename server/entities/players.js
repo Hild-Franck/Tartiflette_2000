@@ -14,6 +14,7 @@ module.exports = {
         this.date = 0;
         this.speed = 4;
         this.attack = 1;
+        this.chargedTime = 350;
         this.level = 1;
         this.currXp = 0;
         this.maxXp = 20;
@@ -29,6 +30,7 @@ module.exports = {
             stmMod: 0,
             hpMod: 0,
             xpMod: 0,
+            chargedTimeMod: 0,
             coolDown: 0,
             hpReg: 0,
             staminaReg: 0,
@@ -39,7 +41,7 @@ module.exports = {
                 dmgBst: 0,
                 nbrHits: 0
             },
-            back: 0,
+            back: 0
         }
     }
 };

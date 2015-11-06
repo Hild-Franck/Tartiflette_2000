@@ -147,15 +147,24 @@ var game = {
                     game.objects.entities.push(element);
                 }
             });
-            if(player.maxXp != data.plyData.maxXp)
-                game.createTxtFx({x: game.canvas.width / 2, y: game.canvas.height - 25}, "Level up !", 30, true);
-            if(player.currentHp < data.plyData.currHp)
-                game.createTxtFx(player, "+" + data.plyData.currHp - player.currentHp, 30, true);
+            if(data.plyData.level.length != 0) {
+                game.createTxtFx({
+                    x: game.canvas.width / 2,
+                    y: game.canvas.height - 50
+                }, (data.plyData.level.length) + "Level up !", 30, true);
+                for(var i = 0; i < data.plyData.level.length; i++)
+                    game.createTxtFx({
+                        x: game.canvas.width / 2,
+                        y: game.canvas.height - 25
+                    }, data.plyData.level[i] + " gain !", 30, true);
+            }
+            if(player.currentHp < data.plyData.data.currHp)
+                game.createTxtFx(player, "+" + data.plyData.data.currHp - player.currentHp, 30, true);
             game.objects.arrange();
-            player.currentStm = data.plyData.currentStm;
-            player.currentHp = data.plyData.currHp;
-            player.currXp = data.plyData.currXp;
-            player.maxXp = data.plyData.maxXp;
+            player.currentStm = data.plyData.data.currentStm;
+            player.currentHp = data.plyData.data.currHp;
+            player.currXp = data.plyData.data.currXp;
+            player.maxXp = data.plyData.data.maxXp;
         },
         /**
          * Fonction qui tri les objets selon leur variable y
@@ -257,6 +266,11 @@ var game = {
                 player.downSwitch = true;
                 player.poi = 0;
             }
+            if(event.keyCode == 100) {
+                if(!player.attackSwitch)
+                    player.attackStart = (new Date()).getTime();
+                player.attackSwitch = true;
+            }
             if(event.keyCode == 104)
                 player.concentrate();
         }, true);
@@ -287,7 +301,8 @@ var game = {
             player.currentStm = servData.stmnPlayer;
             player.currXp = servData.xpPlayer;
             player.id = servData.idPlayer;
-            player.sprite = servData.spritePlayer
+            player.sprite = servData.spritePlayer;
+            player.chargedTime = servData.chrgdTmPlayer;
         });
     },
     /**
@@ -562,7 +577,9 @@ var player = {
 
     conc: null,
 
+    attackStart: 0,
     keys: 0,
+    attackSwitch: false,
     rightSwitch: false,
     leftSwitch: false,
     upSwitch: false,
@@ -574,6 +591,7 @@ var player = {
     testKey: 0,
     sumX :0,
     loop: 0,
+    chargedTime: 350,
 
     poi: -1,
 
@@ -596,6 +614,8 @@ var player = {
      */
     attack: function(type){
         //game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
+        this.attackSwitch = false;
+        console.log((new Date()).getTime() - this.attackStart);
         socket.emit('attack', type);
     },
     concentrate: function(){
@@ -626,6 +646,11 @@ var player = {
         game.context.fillStyle = "#CC9900";
         game.context.fillRect(21,game.canvas.height - 19,this.currXp / this.maxXp * (game.canvas.width - 42), 14);
         game.writeText("XP",game.canvas.width/2,game.canvas.height - 25,"CC9900",1, 15,"center", true);
+        //Charge
+        game.context.strokeRect(5,57,101,21);
+        game.context.fillStyle = "#CC9900";
+        game.context.fillRect(6,58,this.currentStm / this.maxStm * 99,19);
+        game.writeText("Stamina",110,72,"CC9900",1, 12,"left", true);
     },
 
     /**
