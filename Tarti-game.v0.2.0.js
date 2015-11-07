@@ -16,7 +16,7 @@ Entity.prototype.animate = function(animSpeed, width, height){
     height = height || 1;
     var ind = 3;
     this.draw((this.frame % (this.spriteSheet.width / 32) + ind * this.sprite), this.sprInd, this.x, this.y, width, height);
-    obj.countDraw++;
+    this.countDraw++;
 
     if (this.countDraw >= Math.round((game.fps/this.nbrFrame)/animSpeed) * this.nbrFrame)
         this.countDraw = 0;
@@ -46,7 +46,7 @@ function Enemy(_x, _y, _speed, _dirX){
     this.countDraw = 0;
     this.spriteSheet = new Image();
     this.spriteSheet.src = "resources/monster2.png";
-    this.update = function () {
+    this.display = function () {
         var time = new Date();
         this.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * this.dirX;
         if(this.dirX == -1)
@@ -82,7 +82,7 @@ function Player(_x, _y, _speed,  _date, _key){
     this.lastTime = _date;
     this.spriteSheet = new Image();
     this.spriteSheet.src = "resources/Actor1.png";
-    this.draw = function () {
+    this.display = function () {
         this.time = (new Date()).getTime();
         if(this.key != -1) {
             console.log("element.time: " + this.time);
@@ -106,6 +106,57 @@ function Player(_x, _y, _speed,  _date, _key){
 }
 Player.prototype = Object.create(Entity.prototype);
 Player.prototype.constructor = Player;
+
+function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLinked){
+    this.x = _x;
+    this.y = _y;
+
+    this.sprite = 0;
+    this.nbrFrame = _nbrFrame;
+    this.animSpeed = _animSpeed || 1;
+    this.looped = _loop || false;
+    this.creator = _linker || undefined;
+    this.isLinked = _isLinked || false;
+
+    this.stop = false
+
+
+
+    this.spriteSheet = new Image();
+    this.spriteSheet.src = "resources/graphics/fx/" + _sprite + ".png";
+    this.frame = 0;
+    this.sprInd = 0;
+    this.countDraw = 0;
+
+    this.xSpot = 16;
+    this.ySpot = 16;
+    /**
+     * Dessine l'effet spécial
+     */
+    this.display = function(){
+        if(this.isLinked && this.creator !== "undefined"){
+            this.x = this.creator.x;
+            this.y = this.creator.y + 4;
+        }
+        this.animate(this.animSpeed, 1, 1);
+        if((this.frame >= this.nbrFrame - 1 && this.sprInd == Math.floor((this.nbrFrame-1) / (this.spriteSheet.width / 32))  && this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
+            if(!this.looped || this.stop) {
+                game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
+                return false;
+            }
+            else{
+                this.frame = 0;
+                this.sprInd = 0;
+                this.countDraw = 0;
+                return true;
+            }
+        }
+        else
+            return true;
+    }
+}
+SpriteFx.prototype = Object.create(Entity.prototype);
+SpriteFx.prototype.constructor = SpriteFx;
 
 function ColorRGB(_red, _green, _blue, _alpha){
     this.red = _red;
@@ -371,51 +422,17 @@ var game = {
         });
     },
     /**
-     * Anime le sprite d'un objet
-     * @param {Object} obj L'objet à animer
-     * @param {Number} [animSpeed=1] La vitesse d'animation, 1 étant la vitesse normale
-     * @param {Number} [width] La largeur du sprite en pixel
-     * @param {Number} [height] La hauteur du sprite en pixel
-     */
-    animate: function(obj, animSpeed, width, height){
-        animSpeed = typeof animSpeed !== "undefined" ? animSpeed : 1;
-        var ind = 3; //obj === player ? 3 : 1;
-        this.drawObj(obj, (obj.frame % (obj.spriteSheet.width / 32) + ind * obj.sprite), obj.sprInd,obj.x,obj.y, width, height);
-        obj.countDraw++;
-
-        if (obj.countDraw >= Math.round((game.fps/obj.nbrFrame)/animSpeed) * obj.nbrFrame)
-            obj.countDraw = 0;
-        if (obj.countDraw % Math.round((game.fps/obj.nbrFrame) / animSpeed) == 0)
-            obj.frame++;
-        if (obj.frame >= obj.nbrFrame)
-            obj.frame = 0;
-
-        if(obj.xPrev == obj.x && obj.yPrev == obj.y)
-            obj.frame = 1;
-        if((obj.frame - (obj.spriteSheet.width / 32) * obj.sprInd) >= obj.spriteSheet.width / 32 && ind == 3) {
-            obj.sprInd += 1;
-        }
-    },
-    /**
      * Dessine les objets listés
      */
     drawObjects: function(){
         for(var i = 0; i < game.objects.entities.length; i++){
-            if(!game.objects.entities[i].draw())
+            if(!game.objects.entities[i].display())
                 i--;
         }
         for(i = 0; i < game.objects.gui.length; i++){
-            if(!game.objects.gui[i].draw())
+            if(!game.objects.gui[i].display())
                 i--;
         }
-    },
-    drawObj: function(obj,sprIndX,sprIndY,posX,posY,width,height){
-        width = typeof width !== 'undefined' ?  width : 1;
-        height = typeof height !== 'undefined' ?  height : 1;
-        posX = typeof posX !== 'undefined' ? posX : obj.x;
-        posY= typeof posY !== 'undefined' ? posY : obj.y;
-        game.context.drawImage(obj.spriteSheet,  sprIndX * 32 * width , sprIndY * 32 * width, width * 32, height * 32, posX + game.xOffSet - obj.xSpot, posY + game.yOffSet - obj.ySpot, width * 32,height * 32);
-
     },
     /**
      * Fonction permettant d'écirire du texte à l'écran
@@ -468,7 +485,7 @@ var game = {
          * @returns {Boolean} Si l'objet est encore dans le tableau
          * @instance
          */
-        this.draw = function(){
+        this.display = function(){
             if(this.opacity > 0){
                 game.writeText(this.text,this.x,this.y - this.yOffset,"red",this.opacity, size, "center", isStatic);
                 this.yOffset++;
@@ -489,68 +506,8 @@ var game = {
     createTxtFx: function(creator, text,size, isStatic){
         game.objects.gui.push(new this.TextFx(creator, text, size, isStatic));
     },
-    /**
-     * Constructeur d'un objet d'effet spécial
-     * @param {Number} _x Coordonée x où apparait l'effet spécial
-     * @param {Number} _y Coordonnée y où apparait l'effet spécial
-     * @param {String} _sprite Le sprite à afficher
-     * @param {Number} _nbrFrame Le nombre de frames de l'animation
-     * @param {Number} _animSpeed La vitesse d'animation du sprite
-     * @param {Boolean} [_loop=false] Le nombre de fois que l'animation doit se lancer
-     * @param {Object} [_linker=undefined] L'objet auquel lier l'effet
-     * @param {Boolean} [_isLinked=false] Détermine si l'effet doit être attaché à un objet
-     * @constructor
-     */
-    SpriteFx: function(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLinked){
-        this.x = _x;
-        this.y = _y;
-
-        this.sprite = 0;
-        this.nbrFrame = _nbrFrame;
-        this.looped = typeof _loop !== "undefined" ? _loop : false;
-        this.creator = typeof _linker !== "undefined" ? _linker : undefined;
-        this.isLinked = typeof _isLinked !== "undefined" ? _isLinked : false;
-        this.animSpeed = typeof _animSpeed !== "undefined" ? _animSpeed : 1;
-
-        this.stop = false
-
-        
-
-        this.spriteSheet = new Image();
-        this.spriteSheet.src = "resources/graphics/fx/" + _sprite + ".png";
-        this.frame = 0;
-        this.sprInd = 0;
-        this.countDraw = 0;
-
-        this.xSpot = 16;
-        this.ySpot = 16;
-        /**
-         * Dessine l'effet spécial
-         */
-        this.draw = function(){
-            if(this.isLinked && this.creator !== "undefined"){
-                this.x = this.creator.x;
-                this.y = this.creator.y + 4;
-            }
-            game.animate(this,this.animSpeed, 1, 1);
-            if((this.frame >= this.nbrFrame - 1 && this.sprInd == Math.floor((this.nbrFrame-1) / (this.spriteSheet.width / 32))  && this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
-                if(!this.looped || this.stop) {
-                    game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
-                    return false;
-                }
-                else{
-                    this.frame = 0;
-                    this.sprInd = 0;
-                    this.countDraw = 0;
-                    return true;
-                }
-            }
-            else
-                return true;
-        }
-    },
     createSpriteFx: function(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked){
-        var ind = game.objects.entities.push(new this.SpriteFx(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked));
+        var ind = game.objects.entities.push(new SpriteFx(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked));
         return game.objects.entities[ind - 1];
     },
     /**
@@ -569,7 +526,6 @@ var game = {
         });
         this.portview(player,100,100);
         game.drawObjects();
-        //player.draw();
         player.drawLife();
         if(!socket.connected){
             this.context.font = "20px Arial";
@@ -687,9 +643,10 @@ var player = {
         if(this.conc === null)
             this.conc = game.createSpriteFx(player.x, player.y, "Special10", 7, 1, true, player, true);
     },
-
-    draw: function(){
-        game.animate(this, 2);
+    draw: Entity.prototype.draw,
+    animate: Entity.prototype.animate,
+    display: function(){
+        this.animate(2);
         return true;
     },
     /**
@@ -751,6 +708,8 @@ var player = {
             this.sumX += game.timeTest - game.lastTimeTest;
             this.x += 0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest);
             this.y += 0.06 * this.speed * this.dir[this.poi][1] * (game.timeTest - game.lastTimeTest);
+            this.x = Math.round(this.x);
+            this.y = Math.round(this.y);
             this.sprInd = this.poi;
             this.key.id = player.poi;
             }
