@@ -2,6 +2,129 @@
  * Created by Hild Franck on 7/8/2015.
  */
 
+function Entity(){}
+Entity.prototype.draw = function(sprIndX, sprIndY, _posX, _posY, _width, _height){
+        _width = _width || 1;
+        _height = _height || 1;
+        _posX = _posX || this.x;
+        _posY= _posY || this.y;
+        game.context.drawImage(this.spriteSheet,  sprIndX * 32 * _width , sprIndY * 32 * _width, _width * 32, _height * 32, _posX + game.xOffSet - this.xSpot, _posY + game.yOffSet - this.ySpot, _width * 32, _height * 32);
+}
+Entity.prototype.animate = function(animSpeed, width, height){
+    animSpeed = animSpeed || 1;
+    width = width || 1;
+    height = height || 1;
+    var ind = 3;
+    this.draw((this.frame % (this.spriteSheet.width / 32) + ind * this.sprite), this.sprInd, this.x, this.y, width, height);
+    obj.countDraw++;
+
+    if (this.countDraw >= Math.round((game.fps/this.nbrFrame)/animSpeed) * this.nbrFrame)
+        this.countDraw = 0;
+    if (this.countDraw % Math.round((game.fps/this.nbrFrame) / animSpeed) == 0)
+        this.frame++;
+    if (this.frame >= this.nbrFrame)
+        this.frame = 0;
+
+    if(this.xPrev == this.x && this.yPrev == this.y)
+        this.frame = 1;
+    if((this.frame - (this.spriteSheet.width / 32) * this.sprInd) >= this.spriteSheet.width / 32 && ind == 3) {
+        this.sprInd += 1;
+    }
+}
+
+function Enemy(_x, _y, _speed, _dirX){
+    this.type = 'enemy';
+    this.xPrev = _x;
+    this.yPrev = _y;
+    this.x = _x;
+    this.y = _y;
+    this.speed = _speed;
+    this.dirX = _dirX;
+    this.sprInd = 0;
+    this.frame = 0;
+    this.nbrFrame = 3;
+    this.countDraw = 0;
+    this.spriteSheet = new Image();
+    this.spriteSheet.src = "resources/monster2.png";
+    this.update = function () {
+        var time = new Date();
+        this.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * this.dirX;
+        if(this.dirX == -1)
+            this.sprInd = 1;
+        if(this.dirX == 1)
+            this.sprInd = 2;
+        if(this.y > this.yPrev)
+            this.sprInd = 3;
+        if(this.y < this.yPrev)
+            this.sprInd = 0;
+        this.animate(1.5);
+        return true;
+    };
+}
+Enemy.prototype = Object.create(Entity.prototype);
+Enemy.prototype.constructor = Enemy;
+
+function Player(_x, _y, _speed,  _date, _key){
+    this.type = 'player';
+    this.xPrev = _x;
+    this.yPrev = _y;
+    this.x = _x;
+    this.y = _y
+    this.speed = _speed;
+    this.sprInd = 0;
+    this.frame = 0;
+    this.xSpot = 16;
+    this.ySpot = 16;
+    this.nbrFrame = 3;
+    this.countDraw = 0;
+    this.key = _key;
+    this.time = (new Date()).getTime();
+    this.lastTime = _date;
+    this.spriteSheet = new Image();
+    this.spriteSheet.src = "resources/Actor1.png";
+    this.draw = function () {
+        this.time = (new Date()).getTime();
+        if(this.key != -1) {
+            console.log("element.time: " + this.time);
+            console.log("element.lastTime: " + this.lastTime);
+            console.log("element.y: " + this.y);
+            this.x += 0.06 * this.speed * player.dir[this.key][0] * (this.time - this.lastTime);
+            this.y += 0.06 * this.speed * player.dir[this.key][1] * (this.time - this.lastTime);
+            if (this.xPrev > this.x)
+                this.sprInd = 1;
+            if (this.xPrev < this.x)
+                this.sprInd = 2;
+            if (this.y > this.yPrev)
+                this.sprInd = 3;
+            if (this.y < this.yPrev)
+                this.sprInd = 0;
+        }
+        this.animate();
+        this.lastTime = this.time;
+        return true;
+    };
+}
+Player.prototype = Object.create(Entity.prototype);
+Player.prototype.constructor = Player;
+
+function ColorRGB(_red, _green, _blue, _alpha){
+    this.red = _red;
+    this.green = _green;
+    this.blue = _blue;
+    this.alpha = _alpha;
+}
+ColorRGB.prototype.toHex = function(){
+    return new ColorHex(this.red.toString(16) + this.green.toString(16) + this.blue.toString(16), this.alpha);
+}
+
+function ColorHex(_hex, _alpha){
+    this.hex = _hex;
+    this.alpha = _alpha;
+}
+ColorHex.prototype.toDec = function(){
+    return new ColorRGB(parseInt(this.hex.splice(0,3), 16), parseInt(this.hex.splice(3,6), 16), parseInt(this.hex.splice(6,9), 16), this.alpha);
+}
+
 /**
  * L'objet du jeu
  * @class
@@ -71,31 +194,7 @@ var game = {
 
                 }
                 if(i == game.objects.entities.length && !element.dead) {
-                    element.type = 'enemy';
-                    element.xPrev = element.x;
-                    element.yPrev = element.y;
-                    element.sprInd = 0;
-                    element.frame = 0;
-                    element.nbrFrame = 3;
-                    element.countDraw = 0;
-                    element.spriteSheet = new Image();
-                    element.spriteSheet.src = "resources/monster2.png";
-                    element.draw = function () {
-
-                        var time = new Date();
-                        element.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * element.dirX;
-                        if(this.dirX == -1)
-                            this.sprInd = 1;
-                        if(this.dirX == 1)
-                            this.sprInd = 2;
-                        if(this.y > this.yPrev)
-                            this.sprInd = 3;
-                        if(this.y < this.yPrev)
-                            this.sprInd = 0;
-                        game.animate(this, 1.5);
-                        return true;
-                    };
-                    game.objects.entities.push(element);
+                    game.objects.entities.push(new Enemy(element.x, element.y, element.speed, element.dirX));
                 }
             });
             data.servData.players.forEach(function(element){
@@ -110,41 +209,7 @@ var game = {
                     }
                 }
                 if (i == game.objects.entities.length && element.$loki !== player.id) {
-                    element.type = 'player';
-                    element.xPrev = element.x;
-                    element.yPrev = element.y;
-                    element.sprInd = 0;
-                    element.frame = 0;
-                    element.xSpot = 16;
-                    element.ySpot = 16;
-                    element.nbrFrame = 3;
-                    element.countDraw = 0;
-                    element.time = (new Date()).getTime();
-                    element.lastTime = element.date;
-                    element.spriteSheet = new Image();
-                    element.spriteSheet.src = "resources/Actor1.png";
-                    element.draw = function () {
-                        element.time = (new Date()).getTime();
-                        if(element.key != -1) {
-                            console.log("element.time: " + element.time);
-                            console.log("element.lastTime: " + element.lastTime);
-                            console.log("element.y: " + element.y);
-                            element.x += 0.06 * element.speed * player.dir[element.key][0] * (element.time - element.lastTime);
-                            element.y += 0.06 * element.speed * player.dir[element.key][1] * (element.time - element.lastTime);
-                            if (this.xPrev > this.x)
-                                this.sprInd = 1;
-                            if (this.xPrev < this.x)
-                                this.sprInd = 2;
-                            if (this.y > this.yPrev)
-                                this.sprInd = 3;
-                            if (this.y < this.yPrev)
-                                this.sprInd = 0;
-                        }
-                        game.animate(this, 1);
-                        element.lastTime = element.time;
-                        return true;
-                    };
-                    game.objects.entities.push(element);
+                    game.objects.entities.push(new Player(element.x, element.y, element.speed, element.date, element.key));
                 }
             });
             if(data.plyData.level.length != 0) {
