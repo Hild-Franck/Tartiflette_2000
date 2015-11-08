@@ -2,6 +2,45 @@
  * Created by Hild Franck on 7/8/2015.
  */
 
+Image.prototype.tintImg = function(color){
+    var colorRatio = 255/(color.red + color.green + color.blue);
+    var tintCanvas = document.createElement('canvas');
+    tintCanvas.width = 32;
+    tintCanvas.height = 32;
+    var tintContext = tintCanvas.getContext('2d');
+    tintContext.drawImage(this, 0, 0, 32, 32, 0, 0, 32, 32);
+    var pixelData = tintContext.getImageData(0, 0, 32, 32);
+
+    for(var j = 0; j < 32*32*4; j+=32*4) {
+        for (var i = 0; i < 32 * 4; i += 4) {
+            pixelData.data[i+j] += colorRatio*color.red;;
+            pixelData.data[i+j+1] += colorRatio*color.green;
+            pixelData.data[i+j+2] += colorRatio*color.blue;
+        }
+    }
+    tintContext.putImageData(pixelData,0,0);
+
+    var dataURL = tintCanvas.toDataURL();
+    tintImg.src = dataURL;
+
+    return tintImg;
+
+}
+
+function Sprite(imgPathn, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
+    this.image = new Image();
+    this.tintImage = new Image();
+    this.image.src = imgPath;
+    this.frameInd = 0;
+    this.spriteInd = _sprite;
+    this.nbrFrame = _nbrFrame || image.width / 32;
+    this.width = _width;
+    this.height = _height;
+    this.xSpot = _xSpot || Math.floor(this.width/2);
+    this.ySpot = _ySpot || Math.floor(this.height/2);
+    this.isTint = false;
+}
+
 function Entity(){}
 Entity.prototype.draw = function(sprIndX, sprIndY, _posX, _posY, _width, _height){
         _width = _width || 1;
@@ -31,6 +70,31 @@ Entity.prototype.animate = function(animSpeed, width, height){
         this.sprInd += 1;
     }
 }
+//Work in Progress ; new animate/draw methods based on new sprite object
+/*
+Entity.prototype.animate = function(sprite, animSpeed){
+    animSpeed = animSpeed || 1;
+    var ind = 3;
+    if(!sprite.isTint)
+        this.draw((this.frame % (this.spriteSheet.width / 32) + ind * this.sprite), this.sprInd, this.x, this.y, width, height);
+    else{
+        this.sprite.tintImage = this.sprite.image.tintImg(new ColorRGB(255, 0, 0));
+    }
+    this.countDraw++;
+
+    if (this.countDraw >= Math.round((game.fps/this.nbrFrame)/animSpeed) * this.nbrFrame)
+        this.countDraw = 0;
+    if (this.countDraw % Math.round((game.fps/this.nbrFrame) / animSpeed) == 0)
+        this.frame++;
+    if (this.frame >= this.nbrFrame)
+        this.frame = 0;
+
+    if(this.xPrev == this.x && this.yPrev == this.y)
+        this.frame = 1;
+    if((this.frame - (this.spriteSheet.width / 32) * this.sprInd) >= this.spriteSheet.width / 32 && ind == 3) {
+        this.sprInd += 1;
+    }
+}*/
 
 function Enemy(_x, _y, _speed, _dirX){
     this.type = 'enemy';
@@ -46,20 +110,27 @@ function Enemy(_x, _y, _speed, _dirX){
     this.countDraw = 0;
     this.spriteSheet = new Image();
     this.spriteSheet.src = "resources/monster2.png";
+    this.dying = false;
     this.display = function () {
-        var time = new Date();
-        this.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * this.dirX;
-        if(this.dirX == -1)
-            this.sprInd = 1;
-        if(this.dirX == 1)
-            this.sprInd = 2;
-        if(this.y > this.yPrev)
-            this.sprInd = 3;
-        if(this.y < this.yPrev)
-            this.sprInd = 0;
-        this.animate(1.5);
+        if(!this.dead) {
+            var time = new Date();
+            this.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * this.dirX;
+            if (this.dirX == -1)
+                this.sprInd = 1;
+            if (this.dirX == 1)
+                this.sprInd = 2;
+            if (this.y > this.yPrev)
+                this.sprInd = 3;
+            if (this.y < this.yPrev)
+                this.sprInd = 0;
+            this.animate(1.5);
+        }
+        else
+            this.death()
         return true;
     };
+    this.death = function(){
+    }
 }
 Enemy.prototype = Object.create(Entity.prototype);
 Enemy.prototype.constructor = Enemy;
@@ -103,6 +174,7 @@ function Player(_x, _y, _speed,  _date, _key){
         this.lastTime = this.time;
         return true;
     };
+    this
 }
 Player.prototype = Object.create(Entity.prototype);
 Player.prototype.constructor = Player;
@@ -162,7 +234,7 @@ function ColorRGB(_red, _green, _blue, _alpha){
     this.red = _red;
     this.green = _green;
     this.blue = _blue;
-    this.alpha = _alpha;
+    this.alpha = _alpha || 1;
 }
 ColorRGB.prototype.toHex = function(){
     return new ColorHex(this.red.toString(16) + this.green.toString(16) + this.blue.toString(16), this.alpha);
