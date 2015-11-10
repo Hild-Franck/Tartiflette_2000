@@ -2,99 +2,76 @@
  * Created by Hild Franck on 7/8/2015.
  */
 
-Image.prototype.tintImg = function(color){
+Image.prototype.tintImg = function(color, xStart, yStart, width, height){
+    xStart = xStart || 0;
+    yStart = yStart || 0;
+    width = width || 32;
+    height = height || 32;
     var colorRatio = 255/(color.red + color.green + color.blue);
     var tintCanvas = document.createElement('canvas');
-    tintCanvas.width = 32;
-    tintCanvas.height = 32;
+    tintCanvas.width = width;
+    tintCanvas.height = height;
     var tintContext = tintCanvas.getContext('2d');
-    tintContext.drawImage(this, 0, 0, 32, 32, 0, 0, 32, 32);
-    var pixelData = tintContext.getImageData(0, 0, 32, 32);
+    tintContext.drawImage(this, xStart, yStart, width, height, 0, 0, width, height);
+    var pixelData = tintContext.getImageData(0, 0, width, height);
 
-    for(var j = 0; j < 32*32*4; j+=32*4) {
-        for (var i = 0; i < 32 * 4; i += 4) {
-            pixelData.data[i+j] += colorRatio*color.red;;
+    for(var j = 0; j < height*width*4; j+=width*4) {
+        for (var i = 0; i < width * 4; i += 4) {
+            pixelData.data[i+j] += colorRatio*color.red;
             pixelData.data[i+j+1] += colorRatio*color.green;
             pixelData.data[i+j+2] += colorRatio*color.blue;
         }
     }
     tintContext.putImageData(pixelData,0,0);
 
-    var dataURL = tintCanvas.toDataURL();
-    tintImg.src = dataURL;
+    return tintCanvas.toDataURL();
 
-    return tintImg;
+};
 
-}
-
-function Sprite(imgPathn, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
+function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
     this.image = new Image();
     this.tintImage = new Image();
     this.image.src = imgPath;
-    this.frameInd = 0;
-    this.spriteInd = _sprite;
-    this.nbrFrame = _nbrFrame || image.width / 32;
+    this.frameInd = 1;
+    this.animInd = _sprite;
+    this.nbrFrame = _nbrFrame || this.image.width / 32;
+    this.frame = 0;
     this.width = _width;
     this.height = _height;
     this.xSpot = _xSpot || Math.floor(this.width/2);
     this.ySpot = _ySpot || Math.floor(this.height/2);
-    this.isTint = false;
+    this.isTint = true;
 }
 
-function Entity(){}
-Entity.prototype.draw = function(sprIndX, sprIndY, _posX, _posY, _width, _height){
-        _width = _width || 1;
-        _height = _height || 1;
-        _posX = _posX || this.x;
-        _posY= _posY || this.y;
-        game.context.drawImage(this.spriteSheet,  sprIndX * 32 * _width , sprIndY * 32 * _width, _width * 32, _height * 32, _posX + game.xOffSet - this.xSpot, _posY + game.yOffSet - this.ySpot, _width * 32, _height * 32);
-}
-Entity.prototype.animate = function(animSpeed, width, height){
-    animSpeed = animSpeed || 1;
-    width = width || 1;
-    height = height || 1;
-    var ind = 3;
-    this.draw((this.frame % (this.spriteSheet.width / 32) + ind * this.sprite), this.sprInd, this.x, this.y, width, height);
-    this.countDraw++;
 
-    if (this.countDraw >= Math.round((game.fps/this.nbrFrame)/animSpeed) * this.nbrFrame)
-        this.countDraw = 0;
-    if (this.countDraw % Math.round((game.fps/this.nbrFrame) / animSpeed) == 0)
-        this.frame++;
-    if (this.frame >= this.nbrFrame)
-        this.frame = 0;
-
-    if(this.xPrev == this.x && this.yPrev == this.y)
-        this.frame = 1;
-    if((this.frame - (this.spriteSheet.width / 32) * this.sprInd) >= this.spriteSheet.width / 32 && ind == 3) {
-        this.sprInd += 1;
-    }
+function Entity(){
+    this.countDraw = 0;
 }
-//Work in Progress ; new animate/draw methods based on new sprite object
-/*
+Entity.prototype.draw = function(sprite, sprIndX, sprIndY){
+    context.drawImage(sprite.image,  sprIndX * 32 , sprIndY * 32, 32, 32, this.x - sprite.xSpot, this.y - sprite.ySpot, 32, 32);
+};
 Entity.prototype.animate = function(sprite, animSpeed){
     animSpeed = animSpeed || 1;
-    var ind = 3;
-    if(!sprite.isTint)
-        this.draw((this.frame % (this.spriteSheet.width / 32) + ind * this.sprite), this.sprInd, this.x, this.y, width, height);
+    if(!(sprite.isTint))
+        this.draw(sprite, sprite.frame + 3 * sprite.frameInd, sprite.animInd, this.x, this.y);
     else{
-        this.sprite.tintImage = this.sprite.image.tintImg(new ColorRGB(255, 0, 0));
+        this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (sprite.frame + 3 * sprite.frameInd)*32, sprite.animInd*32);
+        context.drawImage(sprite.tintImage, 0, 0, 32, 32, this.x - sprite.xSpot, this.y - sprite.ySpot, 32, 32);
+
     }
     this.countDraw++;
 
-    if (this.countDraw >= Math.round((game.fps/this.nbrFrame)/animSpeed) * this.nbrFrame)
+    if (this.countDraw >= Math.round((fps/sprite.nbrFrame)/animSpeed) * sprite.nbrFrame)
         this.countDraw = 0;
-    if (this.countDraw % Math.round((game.fps/this.nbrFrame) / animSpeed) == 0)
-        this.frame++;
-    if (this.frame >= this.nbrFrame)
-        this.frame = 0;
+    if (this.countDraw % Math.round((fps/sprite.nbrFrame) / animSpeed) == 0)
+        sprite.frame++;
+    if (sprite.frame >= sprite.nbrFrame)
+        sprite.frame = 0;
 
-    if(this.xPrev == this.x && this.yPrev == this.y)
-        this.frame = 1;
-    if((this.frame - (this.spriteSheet.width / 32) * this.sprInd) >= this.spriteSheet.width / 32 && ind == 3) {
-        this.sprInd += 1;
-    }
-}*/
+    /*if((this.frame - (this.spriteSheet.width / 32) * this.sprInd) >= this.spriteSheet.width / 32 && ind == 3) {
+     this.sprInd += 1;
+     }*/
+};
 
 function Enemy(_x, _y, _speed, _dirX){
     this.type = 'enemy';
