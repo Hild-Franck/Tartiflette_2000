@@ -48,7 +48,7 @@ function Entity(){
     this.countDraw = 0;
 }
 Entity.prototype.draw = function(sprite, sprIndX, sprIndY){
-    context.drawImage(sprite.image,  sprIndX * 32 , sprIndY * 32, 32, 32, this.x - sprite.xSpot, this.y - sprite.ySpot, 32, 32);
+    game.context.drawImage(sprite.image,  sprIndX * 32 , sprIndY * 32, 32, 32, this.x - sprite.xSpot, this.y - sprite.ySpot, 32, 32);
 };
 Entity.prototype.animate = function(sprite, animSpeed){
     animSpeed = animSpeed || 1;
@@ -56,7 +56,7 @@ Entity.prototype.animate = function(sprite, animSpeed){
         this.draw(sprite, sprite.frame + 3 * sprite.frameInd, sprite.animInd, this.x, this.y);
     else{
         this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (sprite.frame + 3 * sprite.frameInd)*32, sprite.animInd*32);
-        context.drawImage(sprite.tintImage, 0, 0, 32, 32, this.x - sprite.xSpot, this.y - sprite.ySpot, 32, 32);
+        game.context.drawImage(sprite.tintImage, 0, 0, 32, 32, this.x - sprite.xSpot, this.y - sprite.ySpot, 32, 32);
 
     }
     this.countDraw++;
@@ -167,7 +167,7 @@ function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLink
     this.creator = _linker || undefined;
     this.isLinked = _isLinked || false;
 
-    this.stop = false
+    this.stop = false;
 
 
 
