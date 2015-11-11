@@ -32,15 +32,15 @@ function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
     this.image = new Image();
     this.tintImage = new Image();
     this.image.src = imgPath;
-    this.frameInd = 1;
-    this.animInd = _sprite;
+    this.spriteInd = _sprite;
+    this.animInd = 0;
     this.nbrFrame = _nbrFrame || this.image.width / 32;
     this.frame = 0;
     this.width = _width;
     this.height = _height;
     this.xSpot = _xSpot || Math.floor(this.width/2);
     this.ySpot = _ySpot || Math.floor(this.height/2);
-    this.isTint = true;
+    this.isTint = false;
 }
 
 
@@ -48,22 +48,22 @@ function Entity(){
     this.countDraw = 0;
 }
 Entity.prototype.draw = function(sprite, sprIndX, sprIndY){
-    game.context.drawImage(sprite.image,  sprIndX * 32 , sprIndY * 32, 32, 32, this.x - sprite.xSpot, this.y - sprite.ySpot, 32, 32);
+    game.context.drawImage(sprite.image,  sprIndX * 32 , sprIndY * 32, 32, 32, this.x - sprite.xSpot + game.xOffSet, this.y - sprite.ySpot + game.yOffSet, 32, 32);
 };
 Entity.prototype.animate = function(sprite, animSpeed){
     animSpeed = animSpeed || 1;
     if(!(sprite.isTint))
-        this.draw(sprite, sprite.frame + 3 * sprite.frameInd, sprite.animInd, this.x, this.y);
+        this.draw(sprite, sprite.frame + 3 * sprite.spriteInd, sprite.animInd, this.x, this.y);
     else{
-        this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (sprite.frame + 3 * sprite.frameInd)*32, sprite.animInd*32);
-        game.context.drawImage(sprite.tintImage, 0, 0, 32, 32, this.x - sprite.xSpot, this.y - sprite.ySpot, 32, 32);
+        this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (sprite.frame + 3 * sprite.spriteInd)*32, sprite.animInd*32);
+        game.context.drawImage(sprite.tintImage, 0, 0, 32, 32, this.x - sprite.xSpot + game.xOffSet, this.y - sprite.ySpot + game.yOffSet, 32, 32);
 
     }
     this.countDraw++;
 
-    if (this.countDraw >= Math.round((fps/sprite.nbrFrame)/animSpeed) * sprite.nbrFrame)
+    if (this.countDraw >= Math.round((game.fps/sprite.nbrFrame)/animSpeed) * sprite.nbrFrame)
         this.countDraw = 0;
-    if (this.countDraw % Math.round((fps/sprite.nbrFrame) / animSpeed) == 0)
+    if (this.countDraw % Math.round((game.fps/sprite.nbrFrame) / animSpeed) == 0)
         sprite.frame++;
     if (sprite.frame >= sprite.nbrFrame)
         sprite.frame = 0;
@@ -609,8 +609,8 @@ var player = {
     ],
     key: {id: -1, date: 0},
     prevKey: {id: -1, date: 0},
-    x: 50,
-    y: 50,
+    x: 150,
+    y: 150,
     xPrev: 0,
     yPrev: 0,
     speed: 4,
@@ -673,7 +673,7 @@ var player = {
     draw: Entity.prototype.draw,
     animate: Entity.prototype.animate,
     display: function(){
-        this.animate(2);
+        this.animate(this.sprite, 2);
         return true;
     },
     /**
@@ -737,7 +737,7 @@ var player = {
             this.y += 0.06 * this.speed * this.dir[this.poi][1] * (game.timeTest - game.lastTimeTest);
             this.x = Math.round(this.x);
             this.y = Math.round(this.y);
-            this.sprInd = this.poi;
+            this.sprite.animInd = this.poi;
             this.key.id = player.poi;
             }
         else {
@@ -754,14 +754,14 @@ var player = {
         if(this.key.id != this.prevKey.id)
             socket.emit("movement", this.key);
 
-        this.dirX = this.dir[this.sprInd][0];
-        this.dirY = this.dir[this.sprInd][1];
+        this.dirX = this.dir[this.sprite.animInd][0];
+        this.dirY = this.dir[this.sprite.animInd][1];
         game.lastUpdt = game.timeTest;
     }
 };
 //--- Initialisation ---
 game.init();
-player.init();
+player.init(1);
 
 //--- Game loop ---
 setInterval(function(){
