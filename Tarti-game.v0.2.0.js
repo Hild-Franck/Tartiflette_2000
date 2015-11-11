@@ -73,7 +73,7 @@ Entity.prototype.animate = function(sprite, animSpeed){
      }*/
 };
 
-function Enemy(_x, _y, _speed, _dirX){
+function Enemy(_x, _y, _speed, _dirX, _id){
     this.type = 'enemy';
     this.xPrev = _x;
     this.yPrev = _y;
@@ -84,23 +84,25 @@ function Enemy(_x, _y, _speed, _dirX){
     this.countDraw = 0;
     this.sprite = new Sprite("resources/monster2.png", 32, 32, 0, 3);
     this.dying = false;
+    this.id = _id;
     this.display = function () {
         if(!this.dead) {
             var time = new Date();
             this.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * this.dirX;
             if (this.dirX == -1)
-                this.sprInd = 1;
+                this.sprite.animInd = 1;
             if (this.dirX == 1)
-                this.sprInd = 2;
+                this.sprite.animInd = 2;
             if (this.y > this.yPrev)
-                this.sprInd = 3;
+                this.sprite.animInd = 3;
             if (this.y < this.yPrev)
-                this.sprInd = 0;
-            this.animate(1.5);
+                this.sprite.animInd = 0;
+            this.animate(this.sprite, 1.5);
         }
         else
             this.death()
         return true;
+        this.xPrev = this.x;
     };
     this.death = function(){
     }
@@ -125,8 +127,6 @@ function Player(_x, _y, _speed, _date, _key, sprite){
     this.time = (new Date()).getTime();
     this.lastTime = _date;
     this.sprite = new Sprite("resources/Actor1.png", 32, 32, sprite, 3);
-    this.spriteSheet = new Image();
-    this.spriteSheet.src = "resources/Actor1.png";
     this.display = function () {
         this.time = (new Date()).getTime();
         if(this.key != -1) {
@@ -263,7 +263,7 @@ var game = {
 
             data.servData.enemies.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
-                    if (element.$loki === game.objects.entities[i].$loki && game.objects.entities[i].type === 'enemy'){
+                    if (element.$loki === game.objects.entities[i].id && game.objects.entities[i].type === 'enemy'){
                         if (!(element.hit === null))
                             game.createTxtFx(game.objects.entities[i], element.hit.damage);
                         if(!element.dead) {
@@ -282,7 +282,7 @@ var game = {
 
                 }
                 if(i == game.objects.entities.length && !element.dead) {
-                    game.objects.entities.push(new Enemy(element.x, element.y, element.speed, element.dirX));
+                    game.objects.entities.push(new Enemy(element.x, element.y, element.speed, element.dirX, element.$loki));
                 }
             });
             data.servData.players.forEach(function(element){
@@ -454,7 +454,7 @@ var game = {
             player.currentStm = servData.stmnPlayer;
             player.currXp = servData.xpPlayer;
             player.id = servData.idPlayer;
-            player.sprite = servData.spritePlayer;
+            player.sprite = new Sprite("resources/graphics/Actor1.png", 32, 32, 1, 3);
             player.chargedTime = servData.chrgdTmPlayer;
         });
     },
@@ -757,6 +757,10 @@ var player = {
         this.dirX = this.dir[this.sprite.animInd][0];
         this.dirY = this.dir[this.sprite.animInd][1];
         game.lastUpdt = game.timeTest;
+        if(this.x == this.xPrev && this.y == this.yPrev){
+            this.sprite.frame = 1;
+            this.countDraw = 0;
+        }
     }
 };
 //--- Initialisation ---
