@@ -171,12 +171,13 @@ function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLink
      * Dessine l'effet spécial
      */
     this.display = function(){
+        console.log('countDraw: ' + this.countDraw);
         if(this.isLinked && this.creator !== "undefined"){
             this.x = this.creator.x;
             this.y = this.creator.y + 4;
         }
-        this.animate(this.animSpeed, 1, 1);
-        if((this.frame >= this.nbrFrame - 1 && this.sprInd == Math.floor((this.nbrFrame-1) / (this.spriteSheet.width / 32))  && this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
+        this.animate(this.sprite, this.animSpeed);
+        if((this.sprite.frame >= this.sprite.nbrFrame - 1 /*&& this.sprite.animInd == Math.floor((this.nbrFrame-1) / (this.sprite.width / 32))  */&& this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
             if(!this.looped || this.stop) {
                 game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
                 return false;
