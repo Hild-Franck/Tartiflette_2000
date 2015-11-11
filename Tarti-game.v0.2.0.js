@@ -38,6 +38,8 @@ function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
     this.frame = 0;
     this.width = _width;
     this.height = _height;
+    this.widthMod = 1;
+    this.heightMod = 1;
     this.xSpot = _xSpot || Math.floor(this.width/2);
     this.ySpot = _ySpot || Math.floor(this.height/2);
     this.isTint = false;
@@ -47,7 +49,8 @@ function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
 function Entity(){
     this.countDraw = 0;
 }
-Entity.prototype.draw = function(sprite, sprIndX, sprIndY){
+Entity.prototype.draw = function(sprite, sprIndX, sprIndY, width){
+    width = width || 1;
     game.context.drawImage(sprite.image,  sprIndX * 32 , sprIndY * 32, 32, 32, this.x - sprite.xSpot + game.xOffSet, this.y - sprite.ySpot + game.yOffSet, 32, 32);
 };
 Entity.prototype.animate = function(sprite, animSpeed){
@@ -84,9 +87,10 @@ function Enemy(_x, _y, _speed, _dirX, _id){
     this.countDraw = 0;
     this.sprite = new Sprite("resources/monster2.png", 32, 32, 0, 3);
     this.dying = false;
+    this.dead = false;
     this.id = _id;
     this.display = function () {
-        if(!this.dead) {
+        if(!this.dying) {
             var time = new Date();
             this.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * this.dirX;
             if (this.dirX == -1)
@@ -100,11 +104,16 @@ function Enemy(_x, _y, _speed, _dirX, _id){
             this.animate(this.sprite, 1.5);
         }
         else
-            this.death()
-        return true;
+            this.death();
         this.xPrev = this.x;
+        return true;
     };
     this.death = function(){
+        this.sprite.widthMod -= 0.02;
+        this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (this.sprite.frame + 3 * this.sprite.spriteInd)*32, this.sprite.animInd*32);
+        game.context.drawImage(this.sprite.tintImage, 0, 0, 32, 32, this.x - this.sprite.xSpot * this.sprite.widthMod + game.xOffSet, this.y - this.sprite.ySpot* (1/this.sprite.widthMod) + game.yOffSet, 32 * this.sprite.widthMod, 32);
+        if(this.sprite.widthMod <= 0)
+            this.dead = true;
     }
 }
 Enemy.prototype = Object.create(Entity.prototype);
@@ -171,7 +180,6 @@ function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLink
      * Dessine l'effet spécial
      */
     this.display = function(){
-        console.log('countDraw: ' + this.countDraw);
         if(this.isLinked && this.creator !== "undefined"){
             this.x = this.creator.x;
             this.y = this.creator.y + 4;
@@ -265,16 +273,19 @@ var game = {
             data.servData.enemies.forEach(function(element){
                 for (var i = 0; i < game.objects.entities.length; i++){
                     if (element.$loki === game.objects.entities[i].id && game.objects.entities[i].type === 'enemy'){
-                        if (!(element.hit === null))
-                            game.createTxtFx(game.objects.entities[i], element.hit.damage);
+                        if (!(element.hit === null) &&  game.objects.entities[i].dying == false)
+                            game.createTxtFx(game.objects.entities[i], element.hit.damage, 15, false, false);
                         if(!element.dead) {
                             game.objects.entities[i].y = element.y;
                             game.objects.entities[i].x = element.x;
                             game.objects.entities[i].dirX = element.dirX;
                         }
                         else {
-                            game.objects.entities.splice(i, 1);
-                            i--;
+                            game.objects.entities[i].dying = true;
+                            if(game.objects.entities[i].dead) {
+                                game.objects.entities.splice(i, 1);
+                                i--;
+                            }
                         }
                         break;
                     }
@@ -304,16 +315,16 @@ var game = {
             if(data.plyData.level.length != 0) {
                 game.createTxtFx({
                     x: game.canvas.width / 2,
-                    y: game.canvas.height - 50
-                }, (data.plyData.level.length) + "Level up !", 30, true);
+                    y: game.canvas.height - 100
+                }, (data.plyData.level.length) + "Level up !", 30, true, true);
                 for(var i = 0; i < data.plyData.level.length; i++)
                     game.createTxtFx({
                         x: game.canvas.width / 2,
-                        y: game.canvas.height - 25
-                    }, data.plyData.level[i] + " gain !", 30, true);
+                        y: game.canvas.height - 75
+                    }, data.plyData.level[i] + " gain !", 30, true, true);
             }
             if(player.currentHp < data.plyData.data.currHp)
-                game.createTxtFx(player, "+" + data.plyData.data.currHp - player.currentHp, 30, true);
+                game.createTxtFx(player, "+" + data.plyData.data.currHp - player.currentHp, 30, true, true);
             game.objects.arrange();
             player.currentStm = data.plyData.data.currentStm;
             player.currentHp = data.plyData.data.currHp;
@@ -485,10 +496,10 @@ var game = {
      */
     writeText: function(text, x, y, color, opacity, size, align, isStatic){
         this.context.font = typeof size !== "undefined" ? size.toString() +  "px sans-serif" : "10px sans-serif";
-        this.context.textAlign = typeof align !== "undefined" ? align : "left";
-        this.context.fillStyle = typeof color !== 'undefined' ? color : "white";
-        this.context.globalAlpha = typeof opacity !== 'undefined' ? opacity : 1;
-        isStatic = typeof isStatic !== 'undefined' ? isStatic : false;
+        this.context.textAlign = align || "left";
+        this.context.fillStyle = color || "white";
+        this.context.globalAlpha = opacity || 1;
+        isStatic = isStatic || false;
 
         this.context.strokeStyle = "black";
         this.context.lineWidth = 0.5;
@@ -509,15 +520,18 @@ var game = {
      * @param {String} _text Le texte à afficher
      * @constructor
      */
-    TextFx: function(_creator, _text, size, isStatic){
+    TextFx: function(_creator, _text, size, _persistence, _isStatic){
+        console.log('_isStatic: ' + _isStatic);
         this.creator = _creator;
         this.text = _text;
-
-        this.yOffset = 0;
+        this.persistence = _persistence || false;
+        this.isStatic = _isStatic || false;
+        this.yAnim = 0;
         this.x = this.creator.x;
         this.y = this.creator.y - 20;
         this.opacity = 1;
-
+        this.persCnter = 0;
+        console.log('this.isStatic: ' + this.isStatic);
         /**
          * Dessine le texte
          * @returns {Boolean} Si l'objet est encore dans le tableau
@@ -525,9 +539,18 @@ var game = {
          */
         this.display = function(){
             if(this.opacity > 0){
-                game.writeText(this.text,this.x,this.y - this.yOffset,"red",this.opacity, size, "center", isStatic);
-                this.yOffset++;
-                this.opacity -= 0.03;
+                game.writeText(this.text,this.x,this.y - this.yAnim, "red", this.opacity, size, "center", this.isStatic);
+                if(!this.persistence)
+                    this.opacity -= 0.03;
+                else
+                    this.persCnter++;
+
+                if (this.persCnter < 20)
+                    this.yAnim += 1;
+
+                if (this.persCnter == 80)
+                    this.persistence = false;
+
                 return true;
             }
             else {
@@ -541,8 +564,8 @@ var game = {
      * @param {Object} creator Le créateur du texte
      * @param {String} text Le texte à afficher
      */
-    createTxtFx: function(creator, text,size, isStatic){
-        game.objects.gui.push(new this.TextFx(creator, text, size, isStatic));
+    createTxtFx: function(creator, text,size, persistence, isStatic){
+        game.objects.gui.push(new this.TextFx(creator, text, size, persistence, isStatic));
     },
     createSpriteFx: function(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked){
         var ind = game.objects.entities.push(new SpriteFx(x, y, sprite, nbrFrame, animSpeed, loop, linker, isLinked));
