@@ -81,12 +81,8 @@ function Enemy(_x, _y, _speed, _dirX){
     this.y = _y;
     this.speed = _speed;
     this.dirX = _dirX;
-    this.sprInd = 0;
-    this.frame = 0;
-    this.nbrFrame = 3;
     this.countDraw = 0;
-    this.spriteSheet = new Image();
-    this.spriteSheet.src = "resources/monster2.png";
+    this.sprite = new Sprite("resources/monster2.png", 32, 32, 0, 3);
     this.dying = false;
     this.display = function () {
         if(!this.dead) {
@@ -112,7 +108,7 @@ function Enemy(_x, _y, _speed, _dirX){
 Enemy.prototype = Object.create(Entity.prototype);
 Enemy.prototype.constructor = Enemy;
 
-function Player(_x, _y, _speed,  _date, _key){
+function Player(_x, _y, _speed, _date, _key, sprite){
     this.type = 'player';
     this.xPrev = _x;
     this.yPrev = _y;
@@ -128,6 +124,7 @@ function Player(_x, _y, _speed,  _date, _key){
     this.key = _key;
     this.time = (new Date()).getTime();
     this.lastTime = _date;
+    this.sprite = new Sprite("resources/Actor1.png", 32, 32, sprite, 3);
     this.spriteSheet = new Image();
     this.spriteSheet.src = "resources/Actor1.png";
     this.display = function () {
@@ -160,8 +157,6 @@ function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLink
     this.x = _x;
     this.y = _y;
 
-    this.sprite = 0;
-    this.nbrFrame = _nbrFrame;
     this.animSpeed = _animSpeed || 1;
     this.looped = _loop || false;
     this.creator = _linker || undefined;
@@ -169,16 +164,9 @@ function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLink
 
     this.stop = false;
 
+    this.sprite = new Sprite("resources/graphics/fx/" + _sprite + ".png", 32, 32, 0, _nbrFrame)
 
-
-    this.spriteSheet = new Image();
-    this.spriteSheet.src = "resources/graphics/fx/" + _sprite + ".png";
-    this.frame = 0;
-    this.sprInd = 0;
     this.countDraw = 0;
-
-    this.xSpot = 16;
-    this.ySpot = 16;
     /**
      * Dessine l'effet spécial
      */
@@ -608,15 +596,8 @@ var game = {
  */
 var player = {
     spriteSheet: new Image(),
+    sprite: null,
     countDraw: 0,
-    frame: 0,
-    nbrFrame: 3,
-    sprite: 1,
-    sprInd: 0,
-
-    heigth: 32,
-    width: 32,
-
 
     dirX: 0,
     dirY: 1,
@@ -632,8 +613,6 @@ var player = {
     y: 50,
     xPrev: 0,
     yPrev: 0,
-    xSpot: 16,
-    ySpot: 16,
     speed: 4,
 
     maxHp: 10,
@@ -672,10 +651,9 @@ var player = {
      * @param {Number} [yStart=10] Coordonnée y de départ du personnage
      */
     init: function(_sprite, xStart, yStart){
-        this.spriteSheet.src = "resources/graphics/Actor1.png";
-        this.x = (xStart !== undefined) ? xStart : this.x;
-        this.y = (yStart !== undefined) ? yStart : this.y;
-        this.sprite = (_sprite !== undefined) ? _sprite : this.sprite;
+        this.x = xStart || this.x;
+        this.y = yStart || this.y;
+        this.sprite = new Sprite("resources/graphics/Actor1.png", 32, 32, _sprite, 3)
         game.objects.add(game.objects.entities, this);
     },
 
