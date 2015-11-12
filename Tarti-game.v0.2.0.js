@@ -687,7 +687,7 @@ var player = {
         //game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
         this.attackSwitch = false;
         console.log((new Date()).getTime() - this.attackStart);
-        socket.emit('attack', type);
+        socket.emit('attack', (new Date()).getTime() - this.attackStart);
         this.attackStart = 0;
         this.charge = 0;
     },

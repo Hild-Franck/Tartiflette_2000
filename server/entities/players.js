@@ -38,8 +38,10 @@ module.exports = {
             armor: 0,
             charged: {
                 level: 0,
+                stmCons: 0,
                 dmgBst: 0,
-                nbrHits: 0
+                nbrHits: 4,
+                hitCoolDwn: 100
             },
             back: 0
         }
