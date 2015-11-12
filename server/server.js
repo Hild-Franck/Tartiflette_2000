@@ -144,7 +144,8 @@ io.sockets.on('connection', function (socket) {
                 stmnPlayer: player.db.currentStm,
                 xpPlayer: player.db.currXp,
                 idPlayer: playersConnected[uuid].id,
-                spritePlayer: player.db.sprite
+                spritePlayer: player.db.sprite,
+                chrgdTmPlayer: player.db.chargedTime + player.db.perks.chargedTimeMod
             });
             console.log("Player number " + playersConnected[uuid].id + " is reconnected");
         }
@@ -176,7 +177,7 @@ io.sockets.on('connection', function (socket) {
                     xpPlayer: player.db.currXp,
                     idPlayer: playersConnected[uuid].id,
                     spritePlayer: player.db.sprite,
-                    chrgdTmPlayer: player.db.chrgdTmPlayer + player.db.perks.chargedTimeMod
+                    chrgdTmPlayer: player.db.chargedTime + player.db.perks.chargedTimeMod
                 });
                 console.log("Player number " + playersConnected[uuid].id + " is connected");
                 count++;

@@ -521,7 +521,6 @@ var game = {
      * @constructor
      */
     TextFx: function(_creator, _text, size, _persistence, _isStatic){
-        console.log('_isStatic: ' + _isStatic);
         this.creator = _creator;
         this.text = _text;
         this.persistence = _persistence || false;
@@ -531,7 +530,6 @@ var game = {
         this.y = this.creator.y - 20;
         this.opacity = 1;
         this.persCnter = 0;
-        console.log('this.isStatic: ' + this.isStatic);
         /**
          * Dessine le texte
          * @returns {Boolean} Si l'objet est encore dans le tableau
@@ -665,6 +663,7 @@ var player = {
     sumX :0,
     loop: 0,
     chargedTime: 350,
+    charge: 0,
 
     poi: -1,
 
@@ -689,6 +688,8 @@ var player = {
         this.attackSwitch = false;
         console.log((new Date()).getTime() - this.attackStart);
         socket.emit('attack', type);
+        this.attackStart = 0;
+        this.charge = 0;
     },
     concentrate: function(){
         if(this.conc === null)
@@ -722,8 +723,8 @@ var player = {
         //Charge
         game.context.strokeRect(5,57,101,21);
         game.context.fillStyle = "#CC9900";
-        game.context.fillRect(6,58,this.currentStm / this.maxStm * 99,19);
-        game.writeText("Stamina",110,72,"CC9900",1, 12,"left", true);
+        game.context.fillRect(6,58,(this.charge / this.chargedTime) * 99,19);
+        game.writeText("Charge",110,72,"CC9900",1, 12,"left", true);
     },
 
     /**
@@ -747,6 +748,9 @@ var player = {
             player.poi = 0;
         }
 
+        if(this.attackStart != 0) {
+            this.charge = (this.charge >= this.chargedTime) ? this.chargedTime : ((new Date()).getTime() - this.attackStart);
+        }
 
         if((this.rightSwitch || this.leftSwitch || this.upSwitch || this.downSwitch)){
             game.timeTest = (new Date()).getTime();
