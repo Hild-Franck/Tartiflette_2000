@@ -48,6 +48,7 @@ function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
 
 function Entity(){
     this.countDraw = 0;
+    this.countDrawDam = 0;
 }
 Entity.prototype.draw = function(sprite, sprIndX, sprIndY, width){
     width = width || 1;
@@ -74,6 +75,22 @@ Entity.prototype.animate = function(sprite, animSpeed){
     /*if((this.frame - (this.spriteSheet.width / 32) * this.sprInd) >= this.spriteSheet.width / 32 && ind == 3) {
      this.sprInd += 1;
      }*/
+};
+
+Entity.prototype.death = function(){
+    this.sprite.widthMod -= 0.02;
+    this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (this.sprite.frame + 3 * this.sprite.spriteInd)*32, this.sprite.animInd*32);
+    game.context.drawImage(this.sprite.tintImage, 0, 0, 32, 32, this.x - this.sprite.xSpot * this.sprite.widthMod + game.xOffSet, this.y - this.sprite.ySpot* (1/this.sprite.widthMod) + game.yOffSet, 32 * this.sprite.widthMod, 32);
+    if(this.sprite.widthMod <= 0)
+        this.dead = true;
+};
+Entity.prototype.takeDommage = function(){
+    game.createTxtFx(game.objects.entities[i], element.hit.damage, 15, false, false);
+    while(this.countDrawDam < 6){
+        this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (this.sprite.frame + 3 * this.sprite.spriteInd)*32, this.sprite.animInd*32);
+        game.context.drawImage(sprite.tintImage, 0, 0, 32, 32, this.x - sprite.xSpot + game.xOffSet, this.y - sprite.ySpot + game.yOffSet, 32, 32);
+    }
+    this.countDrawDam++;
 };
 
 function Enemy(_x, _y, _speed, _dirX, _id){
@@ -108,16 +125,10 @@ function Enemy(_x, _y, _speed, _dirX, _id){
         this.xPrev = this.x;
         return true;
     };
-    this.death = function(){
-        this.sprite.widthMod -= 0.02;
-        this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (this.sprite.frame + 3 * this.sprite.spriteInd)*32, this.sprite.animInd*32);
-        game.context.drawImage(this.sprite.tintImage, 0, 0, 32, 32, this.x - this.sprite.xSpot * this.sprite.widthMod + game.xOffSet, this.y - this.sprite.ySpot* (1/this.sprite.widthMod) + game.yOffSet, 32 * this.sprite.widthMod, 32);
-        if(this.sprite.widthMod <= 0)
-            this.dead = true;
-    }
 }
 Enemy.prototype = Object.create(Entity.prototype);
 Enemy.prototype.constructor = Enemy;
+
 
 function Player(_x, _y, _speed, _date, _key, sprite){
     this.type = 'player';
@@ -274,7 +285,7 @@ var game = {
                 for (var i = 0; i < game.objects.entities.length; i++){
                     if (element.$loki === game.objects.entities[i].id && game.objects.entities[i].type === 'enemy'){
                         if (!(element.hit === null) &&  game.objects.entities[i].dying == false)
-                            game.createTxtFx(game.objects.entities[i], element.hit.damage, 15, false, false);
+                            game.objects.entities[i].takeDommage();
                         if(!element.dead) {
                             game.objects.entities[i].y = element.y;
                             game.objects.entities[i].x = element.x;
@@ -594,6 +605,9 @@ var game = {
         }
     }
 };
+
+
+
 
 /**
  * L'objet du joueur
