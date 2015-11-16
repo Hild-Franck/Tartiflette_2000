@@ -48,7 +48,7 @@ function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
 
 function Entity(){
     this.countDraw = 0;
-    this.countDrawDam = 0;
+    this.countDrawDmg = 0;
 }
 Entity.prototype.draw = function(sprite, sprIndX, sprIndY, width){
     width = width || 1;
@@ -84,13 +84,13 @@ Entity.prototype.death = function(){
     if(this.sprite.widthMod <= 0)
         this.dead = true;
 };
-Entity.prototype.takeDommage = function(){
-    game.createTxtFx(game.objects.entities[i], element.hit.damage, 15, false, false);
+Entity.prototype.takeDmg = function(dmg){
+    game.createTxtFx(this, dmg, 15, false, false);
     while(this.countDrawDam < 6){
         this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (this.sprite.frame + 3 * this.sprite.spriteInd)*32, this.sprite.animInd*32);
-        game.context.drawImage(sprite.tintImage, 0, 0, 32, 32, this.x - sprite.xSpot + game.xOffSet, this.y - sprite.ySpot + game.yOffSet, 32, 32);
+        game.context.drawImage(this.sprite.tintImage, 0, 0, 32, 32, this.x - this.sprite.xSpot + game.xOffSet, this.y - this.sprite.ySpot + game.yOffSet, 32, 32);
     }
-    this.countDrawDam++;
+    this.countDrawDmg++;
 };
 
 function Enemy(_x, _y, _speed, _dirX, _id){
@@ -128,7 +128,6 @@ function Enemy(_x, _y, _speed, _dirX, _id){
 }
 Enemy.prototype = Object.create(Entity.prototype);
 Enemy.prototype.constructor = Enemy;
-
 
 function Player(_x, _y, _speed, _date, _key, sprite){
     this.type = 'player';
@@ -168,7 +167,6 @@ function Player(_x, _y, _speed, _date, _key, sprite){
         this.lastTime = this.time;
         return true;
     };
-    this
 }
 Player.prototype = Object.create(Entity.prototype);
 Player.prototype.constructor = Player;
@@ -285,7 +283,7 @@ var game = {
                 for (var i = 0; i < game.objects.entities.length; i++){
                     if (element.$loki === game.objects.entities[i].id && game.objects.entities[i].type === 'enemy'){
                         if (!(element.hit === null) &&  game.objects.entities[i].dying == false)
-                            game.objects.entities[i].takeDommage();
+                            game.objects.entities[i].takeDmg(element.hit.damage);
                         if(!element.dead) {
                             game.objects.entities[i].y = element.y;
                             game.objects.entities[i].x = element.x;
@@ -605,9 +603,6 @@ var game = {
         }
     }
 };
-
-
-
 
 /**
  * L'objet du joueur
