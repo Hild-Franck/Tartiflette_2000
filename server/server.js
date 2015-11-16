@@ -123,6 +123,10 @@ io.sockets.on('connection', function (socket) {
     var uuid;
     var register = false;
     var level = [];
+    var onHoldAtt = {
+        number: 0,
+        lastAtt: 0
+    };
 
     //---Register event from client---
     socket.on('register', function (_uuid) {
@@ -238,9 +242,13 @@ io.sockets.on('connection', function (socket) {
             player.recover = 0;
 
     });*/
-    socket.on('attack', function () {
+    socket.on('attack', function (time) {
         var date = new Date();
         var lastAtck;
+        if(time >= player.db.chargedTime) {
+            onHoldAtt.number = 3;
+            onHoldAtt.lastAtt = date.getTime();
+        }
         if (lastAtck === undefined || date.getTime() - lastAtck > (1000 - player.db.perks.coolDown * 25) && player.db.currentStm > 0) {
             lastAtck = date.getTime();
             player.db.currentStm -= 1;
@@ -266,6 +274,29 @@ io.sockets.on('connection', function (socket) {
 
     eventEmitter.on('chicken', function () {
         if (register) {
+            if(onHoldAtt.number != 0 && ((new Date()).getTime() - onHoldAtt.lastAtt >= player.db.perks.charged.hitCoolDwn)){
+                onHoldAtt.number -= 1;
+                onHoldAtt.lastAtt = (new Date()).getTime();
+
+                player.db.currentStm -= 1;
+                var atckInd = player.db.attack;
+                var atckPerks = attacks.get(atckInd);
+                atckPerks.x = player.db.x + DIRECTION[player.db.dir][0] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
+                atckPerks.y = player.db.y + DIRECTION[player.db.dir][1] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
+                atckPerks.x += (32 - atckPerks.baseAoE) / 2;
+                atckPerks.y += (32 - atckPerks.baseAoE) / 2;
+                atckPerks.width = atckPerks.baseAoE;
+                atckPerks.height = atckPerks.baseAoE;
+                atckPerks.plrDmg = player.db.strength + player.db.perks.damage;
+                atckPerks.creator = player.db;
+                attacksArr.push(atckPerks);
+                players.update(player.db);
+                fx.push({
+                    x: atckPerks.x - (32 - atckPerks.baseAoE) / 2,
+                    y: atckPerks.y - (32 - atckPerks.baseAoE) / 2,
+                    graphic: atckPerks.graphic
+                });
+            }
             while(player.db.currXp >= player.db.maxXp){
                 player.db.currXp -= player.db.maxXp;
                 player.db.maxXp *= 2;
