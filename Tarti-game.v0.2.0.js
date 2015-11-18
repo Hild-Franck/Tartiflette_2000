@@ -49,7 +49,7 @@ function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
 
 function Entity(){
     this.countDraw = 0;
-    this.countDrawDmg = 0;
+    this.countDmg = 0;
 }
 Entity.prototype.draw = function(sprite, sprIndX, sprIndY, width){
     width = width || 1;
@@ -107,11 +107,11 @@ Entity.prototype.death = function(){
 };
 Entity.prototype.takeDmg = function(dmg){
     game.createTxtFx(this, dmg, 15, false, false);
-    while(this.countDrawDam < 6){
+    if(dmg != 0){
+        console.log("Compteur dommage "+this.countDmg); //  N'arrive pas a Detecter le this.countDmd alors qu'il est déclaré dans Entity #HelpFrank
         this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (this.sprite.frame + 3 * this.sprite.spriteInd)*32, this.sprite.animInd*32);
         game.context.drawImage(this.sprite.tintImage, 0, 0, 32, 32, this.x - this.sprite.xSpot + game.xOffSet, this.y - this.sprite.ySpot + game.yOffSet, 32, 32);
     }
-    this.countDrawDmg++;
 };
 
 function Enemy(_x, _y, _speed, _dirX, _id){
