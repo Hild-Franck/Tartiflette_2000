@@ -22,6 +22,7 @@ module.exports = {
         this.maxStm = 10;
         this.currentStm = 10;
         this.currHp = 10;
+        this.coolDwn = 750;
         this.maxHp = 10;
         this.connected = false;
         this.perks = {
@@ -41,6 +42,7 @@ module.exports = {
                 stmCons: 0,
                 dmgBst: 0,
                 nbrHits: 4,
+                coolDownMod: 0.4,
                 hitCoolDwn: 100
             },
             back: 0

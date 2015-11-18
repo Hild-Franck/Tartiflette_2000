@@ -43,6 +43,7 @@ function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
     this.xSpot = _xSpot || Math.floor(this.width/2);
     this.ySpot = _ySpot || Math.floor(this.height/2);
     this.isTint = false;
+    this.rotation = false;
 }
 
 
@@ -56,6 +57,14 @@ Entity.prototype.draw = function(sprite, sprIndX, sprIndY, width){
 };
 Entity.prototype.animate = function(sprite, animSpeed){
     animSpeed = animSpeed || 1;
+    var x = this.x;
+    var y = this.y;
+    if(sprite.rotation){
+        game.context.translate(this.x+game.xOffSet, this.y+game.yOffSet);
+        game.context.rotate(sprite.angle);
+        this.x = -game.xOffSet;
+        this.y = -game.yOffSet;
+    }
     if(!(sprite.isTint))
         this.draw(sprite, sprite.frame + 3 * sprite.spriteInd, sprite.animInd, this.x, this.y);
     else{
@@ -63,6 +72,14 @@ Entity.prototype.animate = function(sprite, animSpeed){
         game.context.drawImage(sprite.tintImage, 0, 0, 32, 32, this.x - sprite.xSpot + game.xOffSet, this.y - sprite.ySpot + game.yOffSet, 32, 32);
 
     }
+    if(sprite.rotation){
+        this.x = x;
+        this.y = y;
+        game.context.rotate(-sprite.angle);
+        game.context.translate(-(this.x+game.xOffSet), -(this.y+game.yOffSet));
+        sprite.rotation = false;
+    }
+
     this.countDraw++;
 
     if (this.countDraw >= Math.round((game.fps/sprite.nbrFrame)/animSpeed) * sprite.nbrFrame)
@@ -75,6 +92,10 @@ Entity.prototype.animate = function(sprite, animSpeed){
     /*if((this.frame - (this.spriteSheet.width / 32) * this.sprInd) >= this.spriteSheet.width / 32 && ind == 3) {
      this.sprInd += 1;
      }*/
+};
+Entity.prototype.rotate = function(angle){
+    this.sprite.rotation = true;
+    this.sprite.angle = angle;
 };
 
 Entity.prototype.death = function(){
@@ -134,7 +155,7 @@ function Player(_x, _y, _speed, _date, _key, sprite){
     this.xPrev = _x;
     this.yPrev = _y;
     this.x = _x;
-    this.y = _y
+    this.y = _y;
     this.speed = _speed;
     this.sprInd = 0;
     this.frame = 0;
@@ -174,6 +195,7 @@ Player.prototype.constructor = Player;
 function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLinked){
     this.x = _x;
     this.y = _y;
+    this.rot = Math.random() * (Math.PI * 2);
 
     this.animSpeed = _animSpeed || 1;
     this.looped = _loop || false;
@@ -182,7 +204,7 @@ function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLink
 
     this.stop = false;
 
-    this.sprite = new Sprite("resources/graphics/fx/" + _sprite + ".png", 32, 32, 0, _nbrFrame)
+    this.sprite = new Sprite("resources/graphics/fx/" + _sprite + ".png", 32, 32, 0, _nbrFrame);
 
     this.countDraw = 0;
     /**
@@ -193,6 +215,7 @@ function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLink
             this.x = this.creator.x;
             this.y = this.creator.y + 4;
         }
+        this.rotate(this.rot);
         this.animate(this.sprite, this.animSpeed);
         if((this.sprite.frame >= this.sprite.nbrFrame - 1 /*&& this.sprite.animInd == Math.floor((this.nbrFrame-1) / (this.sprite.width / 32))  */&& this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
             if(!this.looped || this.stop) {
@@ -217,11 +240,11 @@ function ColorRGB(_red, _green, _blue, _alpha){
     this.red = _red;
     this.green = _green;
     this.blue = _blue;
-    this.alpha = _alpha || 1;
+    this.alpha = _alpha || 1
 }
 ColorRGB.prototype.toHex = function(){
     return new ColorHex(this.red.toString(16) + this.green.toString(16) + this.blue.toString(16), this.alpha);
-}
+};
 
 function ColorHex(_hex, _alpha){
     this.hex = _hex;
@@ -229,7 +252,7 @@ function ColorHex(_hex, _alpha){
 }
 ColorHex.prototype.toDec = function(){
     return new ColorRGB(parseInt(this.hex.splice(0,3), 16), parseInt(this.hex.splice(3,6), 16), parseInt(this.hex.splice(6,9), 16), this.alpha);
-}
+};
 
 /**
  * L'objet du jeu
@@ -248,6 +271,7 @@ var game = {
 
     timeTest: (new Date()).getTime(),
     lastTimeTest: 0,
+
     lastUpdt: 0,
     fps: 60,
     xOffSet: 0,
