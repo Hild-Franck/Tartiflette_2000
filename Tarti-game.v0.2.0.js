@@ -91,8 +91,6 @@ Entity.prototype.takeDmg = function(dmg){
         this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (this.sprite.frame + 3 * this.sprite.spriteInd)*32, this.sprite.animInd*32);
         game.context.drawImage(this.sprite.tintImage, 0, 0, 32, 32, this.x - this.sprite.xSpot + game.xOffSet, this.y - this.sprite.ySpot + game.yOffSet, 32, 32);
     }
-
-
 };
 
 function Enemy(_x, _y, _speed, _dirX, _id){
