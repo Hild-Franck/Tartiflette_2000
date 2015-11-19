@@ -107,11 +107,7 @@ Entity.prototype.death = function(){
 };
 Entity.prototype.takeDmg = function(dmg){
     game.createTxtFx(this, dmg, 15, false, false);
-    if(dmg != 0){
-        console.log("Compteur dommage "+this.countDmg); //  N'arrive pas a Detecter le this.countDmd alors qu'il est déclaré dans Entity #HelpFrank
-        this.sprite.tintImage.src = this.sprite.image.tintImg(new ColorRGB(255, 0, 0), (this.sprite.frame + 3 * this.sprite.spriteInd)*32, this.sprite.animInd*32);
-        game.context.drawImage(this.sprite.tintImage, 0, 0, 32, 32, this.x - this.sprite.xSpot + game.xOffSet, this.y - this.sprite.ySpot + game.yOffSet, 32, 32);
-    }
+    this.sprite.isTint = true;
 };
 
 function Enemy(_x, _y, _speed, _dirX, _id){
@@ -123,10 +119,12 @@ function Enemy(_x, _y, _speed, _dirX, _id){
     this.speed = _speed;
     this.dirX = _dirX;
     this.countDraw = 0;
+    this.countDmg = 0;
     this.sprite = new Sprite("resources/monster2.png", 32, 32, 0, 3);
     this.dying = false;
     this.dead = false;
     this.id = _id;
+    this.countTint = 0;
     this.display = function () {
         if(!this.dying) {
             var time = new Date();
@@ -144,6 +142,14 @@ function Enemy(_x, _y, _speed, _dirX, _id){
         else
             this.death();
         this.xPrev = this.x;
+
+        if(this.sprite.isTint)
+            this.countTint++;
+        if(this.countTint == 6){
+            this.sprite.isTint = false;
+            this.countTint = 0;
+        }
+
         return true;
     };
 }
