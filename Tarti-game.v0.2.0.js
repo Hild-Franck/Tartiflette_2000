@@ -2,15 +2,23 @@
  * Created by Hild Franck on 7/8/2015.
  */
 
+const DIRX = 0;
+const DIRY = 1;
+
+Image.prototype.createTintCanvas = function(width, height){
+    var tintCanvas = document.createElement('canvas');
+    tintCanvas.width = width;
+    tintCanvas.height = height;
+    return tintCanvas;
+};
+
 Image.prototype.tintImg = function(color, xStart, yStart, width, height){
     xStart = xStart || 0;
     yStart = yStart || 0;
     width = width || 32;
     height = height || 32;
     var colorRatio = 255/(color.red + color.green + color.blue);
-    var tintCanvas = document.createElement('canvas');
-    tintCanvas.width = width;
-    tintCanvas.height = height;
+    var tintCanvas = this.createTintCanvas(width, height);
     var tintContext = tintCanvas.getContext('2d');
     tintContext.drawImage(this, xStart, yStart, width, height, 0, 0, width, height);
     var pixelData = tintContext.getImageData(0, 0, width, height);
@@ -39,7 +47,6 @@ function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
     this.width = _width;
     this.height = _height;
     this.widthMod = 1;
-    this.heightMod = 1;
     this.xSpot = _xSpot || Math.floor(this.width/2);
     this.ySpot = _ySpot || Math.floor(this.height/2);
     this.isTint = false;
@@ -47,14 +54,12 @@ function Sprite(imgPath, _width, _height, _sprite, _nbrFrame, _xSpot, _ySpot){
 }
 
 
-function Entity(){
-    this.countDraw = 0;
-    this.countDmg = 0;
-}
-Entity.prototype.draw = function(sprite, sprIndX, sprIndY, width){
-    width = width || 1;
+function Entity(){}
+
+Entity.prototype.draw = function(sprite, sprIndX, sprIndY){
     game.context.drawImage(sprite.image,  sprIndX * 32 , sprIndY * 32, 32, 32, this.x - sprite.xSpot + game.xOffSet, this.y - sprite.ySpot + game.yOffSet, 32, 32);
 };
+
 Entity.prototype.animate = function(sprite, animSpeed){
     animSpeed = animSpeed || 1;
     var x = this.x;
@@ -89,9 +94,6 @@ Entity.prototype.animate = function(sprite, animSpeed){
     if (sprite.frame >= sprite.nbrFrame)
         sprite.frame = 0;
 
-    /*if((this.frame - (this.spriteSheet.width / 32) * this.sprInd) >= this.spriteSheet.width / 32 && ind == 3) {
-     this.sprInd += 1;
-     }*/
 };
 Entity.prototype.rotate = function(angle){
     this.sprite.rotation = true;
@@ -110,6 +112,17 @@ Entity.prototype.takeDmg = function(dmg){
     this.sprite.isTint = true;
 };
 
+Entity.prototype.setAnimInd = function(){
+    if (this.x > this.xPrev)
+        return 1;
+    if (this.x < this.xPrev)
+        return 2;
+    if (this.y > this.yPrev)
+        return 3;
+    if (this.y < this.yPrev)
+        return 0;
+};
+
 function Enemy(_x, _y, _speed, _dirX, _id){
     this.type = 'enemy';
     this.xPrev = _x;
@@ -119,7 +132,6 @@ function Enemy(_x, _y, _speed, _dirX, _id){
     this.speed = _speed;
     this.dirX = _dirX;
     this.countDraw = 0;
-    this.countDmg = 0;
     this.sprite = new Sprite("resources/monster2.png", 32, 32, 0, 3);
     this.dying = false;
     this.dead = false;
@@ -129,18 +141,13 @@ function Enemy(_x, _y, _speed, _dirX, _id){
         if(!this.dying) {
             var time = new Date();
             this.x += (((game.fps / 1000) * this.speed) * (time.getTime() - game.objects.servTime)) * this.dirX;
-            if (this.dirX == -1)
-                this.sprite.animInd = 1;
-            if (this.dirX == 1)
-                this.sprite.animInd = 2;
-            if (this.y > this.yPrev)
-                this.sprite.animInd = 3;
-            if (this.y < this.yPrev)
-                this.sprite.animInd = 0;
+            this.sprite.animInd = this.setAnimInd();
+
             this.animate(this.sprite, 1.5);
         }
         else
             this.death();
+
         this.xPrev = this.x;
 
         if(this.sprite.isTint)
@@ -149,7 +156,6 @@ function Enemy(_x, _y, _speed, _dirX, _id){
             this.sprite.isTint = false;
             this.countTint = 0;
         }
-
         return true;
     };
 }
@@ -163,11 +169,6 @@ function Player(_x, _y, _speed, _date, _key, sprite){
     this.x = _x;
     this.y = _y;
     this.speed = _speed;
-    this.sprInd = 0;
-    this.frame = 0;
-    this.xSpot = 16;
-    this.ySpot = 16;
-    this.nbrFrame = 3;
     this.countDraw = 0;
     this.key = _key;
     this.time = (new Date()).getTime();
@@ -176,19 +177,9 @@ function Player(_x, _y, _speed, _date, _key, sprite){
     this.display = function () {
         this.time = (new Date()).getTime();
         if(this.key != -1) {
-            console.log("element.time: " + this.time);
-            console.log("element.lastTime: " + this.lastTime);
-            console.log("element.y: " + this.y);
-            this.x += 0.06 * this.speed * player.dir[this.key][0] * (this.time - this.lastTime);
-            this.y += 0.06 * this.speed * player.dir[this.key][1] * (this.time - this.lastTime);
-            if (this.xPrev > this.x)
-                this.sprInd = 1;
-            if (this.xPrev < this.x)
-                this.sprInd = 2;
-            if (this.y > this.yPrev)
-                this.sprInd = 3;
-            if (this.y < this.yPrev)
-                this.sprInd = 0;
+            this.x += 0.06 * this.speed * player.dir[this.key][DIRX] * (this.time - this.lastTime);
+            this.y += 0.06 * this.speed * player.dir[this.key][DIRY] * (this.time - this.lastTime);
+            this.sprite.animInd = this.setAnimInd();
         }
         this.animate();
         this.lastTime = this.time;
@@ -223,7 +214,7 @@ function SpriteFx(_x, _y,_sprite, _nbrFrame, _animSpeed, _loop, _linker, _isLink
         }
         this.rotate(this.rot);
         this.animate(this.sprite, this.animSpeed);
-        if((this.sprite.frame >= this.sprite.nbrFrame - 1 /*&& this.sprite.animInd == Math.floor((this.nbrFrame-1) / (this.sprite.width / 32))  */&& this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
+        if((this.sprite.frame >= this.sprite.nbrFrame - 1 && this.countDraw == (game.fps/this.animSpeed) - 1) || this.stop ){
             if(!this.looped || this.stop) {
                 game.objects.entities.splice(game.objects.entities.indexOf(this), 1);
                 return false;
@@ -256,6 +247,9 @@ function ColorHex(_hex, _alpha){
     this.hex = _hex;
     this.alpha = _alpha;
 }
+ColorHex.prototype.getColor = function(){
+    return this.hex;
+};
 ColorHex.prototype.toDec = function(){
     return new ColorRGB(parseInt(this.hex.splice(0,3), 16), parseInt(this.hex.splice(3,6), 16), parseInt(this.hex.splice(6,9), 16), this.alpha);
 };
@@ -363,7 +357,7 @@ var game = {
                     }, data.plyData.level[i] + " gain !", 30, true, true);
             }
             if(player.currentHp < data.plyData.data.currHp)
-                game.createTxtFx(player, "+" + data.plyData.data.currHp - player.currentHp, 30, true, true);
+                game.createTxtFx(player, "+" + (data.plyData.data.currHp - player.currentHp), 30, true, true);
             game.objects.arrange();
             player.currentStm = data.plyData.data.currentStm;
             player.currentHp = data.plyData.data.currHp;
@@ -456,19 +450,19 @@ var game = {
         addEventListener("keydown", function(event) {
             if (event.keyCode == 68) {
                 player.rightSwitch = true;
-                player.poi = 2;
+
             }
             if(event.keyCode == 81) {
                 player.leftSwitch = true;
-                player.poi = 1;
+
             }
             if(event.keyCode == 90) {
                 player.upSwitch = true;
-                player.poi = 3;
+
             }
             if(event.keyCode == 83) {
                 player.downSwitch = true;
-                player.poi = 0;
+
             }
             if(event.keyCode == 100) {
                 if(!player.attackSwitch)
@@ -500,7 +494,7 @@ var game = {
         socket.on("servData", function(servData){
             player.x = servData.xPlayer;
             player.y = servData.yPlayer;
-            player.poi = servData.dirPlayer;
+            player.key.id = servData.dirPlayer;
             player.currentHp = servData.hlthPlayer;
             player.currentStm = servData.stmnPlayer;
             player.currXp = servData.xpPlayer;
@@ -703,9 +697,6 @@ var player = {
     loop: 0,
     chargedTime: 350,
     charge: 0,
-
-    poi: -1,
-
     /**
      * Fonction d'initialisation du personnage
      * @param {Number} [_sprite=1] Sprite du personnage
@@ -715,15 +706,14 @@ var player = {
     init: function(_sprite, xStart, yStart){
         this.x = xStart || this.x;
         this.y = yStart || this.y;
-        this.sprite = new Sprite("resources/graphics/Actor1.png", 32, 32, _sprite, 3)
+        this.sprite = new Sprite("resources/graphics/Actor1.png", 32, 32, _sprite, 3);
         game.objects.add(game.objects.entities, this);
     },
 
     /**
      * Gère l'attaque du personnage
      */
-    attack: function(type){
-        //game.createSpriteFx(this.x + 30*this.dirX, this.y + 30*this.dirY, "Attack2", 3, 5);
+    attack: function(){
         this.attackSwitch = false;
         console.log((new Date()).getTime() - this.attackStart);
         socket.emit('attack', (new Date()).getTime() - this.attackStart);
@@ -736,6 +726,26 @@ var player = {
     },
     draw: Entity.prototype.draw,
     animate: Entity.prototype.animate,
+    setKey: function(){
+        if(this.rightSwitch) {
+            return 2;
+        }
+        if(this.leftSwitch) {
+            return 1;
+        }
+        if(this.upSwitch) {
+            return 3;
+        }
+        if(this.downSwitch) {
+            return 0;
+        }
+    },
+    drawBar: function(color, value, text, x, y){
+        game.context.strokeRect(x, y, 101, 21);
+        game.context.fillStyle = color.getColor();
+        game.context.fillRect(x+1, y+1, value * 99, 19);
+        game.writeText(text, x + 110, y + 15, color.getColor(), 1, 12, "left", true);
+    },
     display: function(){
         this.animate(this.sprite, 2);
         return true;
@@ -744,26 +754,17 @@ var player = {
      * Dessine la vie du joueur
      */
     drawLife: function(){
-        //Vie
-        game.context.strokeRect(5,5,101,21);
-        game.context.fillStyle = "#E00000";
-        game.context.fillRect(6,6,this.currentHp / this.maxHp * 99,19);
-        game.writeText("HP",110,20,"E00000",1, 12,"left", true);
-        //Compétences (mana / force / concentration)
-        game.context.strokeRect(5,31,101,21);
-        game.context.fillStyle = "#CC9900";
-        game.context.fillRect(6,32,this.currentStm / this.maxStm * 99,19);
-        game.writeText("Stamina",110,46,"CC9900",1, 12,"left", true);
-        //Expérience
+        this.drawBar((new ColorHex("#2ecc71", 1)), this.currentHp / this.maxHp, "HP", 5, 5);
+
+        this.drawBar((new ColorHex("#e74c3c", 1)), this.currentStm / this.maxStm, "Stamina", 5, 31);
+
+        this.drawBar((new ColorHex("#3498db", 1)), this.charge / this.chargedTime, "Charge", 5, 57);
+
         game.context.strokeRect(20,game.canvas.height - 20,game.canvas.width - 40,16);
         game.context.fillStyle = "#CC9900";
         game.context.fillRect(21,game.canvas.height - 19,this.currXp / this.maxXp * (game.canvas.width - 42), 14);
         game.writeText("XP",game.canvas.width/2,game.canvas.height - 25,"CC9900",1, 15,"center", true);
-        //Charge
-        game.context.strokeRect(5,57,101,21);
-        game.context.fillStyle = "#CC9900";
-        game.context.fillRect(6,58,(this.charge / this.chargedTime) * 99,19);
-        game.writeText("Charge",110,72,"CC9900",1, 12,"left", true);
+
     },
 
     /**
@@ -774,18 +775,8 @@ var player = {
         this.key.id = -1;
         this.xPrev = this.x;
         this.yPrev = this.y;
-        if(this.rightSwitch) {
-            player.poi = 2;
-        }
-        if(this.leftSwitch) {
-            player.poi = 1;
-        }
-        if(this.upSwitch) {
-            player.poi = 3;
-        }
-        if(this.downSwitch) {
-            player.poi = 0;
-        }
+        this.key.id = this.setKey();
+
 
         if(this.attackStart != 0) {
             this.charge = (this.charge >= this.chargedTime) ? this.chargedTime : ((new Date()).getTime() - this.attackStart);
@@ -794,35 +785,22 @@ var player = {
         if((this.rightSwitch || this.leftSwitch || this.upSwitch || this.downSwitch)){
             game.timeTest = (new Date()).getTime();
             game.lastTimeTest = game.lastUpdt;
-            /*if(this.testKey == 0) {
-                this.testKey = game.lastTimeTest;
-            }*/
-            this.arrTest.push(game.timeTest - game.lastTimeTest);
-            this.arrTestTwo.push((new Date()).getTime());
-            this.sumX += game.timeTest - game.lastTimeTest;
-            this.x += 0.06 * this.speed * this.dir[this.poi][0] * (game.timeTest - game.lastTimeTest);
-            this.y += 0.06 * this.speed * this.dir[this.poi][1] * (game.timeTest - game.lastTimeTest);
+            this.x += 0.06 * this.speed * this.dir[this.key.id][DIRX] * (game.timeTest - game.lastTimeTest);
+            this.y += 0.06 * this.speed * this.dir[this.key.id][DIRY] * (game.timeTest - game.lastTimeTest);
             this.x = Math.round(this.x);
             this.y = Math.round(this.y);
-            this.sprite.animInd = this.poi;
-            this.key.id = player.poi;
+            this.sprite.animInd = this.key.id;
             }
         else {
             game.timeTest = (new Date()).getTime();
             this.key.id = -1;
-            if (this.sumX != 0) {
-                this.testKey = 0;
-                this.sumX = 0;
-                this.arrTest = [];
-                this.arrTestTwo = [];
-            }
         }
         this.key.date = game.lastUpdt;
         if(this.key.id != this.prevKey.id)
             socket.emit("movement", this.key);
 
-        this.dirX = this.dir[this.sprite.animInd][0];
-        this.dirY = this.dir[this.sprite.animInd][1];
+        this.dirX = this.dir[this.sprite.animInd][DIRX];
+        this.dirY = this.dir[this.sprite.animInd][DIRY];
         game.lastUpdt = game.timeTest;
         if(this.x == this.xPrev && this.y == this.yPrev){
             this.sprite.frame = 1;
@@ -840,9 +818,7 @@ setInterval(function(){
     game.update();
     debug.monitor("x: ", player.x);
     debug.monitor("y: ", player.y);
-    debug.monitor("frame: ", player.frame);
     debug.monitor("dirX: ", player.dirX);
     debug.monitor("dirY: ", player.dirY);
-    debug.monitor("Player key: " + player.key);
     debug.show();
 }, 1000/game.fps);
