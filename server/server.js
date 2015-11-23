@@ -2,6 +2,7 @@
 //---------------------------------------------
 var http = require('http');
 var QuadTree = require('./node_modules/quadTree/lib/quadTree');
+var Player = require('./node_modules/player/lib/player');
 var collision = require('./node_modules/collisions/lib/collisions');
 var random = require('./node_modules/random/lib/random');
 var events = require('events');
@@ -137,21 +138,11 @@ io.sockets.on('connection', function (socket) {
                 clearTimeout(player.timeout);
                 playersConnected[uuid].disconnected = false;
             }
-            player.db = players.get(playersConnected[uuid].id);
-            player.db.connected = true;
+            player = new Player(players, playersConnected[uuid].id, attacks);
+
             players.update(player.db);
-            socket.emit("servData",{
-                xPlayer: player.db.x,
-                yPlayer: player.db.y,
-                dirPlayer: player.db.dir,
-                hlthPlayer: player.db.currHp,
-                stmnPlayer: player.db.currentStm,
-                xpPlayer: player.db.currXp,
-                idPlayer: playersConnected[uuid].id,
-                spritePlayer: player.db.sprite,
-                chrgdTmPlayer: player.db.chargedTime + player.db.perks.chargedTimeMod
-            });
-            console.log("Player number " + playersConnected[uuid].id + " is reconnected");
+            socket.emit("servData", player.getServerData());
+            console.log("Player number " + player.id + " is reconnected");
         }
         else {
             //Check if a player slot is available
@@ -169,20 +160,12 @@ io.sockets.on('connection', function (socket) {
                 //Create player if the server is not full
                 playersConnected[uuid] = {id: i + 1, disconnected: false};
                 playersAvailable[i] = false;
-                player.db = players.get(playersConnected[uuid].id);
-                player.db.connected = true;
+
+                player = new Player(players, playersConnected[uuid].id, attacks);
+
                 players.update(player.db);
-                socket.emit("servData",{
-                    xPlayer: player.db.x,
-                    yPlayer: player.db.y,
-                    dirPlayer: player.db.dir,
-                    hlthPlayer: player.db.currHp,
-                    stmnPlayer: player.db.currentStm,
-                    xpPlayer: player.db.currXp,
-                    idPlayer: playersConnected[uuid].id,
-                    spritePlayer: player.db.sprite,
-                    chrgdTmPlayer: player.db.chargedTime + player.db.perks.chargedTimeMod
-                });
+
+                socket.emit("servData",player.getServerData());
                 console.log("Player number " + playersConnected[uuid].id + " is connected");
                 count++;
                 console.log("There is " + count + " players connected");
@@ -251,24 +234,8 @@ io.sockets.on('connection', function (socket) {
         }
         if (lastAtck === undefined || date.getTime() - lastAtck > (1000 - player.db.perks.coolDown * 25) && player.db.currentStm > 0) {
             lastAtck = date.getTime();
-            player.db.currentStm -= 1;
-            var atckInd = player.db.attack;
-            var atckPerks = attacks.get(atckInd);
-            atckPerks.x = player.db.x + DIRECTION[player.db.dir][0] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
-            atckPerks.y = player.db.y + DIRECTION[player.db.dir][1] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
-            atckPerks.x += (32 - atckPerks.baseAoE) / 2;
-            atckPerks.y += (32 - atckPerks.baseAoE) / 2;
-            atckPerks.width = atckPerks.baseAoE;
-            atckPerks.height = atckPerks.baseAoE;
-            atckPerks.plrDmg = player.db.strength + player.db.perks.damage;
-            atckPerks.creator = player.db;
-            attacksArr.push(atckPerks);
-            players.update(player.db);
-            fx.push({
-                x: atckPerks.x - (32 - atckPerks.baseAoE) / 2,
-                y: atckPerks.y - (32 - atckPerks.baseAoE) / 2,
-                graphic: atckPerks.graphic
-            });
+
+            attacksArr.push(player.attack(fx));
         }
     });
 
@@ -278,35 +245,10 @@ io.sockets.on('connection', function (socket) {
                 onHoldAtt.number -= 1;
                 onHoldAtt.lastAtt = (new Date()).getTime();
 
-                player.db.currentStm -= 1;
-                var atckInd = player.db.attack;
-                var atckPerks = attacks.get(atckInd);
-                atckPerks.x = player.db.x + DIRECTION[player.db.dir][0] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
-                atckPerks.y = player.db.y + DIRECTION[player.db.dir][1] * 30 + random.randomIntRange(-1 * atckPerks.randomizePos, atckPerks.randomizePos);
-                atckPerks.x += (32 - atckPerks.baseAoE) / 2;
-                atckPerks.y += (32 - atckPerks.baseAoE) / 2;
-                atckPerks.width = atckPerks.baseAoE;
-                atckPerks.height = atckPerks.baseAoE;
-                atckPerks.plrDmg = player.db.strength + player.db.perks.damage;
-                atckPerks.creator = player.db;
-                attacksArr.push(atckPerks);
-                players.update(player.db);
-                fx.push({
-                    x: atckPerks.x - (32 - atckPerks.baseAoE) / 2,
-                    y: atckPerks.y - (32 - atckPerks.baseAoE) / 2,
-                    graphic: atckPerks.graphic
-                });
+                attacksArr.push(player.attack(fx));
             }
-            while(player.db.currXp >= player.db.maxXp){
-                player.db.currXp -= player.db.maxXp;
-                player.db.maxXp *= 2;
-                player.db.level += 1;
-                var rand = Math.floor(Math.random()*11);
-                var property = Object.getOwnPropertyNames(player.db.perks)[rand];
-                level.push(property);
-                player.db.perks[property] += 1;
-                players.update(player.db);
-            }
+            player.levelUp(level);
+
             socket.emit('message', {
                 plyData:{
                     data: player.db,
@@ -314,6 +256,7 @@ io.sockets.on('connection', function (socket) {
                 },
                 servData: data
             });
+
             level = [];
         }
     });

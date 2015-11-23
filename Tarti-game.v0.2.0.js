@@ -113,9 +113,9 @@ Entity.prototype.takeDmg = function(dmg){
 };
 
 Entity.prototype.setAnimInd = function(){
-    if (this.x > this.xPrev)
-        return 1;
     if (this.x < this.xPrev)
+        return 1;
+    if (this.x > this.xPrev)
         return 2;
     if (this.y > this.yPrev)
         return 3;
@@ -448,22 +448,18 @@ var game = {
      */
     addListeners: function(){
         addEventListener("keydown", function(event) {
-            if (event.keyCode == 68) {
+            if (event.keyCode == 68)
                 player.rightSwitch = true;
 
-            }
-            if(event.keyCode == 81) {
+            if(event.keyCode == 81)
                 player.leftSwitch = true;
 
-            }
-            if(event.keyCode == 90) {
+            if(event.keyCode == 90)
                 player.upSwitch = true;
 
-            }
-            if(event.keyCode == 83) {
+            if(event.keyCode == 83)
                 player.downSwitch = true;
 
-            }
             if(event.keyCode == 100) {
                 if(!player.attackSwitch)
                     player.attackStart = (new Date()).getTime();
@@ -727,18 +723,16 @@ var player = {
     draw: Entity.prototype.draw,
     animate: Entity.prototype.animate,
     setKey: function(){
-        if(this.rightSwitch) {
+        if(this.rightSwitch)
             return 2;
-        }
-        if(this.leftSwitch) {
+        if(this.leftSwitch)
             return 1;
-        }
-        if(this.upSwitch) {
+        if(this.upSwitch)
             return 3;
-        }
-        if(this.downSwitch) {
+        if(this.downSwitch)
             return 0;
-        }
+
+        return -1;
     },
     drawBar: function(color, value, text, x, y){
         game.context.strokeRect(x, y, 101, 21);
@@ -772,18 +766,18 @@ var player = {
      */
     update: function(){
         this.prevKey.id = this.key.id;
-        this.key.id = -1;
         this.xPrev = this.x;
         this.yPrev = this.y;
         this.key.id = this.setKey();
 
 
-        if(this.attackStart != 0) {
+        if(this.attackStart != 0)
             this.charge = (this.charge >= this.chargedTime) ? this.chargedTime : ((new Date()).getTime() - this.attackStart);
-        }
+
+        game.timeTest = (new Date()).getTime();
 
         if((this.rightSwitch || this.leftSwitch || this.upSwitch || this.downSwitch)){
-            game.timeTest = (new Date()).getTime();
+
             game.lastTimeTest = game.lastUpdt;
             this.x += 0.06 * this.speed * this.dir[this.key.id][DIRX] * (game.timeTest - game.lastTimeTest);
             this.y += 0.06 * this.speed * this.dir[this.key.id][DIRY] * (game.timeTest - game.lastTimeTest);
@@ -791,10 +785,7 @@ var player = {
             this.y = Math.round(this.y);
             this.sprite.animInd = this.key.id;
             }
-        else {
-            game.timeTest = (new Date()).getTime();
-            this.key.id = -1;
-        }
+
         this.key.date = game.lastUpdt;
         if(this.key.id != this.prevKey.id)
             socket.emit("movement", this.key);
