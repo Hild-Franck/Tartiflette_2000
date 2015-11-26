@@ -1,10 +1,20 @@
+//---CONSTANTS---
+//---------------------------------------------
+const DIRECTION = [
+    [0,1],
+    [-1,0],
+    [1,0],
+    [0,-1]
+];
+const X = 0;
+const Y = 1;
 //---REQUIRES---
 //---------------------------------------------
 var http = require('http');
+var random = require('./node_modules/random/lib/random');
 var QuadTree = require('./node_modules/quadTree/lib/quadTree');
 var Player = require('./node_modules/player/lib/player');
 var collision = require('./node_modules/collisions/lib/collisions');
-var random = require('./node_modules/random/lib/random');
 var events = require('events');
 
 //---GLOBALS---
@@ -23,13 +33,7 @@ var time = 0;
 //---Count----
 var count = 0;
 var playersConnected = [];
-//---Directions---
-var DIRECTION = [
-    [0,1],
-    [-1,0],
-    [1,0],
-    [0,-1]
-];
+
 //---DATABASE---
 //---------------------------------------------
 
@@ -192,19 +196,7 @@ io.sockets.on('connection', function (socket) {
     });
     //---Handle player movement---
     socket.on("movement", function(key){
-        //Update positions
-        if(lastKey != 0) {
-            if(player.key != -1) {
-                player.db.dir = player.key;
-                player.db.x += 0.06 * player.db.speed * DIRECTION[player.db.dir][0] * (key.date - lastKey);
-                player.db.y += 0.06 * player.db.speed * DIRECTION[player.db.dir][1] * (key.date - lastKey);
-            }
-
-        }
-        lastKey = key.date;
-        player.key = key.id;
-        player.db.key = player.key;
-        players.update(player.db);
+        player.updtPos(key);
     });
 /*
     socket.on('message', function (message) {
