@@ -220,24 +220,18 @@ io.sockets.on('connection', function (socket) {
     socket.on('attack', function (time) {
         var date = new Date();
         var lastAtck;
-        if(time >= player.db.chargedTime) {
-            onHoldAtt.number = 3;
-            onHoldAtt.lastAtt = date.getTime();
-        }
+
         if (lastAtck === undefined || date.getTime() - lastAtck > (1000 - player.db.perks.coolDown * 25) && player.db.currentStm > 0) {
             lastAtck = date.getTime();
 
-            attacksArr.push(player.attack(fx));
+            attacksArr.push(player.attack(fx, (time >= player.db.chargedTime)));
         }
     });
 
     eventEmitter.on('chicken', function () {
         if (register) {
-            if(onHoldAtt.number != 0 && ((new Date()).getTime() - onHoldAtt.lastAtt >= player.db.perks.charged.hitCoolDwn)){
-                onHoldAtt.number -= 1;
-                onHoldAtt.lastAtt = (new Date()).getTime();
-
-                attacksArr.push(player.attack(fx));
+            if(player.onHoldAtt.number != 0 && ((new Date()).getTime() - player.onHoldAtt.lastAtt >= player.db.perks.charged.hitCoolDwn)){
+                attacksArr.push(player.attack(fx, 1));
             }
             player.levelUp(level);
 

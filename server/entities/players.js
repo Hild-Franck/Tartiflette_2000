@@ -15,6 +15,7 @@ module.exports = {
         this.speed = 4;
         this.attack = 1;
         this.chargedTime = 350;
+        this.chargedStmn = 0.35;
         this.level = 1;
         this.currXp = 0;
         this.maxXp = 20;
@@ -38,12 +39,10 @@ module.exports = {
             hlthSteal: 0,
             armor: 0,
             charged: {
-                level: 0,
                 stmCons: 0,
                 dmgBst: 0,
                 nbrHits: 4,
-                coolDownMod: 0.4,
-                hitCoolDwn: 100
+                coolDownMod: 0.4
             },
             back: 0
         }
