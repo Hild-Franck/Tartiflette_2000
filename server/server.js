@@ -230,7 +230,7 @@ io.sockets.on('connection', function (socket) {
 
     eventEmitter.on('chicken', function () {
         if (register) {
-            if(player.onHoldAtt.number != 0 && ((new Date()).getTime() - player.onHoldAtt.lastAtt >= player.db.perks.charged.hitCoolDwn)){
+            if(player.onHoldAtt.number != 0 && ((new Date()).getTime() - player.onHoldAtt.lastAtt >= player.db.coolDwn * player.db.perks.charged.coolDownMod)){
                 attacksArr.push(player.attack(fx, 1));
             }
             player.levelUp(level);

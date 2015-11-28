@@ -42,7 +42,7 @@ module.exports = {
                 stmCons: 0,
                 dmgBst: 0,
                 nbrHits: 4,
-                coolDownMod: 0.4
+                coolDownMod: 0.1
             },
             back: 0
         }
